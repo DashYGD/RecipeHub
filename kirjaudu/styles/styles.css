@@ -1,0 +1,190 @@
+body {
+    background-image: url("../../static/images/tausta-HD.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    margin-top: 15%;
+    margin-bottom: 15%;
+
+}
+.bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    border-top-style: outset; 
+    border-bottom-style: outset;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.sidebar {
+    display: none;
+    z-index: 5;
+    max-width: 60%;
+    position: absolute;
+    right: 0;
+}
+
+
+.fc-toolbar { text-transform: capitalize; }
+
+.fc-col-header-cell-cushion {
+    text-transform: capitalize;
+}
+
+#layer_1 {
+border-radius: 20px;
+}
+
+.menubutton {
+display: inline-block;
+text-align: middle;
+transition: .75s;
+transform: rotate(-360deg);
+}
+
+.menubutton::after {
+transition: .75s;
+color: white;
+content: "menu";
+}
+
+.openMenu {
+transition: .75s;
+transform: rotate(360deg);
+}
+
+.openMenu::after {
+color: black;
+content: "Close";
+transition: .75s;
+}
+
+.hidden {
+visibility: hidden;
+}
+
+#sticky {
+position: -webkit-sticky; /* Safari */
+position: sticky;
+top: 0;
+z-index: 1000;
+}
+
+.bottombar {
+display: flex;
+justify-content: left;
+width: 100%;
+list-style-type: none;
+overflow: hidden;
+background-color: #333;
+color: white;
+}
+
+.bottombar span {
+display: flex;
+padding: 12px 15px;
+font-size: 15px;
+}
+
+.center-links {
+display: inline-flex;
+justify-content: center;
+width: 100%;
+}
+
+.center-links a {
+display: flex;
+justify-content: center;
+padding: 12px 15px;
+background-color: #333;
+color: #f2f2f2;
+text-decoration: none;
+font-size: 18px;
+}
+
+.center-links a:hover {
+background-color: grey;
+}
+
+.right-buttons {
+display: flex;
+}
+
+.right-buttons button,
+.right-buttons a {
+display: flex;
+text-align: center;
+cursor: pointer;
+padding: 14px 12px;
+background-color: #333;
+color: #f2f2f2;
+text-decoration: none;
+}
+
+.left-buttons {
+display: flex;
+}
+
+.left-buttons button {
+display: flex;
+cursor: pointer;
+text-align: center;
+padding: 14px 12px;
+background-color: #333;
+color: #f2f2f2;
+text-decoration: none;
+border-style: none;
+}
+
+#right-containers {
+width: 20%;
+background-color: #f0f0f0;
+padding: 20px;
+box-sizing: border-box;
+height: 100vh;
+overflow-y: auto;
+}
+
+
+#layer_2 {
+    padding: 5%;
+    padding-top: 2%;
+    max-width: 1350px;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-left-style: outset;
+    border-right-style: outset;
+    border-bottom-style: outset;
+}
+
+.w3-card-4 {
+    border-style: outset;
+}
+
+#etusivu_2 {
+    padding: 4%;
+}
+#toiminta_2 {
+    padding: 4%;
+}
+#tietosuoja_2 {
+    
+    padding-top: 14px;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-bottom: 4%;
+}
