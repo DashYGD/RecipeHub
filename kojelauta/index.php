@@ -71,7 +71,7 @@ if (!isset($_SESSION['user'])) {
             </div>
         </div>
 
-        <div id="layer_2" class="w3-content w3-white" style="max-width:1440px; max-height:1071px;">
+        <div id="layer_2" class="w3-card w3-content w3-white" style="max-width:1440px; max-height:1071px;">
 
         </div>
     </div>
