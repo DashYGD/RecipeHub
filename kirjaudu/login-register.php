@@ -3,41 +3,44 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Include MongoDB library
+require 'vendor/autoload.php';
 
+// Connect to MongoDB
+$mongoClient = new MongoDB\Client("mongodb://localhost:27017");
+$db = $mongoClient->selectDatabase('reseptisovellus');
+
+// Check connection
+if (!$mongoClient) {
+    die("MongoDB connection failed");
+}
 
 include "../static/server/connect.php";
 
-checkRememberMe($conn);
+checkRememberMe($db);
 
+function checkRememberMe($db) {
+    if (isset($_COOKIE['auth_token'])) {
+        $token = $_COOKIE['auth_token'];
+        $result = $db->kayttajat->findOne(['token' => $token]);
 
-function checkRememberMe($conn) {
-  if (isset($_COOKIE['auth_token'])) {
-      $token = $_COOKIE['auth_token'];
-      $stmt = $conn->prepare("SELECT * FROM käyttäjät WHERE token = ?");
-      $stmt->bind_param("s", $token);
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-      if ($result->num_rows == 1) {
-          $row = $result->fetch_assoc();
-          if ($row['is_admin'] == 1) {
-            $_SESSION['admin'] = true;
-            header("Location: admin");
-          } else {
-              $_SESSION['user'] = $row['username'];
-              header("Location: kojelauta");
-          }
-          return true;
-      }
-  }
-  return false;
+        if ($result) {
+            if ($result['is_admin'] == 1) {
+                $_SESSION['admin'] = true;
+                header("Location: admin");
+            } else {
+                $_SESSION['user'] = $result['username'];
+                header("Location: kojelauta");
+            }
+            exit;
+        }
+    }
 }
 
 if (isset($_SESSION['login_error'])) {
     $login_error = $_SESSION['login_error'];
     unset($_SESSION['login_error']);
 }
-
 
 $registration_attempt = isset($_SESSION['registration_attempt']) && $_SESSION['registration_attempt'];
 
