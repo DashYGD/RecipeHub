@@ -15,8 +15,6 @@ if (!$mongoClient) {
     die("MongoDB connection failed");
 }
 
-include "../static/server/connect.php";
-
 checkRememberMe($db);
 
 function checkRememberMe($db) {
