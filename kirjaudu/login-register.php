@@ -111,7 +111,7 @@ if ($registration_attempt) {
           
           <div id="layer_2">
             <center>
-                <h1>ReceHub Kirjautuminen</h1>
+                <h1>RecipeHub Kirjautuminen</h1>
             </center>
 
             <form class="w3-container" action="process" method="POST" id="login-in">

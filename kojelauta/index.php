@@ -22,7 +22,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 } else {
     $username = $_SESSION['user'];
-    echo $username;
+    //echo $username;
 }
 
 ?>
@@ -35,11 +35,11 @@ if (!isset($_SESSION['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="../static\images\favicon.ico">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/W3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@28,400,0,0">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@28,400,0,0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@28,400,0,0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/styles.css">
 </head>
@@ -72,7 +72,9 @@ if (!isset($_SESSION['user'])) {
         </div>
 
         <div id="layer_2" class="w3-card w3-content w3-white" style="max-width:1440px; max-height:1071px;">
-
+            <center>
+                <h1>RecipeHub</h1>
+            </center>
         </div>
     </div>
 
