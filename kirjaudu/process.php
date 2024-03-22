@@ -3,7 +3,7 @@
 require '../vendor/autoload.php';
 
 // Connect to MongoDB
-$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:27017/");
+$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
 $db = $mongoClient->reseptisovellus;
 
 function start_session_if_not_started() {
