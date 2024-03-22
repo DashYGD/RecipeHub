@@ -2,7 +2,19 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-include "../static/server/connect.php";
+
+
+// Include MongoDB library
+require __DIR__ . '/../vendor/autoload.php';
+
+// Connect to MongoDB
+$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
+$db = $mongoClient->reseptisovellus;
+
+// Check connection
+if (!$db) {
+    die("MongoDB connection failed");
+}
 
 // Check if user is logged in
 if (!isset($_SESSION['user'])) {

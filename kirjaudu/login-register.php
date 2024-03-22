@@ -92,9 +92,9 @@ if ($registration_attempt) {
                   </div>
                   <div class="center-links">
                       <a class="active w3-hide-small" href="/etusivu">Etusivu</a>
-                      <a class="w3-hide-small" href="/toiminta">Toiminta</a>
-                      <a class="w3-hide-small" href="/tapahtumakalenteri">Tapahtumakalenteri</a>
-                      <a class="w3-hide-small w3-hide-medium" href="/kuvagalleria">Kuvagalleria</a>
+                      <a class="w3-hide-small" href="#">Tyhjä</a>
+                      <a class="w3-hide-small" href="#">Tyhjä</a>
+                      <a class="w3-hide-small w3-hide-medium" href="#">Tyhjä</a>
                   </div>
                   <div class="right-buttons">
                       <a href="/kirjaudu" role="button" class="w3-right"><span class="loginbutton material-symbols-outlined">login</span></a>

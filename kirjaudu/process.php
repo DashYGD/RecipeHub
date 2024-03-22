@@ -28,7 +28,6 @@ if (isset($_POST['email-username_1'], $_POST['password_1'])) {
     $login_input = $_POST['email-username_1'];
     $user_password = $_POST['password_1'];
 
-    // Assuming your collection is named 'users'
     $collection = $db->users;
     $user = $collection->findOne(['$or' => [['email' => $login_input], ['username' => $login_input]]]);
 
@@ -59,7 +58,6 @@ if (isset($_POST['name_2'], $_POST['email_2'], $_POST['password_2'])) {
     $user_password = $_POST['password_2'];
     $verificationToken = generateToken();
 
-    // Assuming your collection is named 'users'
     $collection = $db->users;
 
     $existingUserByEmail = $collection->findOne(['email' => $email]);
