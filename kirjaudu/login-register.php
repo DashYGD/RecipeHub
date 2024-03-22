@@ -4,14 +4,14 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Include MongoDB library
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 // Connect to MongoDB
 $mongoClient = new MongoDB\Client("mongodb://65.21.248.139:27017/");
-$db = $mongoClient->selectDatabase('reseptisovellus');
+$db = $mongoClient->reseptisovellus;
 
 // Check connection
-if (!$mongoClient) {
+if (!$db) {
     die("MongoDB connection failed");
 }
 
@@ -53,6 +53,7 @@ if ($registration_attempt) {
     unset($_SESSION['registration_attempt']);
 }
 ?>
+
 
 
 <!DOCTYPE html>
