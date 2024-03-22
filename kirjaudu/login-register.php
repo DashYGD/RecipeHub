@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 require 'vendor/autoload.php';
 
 // Connect to MongoDB
-$mongoClient = new MongoDB\Client("mongodb://localhost:27017");
+$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:27017/");
 $db = $mongoClient->selectDatabase('reseptisovellus');
 
 // Check connection
