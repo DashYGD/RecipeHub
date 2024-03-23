@@ -2,20 +2,7 @@ body {
     background-image: url("../../static/images/tausta-HD.jpg");
     background-size: cover;
     background-attachment: fixed;
-    font-size: 28px;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    list-style-type: none;
-    overflow: hidden;
-    background-color: #333;
-    border-top-style: outset; 
-    border-bottom-style: outset;
+    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
 }
 
 .sidebar {
@@ -27,26 +14,22 @@ body {
 }
 
 
-.fc-toolbar { text-transform: capitalize; }
-
-.fc-col-header-cell-cushion {
-    text-transform: capitalize;
-}
-
 #layer_1 {
-width: 100%;
-height: 7%;
+    justify-content: center;
+    width: 100%;
+    height: 25%;
 }
 #layer_2 {
     display: flex;
+    margin-right: auto;
+    margin-left: auto;
     justify-content: center;
     align-items: center;
-    width: 80%;
-    height: 80%;
+    width: 90%;
+    height: 90%;
     padding: 3%;
-    margin-left: 6%;
-    margin-right: 6%;
     margin-top: 3%;
+    margin-bottom: 3%;
     outline-style: outset;
     border-radius: 20px;
 }
@@ -84,6 +67,7 @@ position: -webkit-sticky; /* Safari */
 position: sticky;
 top: 0;
 z-index: 1000;
+width: 100%;
 }
 
 .bottombar {
@@ -102,61 +86,47 @@ padding: 12px 15px;
 font-size: 15px;
 }
 
-.center-links {
-display: inline-flex;
-justify-content: center;
-width: 100%;
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: clamp(1.5vw + 40px, 4vw, 12vw);
+    background-color: #333;
+    border-top-style: outset; 
+    border-bottom-style: outset;
 }
 
-.center-links a {
-display: flex;
-justify-content: center;
-padding: 12px 15px;
-background-color: #333;
-color: #f2f2f2;
-text-decoration: none;
-font-size: 80%;
+.material-symbols-outlined{
+    font-size: clamp(1vw + 20px, 2vw, 6vw);
 }
 
-.center-links a:hover {
-background-color: grey;
+.left-links,
+.center-links,
+.right-links {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
-.right-buttons {
-display: flex;
+.left-links a,
+.center-links a,
+.right-links a {
+    cursor: pointer;
+    padding: 0 10px; /* Adjust the padding of the links */
+    background-color: #333;
+    color: #f2f2f2;
+    text-decoration: none;
+    border: none;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.right-buttons button,
-.right-buttons a {
-display: flex;
-text-align: center;
-cursor: pointer;
-padding: 22px 22px;
-background-color: #333;
-color: #f2f2f2;
-text-decoration: none;
-}
-
-.left-buttons {
-display: flex;
-}
-
-.left-buttons button {
-display: flex;
-cursor: pointer;
-text-align: center;
-padding: 22px 22px;
-background-color: #333;
-color: #f2f2f2;
-text-decoration: none;
-border-style: none;
-}
-
-#right-containers {
-width: 20%;
-background-color: #f0f0f0;
-padding: 20px;
-box-sizing: border-box;
-height: 100vh;
-overflow-y: auto;
+.left-links a:hover,
+.center-links a:hover,
+.right-links a:hover {
+    background-color: #555;
 }

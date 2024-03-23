@@ -20,7 +20,7 @@ RewriteRule ^/?kirjaudu/?$ /kirjaudu/login-register\.php [END]
 RewriteRule ^/?kirjaudu/process?$ /kirjaudu/process\.php [END]
 RewriteRule ^/?admin?$ /admin/index\.php [END]
 RewriteRule ^/?kojelauta?$ /kojelauta/index\.php [END]
-RewriteRule ^/?kirjaudu/logout?$ /kirjaudu/server/logout\.php [END]
+RewriteRule ^/?kirjaudu/logout?$ /static/server/logout\.php [END]
 
 
 RewriteRule ^kirjaudu/login-register\.php$ [R=404,L]
