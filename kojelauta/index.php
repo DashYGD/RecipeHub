@@ -43,9 +43,9 @@ if (!isset($_SESSION['user'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/styles.css">
 </head>
-<body id="base" style="opacity:0;">
+<body>
 
-    <div id="layer_1" class="bg">
+    <div id="layer_1" style="opacity:0;">
         <div id="sticky" style="z-index: 1;">
             <div id="navbar" class="navbar" style="z-index: 0">
                 <div class="left-links">
@@ -54,13 +54,20 @@ if (!isset($_SESSION['user'])) {
                     <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                 </div>
                 <div class="center-links">
-                    <a class="active w3-hide-small" href="/etusivu">Etusivu</a>
-                    <a class="w3-hide-small" href="#">Tyhjä</a>
-                    <a class="w3-hide-small" href="#">tyhjä</a>
-                    <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
+                    <div class="dropdown">
+                        <a class="dropbtn w3-hide-small">Reseptisi</a>
+                        <div class="dropdown-content">
+                            <a href="#">Option 1</a>
+                            <a href="#">Option 2</a>
+                            <a href="#">Option 3</a>
+                        </div>
+                    </div>
+                <a class="w3-hide-small" href="#">Suosikit</a>
+                <a class="w3-hide-small" href="#">Asetukset</a>
+                <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
                 </div>
                 <div class="right-links">
-                    <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
+                    <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
             </div>
@@ -72,7 +79,7 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <div id="layer_2" class="w3-card w3-content w3-white" style="max-width:1440px; max-height:1071px;">
+    <div id="layer_2" class="w3-card w3-content w3-white"  style="opacity:0; max-width:1440px; max-height:1071px;">
         <center>
             <h1>RecipeHub</h1>
         </center>
