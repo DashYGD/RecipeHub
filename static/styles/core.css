@@ -78,7 +78,6 @@ font-size: 15px;
     width: 100%;
     height: clamp(1.5vw + 40px, 4vw, 12vw);
     background-color: #333;
-    border-top-style: outset; 
     border-bottom-style: outset;
 }
 
@@ -98,7 +97,7 @@ font-size: 15px;
 .center-links a,
 .right-links a {
     cursor: pointer;
-    padding: 0 10px; /* Adjust the padding of the links */
+    padding: 0 14px; /* Adjust the padding of the links */
     background-color: #333;
     color: #f2f2f2;
     text-decoration: none;

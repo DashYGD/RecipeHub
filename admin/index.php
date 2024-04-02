@@ -1,92 +1,88 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+
+// Include MongoDB library
+require __DIR__ . '/../vendor/autoload.php';
+
+// Connect to MongoDB
+$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
+$db = $mongoClient->reseptisovellus;
+
+// Check connection
+if (!$db) {
+    die("MongoDB connection failed");
+}
+
+// Check if user is logged in
+if (!isset($_SESSION['admin'])) {
+    header('Location: /kirjaudu/logout');
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
+    <title>Admin</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | RecipeHub</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../static\images\favicon.ico">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/W3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/styles/core.css">
 </head>
 <body>
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol id="check2" viewBox="0 0 16 16">
-            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-        </symbol>
-        <symbol id="circle-half" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-        </symbol>
-        <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
-        </symbol>
-        <symbol id="sun-fill" viewBox="0 0 16 16">
-            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-        </symbol>
-    </svg>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3">
-                <a href="/" class="text-decoration-none">
-                    <h1 class="text-center">RecipeHub</h1>
-                </a>
-                <hr>
-                <div class="list-group">
-                    <a href="?page=recipes" class="list-group-item <?php echo $_GET['page'] == 'recipes' || !isset($_GET['page']) ? 'active' : '' ?>">Recipes</a>
-                    <a href="?page=users" class="list-group-item <?php echo $_GET['page'] == 'users' ? 'active' : '' ?>">Käyttäjät</a>
+    <div id="layer_1" style="opacity:0;">
+        <div id="sticky" style="z-index: 1;">
+            <div id="navbar" class="navbar" style="z-index: 0">
+                <div class="left-links">
+                    <a id="myHomebutton" class="w3-hide-medium w3-hide-large"><span class="homebutton material-symbols-outlined">home</span></a>
+                    <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
+                    <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                 </div>
-                <hr>
-                <!-- Theme switch -->
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="bd-theme" checked>
-                    <label class="form-check-label" for="bd-theme">Dark mode</label>
+                <div class="center-links">
+                    <a class="active w3-hide-small" href="/etusivu">Etusivu</a>
+                    <a class="w3-hide-small" href="#">Tyhjä</a>
+                    <a class="w3-hide-small" href="#">tyhjä</a>
+                    <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
                 </div>
-                <hr>
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong>Ville</strong>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-light text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Asetukset</a></li>
-                        <li><a class="dropdown-item" href="#">Profiili</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Kirjaudu ulos</a></li>
-                    </ul>
+                <div class="right-links">
+                    <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
+                    <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
             </div>
-
-            <!-- Content -->
-            <div class="col-md-9">
-                <?php
-                $page = $_GET['page'] ? $_GET['page'] : 'recipes';
-                switch ($page) {
-                    case 'recipes':
-                        include 'recipes.php';
-                        break;
-                    case 'users':
-                        include 'users.php';
-                        break;
-                    default:
-                        include 'recipes.php';
-                        break;
-                }
-                ?>
+            <div class="mySidebar" id="sidebar">
+                <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
+                    <a href="/etusivu" class="w3-bar-item w3-button">Etusivu</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-        const themeSwitch = document.getElementById('bd-theme');
-        themeSwitch.addEventListener('change', (event) => {
-            if (event.target.checked) {
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-bs-theme', 'light');
-            }
-        });
-    </script>
+    <div id="layer_2" class="w3-card w3-content w3-white"  style="opacity:0; max-width:1440px; max-height:1071px;">
+        <center>
+            <h1>RecipeHub</h1>
+        </center>
+    </div>
+
+    
+<script type="text/javascript" src="../static/scripts/animation.js"></script>
+<script type="text/javascript" src="../static/scripts/keyboard-accessibility.js"></script>
+<script type="text/javascript" src="../static/scripts/sidebar.js"></script>
+<script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
 </body>
 </html>

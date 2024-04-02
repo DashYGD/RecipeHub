@@ -20,20 +20,35 @@ checkRememberMe($db);
 function checkRememberMe($db) {
     if (isset($_COOKIE['auth_token'])) {
         $token = $_COOKIE['auth_token'];
-        $result = $db->kayttajat->findOne(['token' => $token]);
+        
+        // Perform basic input validation on the token
+        if (!preg_match('/^[a-f0-9]{64}$/', $token)) {
+            // Invalid token format
+            return;
+        }
+        
+        // Find user by token
+        $result = $db->users->findOne(['token' => $token]);
 
         if ($result) {
+            // Regenerate session ID to prevent session fixation
+            session_regenerate_id(true);
+
             if ($result['is_admin'] == 1) {
                 $_SESSION['admin'] = true;
-                header("Location: admin");
+                header("Location: /admin");
             } else {
                 $_SESSION['user'] = $result['username'];
-                header("Location: kojelauta");
+                header("Location: /kojelauta");
             }
             exit;
+        } else {
+            // Invalid token or user not found
+            // You may want to log this event for auditing purposes
         }
     }
 }
+
 
 if (isset($_SESSION['login_error'])) {
     $login_error = $_SESSION['login_error'];
@@ -79,10 +94,10 @@ if ($registration_attempt) {
     }
 </style>
 
-<body id="base" style="opacity:0;">
+<body>
 
     <div id="home">
-        <div id="layer_1">
+        <div id="layer_1" style="opacity:0;">
             <div id="sticky" style="z-index: 1;">
                 <div id="navbar" class="navbar" style="z-index: 0">
                     <div class="left-links">
@@ -110,7 +125,7 @@ if ($registration_attempt) {
         </div>
           
           
-        <div id="layer_2">
+        <div id="layer_2" style="opacity:0;">
             <div id="layer_3">
                 <center>
                     <h1>RecipeHub Kirjautuminen</h1>

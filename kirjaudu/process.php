@@ -34,7 +34,10 @@ if (isset($_POST['email-username_1'], $_POST['password_1'])) {
     if ($user && password_verify($user_password, $user['user_password'])) {
         start_session_if_not_started();
         if (isset($_POST['muista_minut'])) {
-            setUserToken($user['_id'], generateToken(), $collection);
+            $token = generateToken();
+            setUserToken($user['_id'], $token, $collection);
+            // Set cookie to remember user
+            setcookie('auth_token', $token, time() + (86400 * 30), "/"); // Cookie valid for 30 days
         }
         if ($user['is_admin'] == 1) {
             $_SESSION['admin'] = true;
