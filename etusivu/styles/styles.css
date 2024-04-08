@@ -1,6 +1,6 @@
 
 body {
-    font-size: clamp(1vw + 10px, 1.5vw, 4vw);
+    font-size: clamp(1vw + 9px, 1.5vw, 4vw);
 }
 .recipe-card {
     text-align: center;
@@ -14,6 +14,8 @@ body {
 
 .recipe-card img {
     width: 200px;
+    padding-left: 2%;
+    padding-right: 2%;
     height: auto;
     border-radius: 50%;
     margin-bottom: 10px;
@@ -32,33 +34,37 @@ body {
     color: white;
     font-family: "Rozha One", serif;
 }
+
 .icon-container {
     width: 90%;
+    height: 60%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center; /* Distributes space between items */
-    margin: 0 auto; /* Centers the container */
+    margin: 0 auto;
 }
 
 .icon {
-    width: calc(30% - 2%); /* Each block takes up 30% width with 1% margin on each side */
+    width: 30%;
+    max-width: 200px;
     margin: 1%; /* 1% margin between blocks */
     cursor: pointer;
     background-color: rgb(134, 228, 102);
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(1, 1, 1, 0.3);
-    padding: 10px;
+    text-align: center;
     box-sizing: border-box; /* Ensures padding is included in the width */
 }
 
 .icon img {
     width: 100%;
+    max-width: 180px;
+    padding: 12%;
 }
 
 .icon p {
-    padding-top: 15px;
     text-align: center;
-    font-size: clamp(1.5vw + 12px, 4vw, 8vw) !important;
+    font-size: clamp(1.5vw + 10px, 2vw, 4vw) !important;
     color: white;
     font-family: "Rozha One", serif;
     font-weight: 400;
