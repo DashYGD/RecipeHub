@@ -2,7 +2,7 @@ body {
     background-image: url("../../static/images/tausta-HD.jpg");
     background-size: cover;
     background-attachment: fixed;
-    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
+    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw) !important;
 }
 
 .sidebar {

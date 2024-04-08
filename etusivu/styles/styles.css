@@ -1,0 +1,106 @@
+
+body {
+    font-size: clamp(1vw + 10px, 1.5vw, 4vw);
+}
+.recipe-card {
+    text-align: center;
+    background-color: rgb(134, 228, 102);
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(1, 1, 1, 0.3);
+    margin: 20px auto;
+}
+
+.recipe-card img {
+    width: 200px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.recipe-card h2 {
+    margin-top: 0;
+    font-size: clamp(1.5vw + 10px, 3vw, 6vw) !important;
+    color: white;
+    font-family: "Rozha One", serif;
+}
+
+.recipe-card p {
+    margin: 10px 0;
+    font-size: clamp(0.8vw + 5px, 1.5vw, 4vw);
+    color: white;
+    font-family: "Rozha One", serif;
+}
+.icon-container {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Distributes space between items */
+    margin: 0 auto; /* Centers the container */
+}
+
+.icon {
+    width: calc(30% - 2%); /* Each block takes up 30% width with 1% margin on each side */
+    margin: 1%; /* 1% margin between blocks */
+    cursor: pointer;
+    background-color: rgb(134, 228, 102);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(1, 1, 1, 0.3);
+    padding: 10px;
+    box-sizing: border-box; /* Ensures padding is included in the width */
+}
+
+.icon img {
+    width: 100%;
+}
+
+.icon p {
+    padding-top: 15px;
+    text-align: center;
+    font-size: clamp(1.5vw + 12px, 4vw, 8vw) !important;
+    color: white;
+    font-family: "Rozha One", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1 {
+    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
+    color: white;
+    font-family: "Rozha One", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: rgb(134, 228, 102);
+}
+
+
+.search-container {
+    text-align: center;
+}
+
+.search-container input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
+    font-family: "Rozha One", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: rgb(134, 228, 102);
+}
+
+.search-container input[type="submit"] {
+    background-color: rgb(134, 228, 102);
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
+    font-family: "Rozha One", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: rgb(134, 228, 102);
+}
