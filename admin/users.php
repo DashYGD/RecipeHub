@@ -14,49 +14,48 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Username</th>
                     <th scope="col">Role</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // include 'connect.php';
+                // Include MongoDB library
+                require '../vendor/autoload.php';
 
-                // $sql = "SELECT * FROM users";
-                // $result = $conn->query($sql);
+                // Connect to MongoDB
+                $mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
+                $db = $mongoClient->reseptisovellus;
 
-                // while ($row = $result->fetch_assoc()) {
-                //     echo '<tr>';
-                //     echo '<td>' . $row['id'] . '</td>';
-                //     echo '<td>' . $row['name'] . '</td>';
-                //     echo '<td>' . $row['email'] . '</td>';
-                //     echo '<td>' . $row['role'] . '</td>';
-                //     echo '</tr>';
-                // }
+                // Select the users collection
+                $collection = $db->users;
 
-                // $conn->close();
+                // Fetch all documents from the collection
+                $users = $collection->find();
+
+                // Loop through each user and display its data
+                foreach ($users as $user) {
+                    if ($user['is_admin'] == 1) {
+                        $user['is_admin'] = "Admin";
+                    } else {
+                        $user['is_admin'] = "User";
+                    }
+                    
+                    echo "<tr>";
+                    echo "<td>" . $user['_id'] . "</td>";
+                    echo "<td>" . $user['email'] . "</td>";
+                    echo "<td>" . $user['username'] . "</td>";
+                    echo "<td>" . $user['is_admin'] . "</td>";
+                    echo "<td>";
+                    echo "<a href=\"edit_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-edit\"></i></a>";
+                    echo " | ";
+                    echo "<a href=\"remove_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-trash\"></i></a>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
                 ?>
-
-                <!-- Dummy data to demonstrate -->
-                <tr>
-                    <td>1</td>
-                    <td>User 1</td>
-                    <td>Admin</td>
-                    <td><a href="remove_user.php?id=1"><i class="fas fa-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>User 2</td>
-                    <td>User</td>
-                    <td><a href="remove_user.php?id=2"><i class="fas fa-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>User 3</td>
-                    <td>User</td>
-                    <td><a href="remove_user.php?id=3"><i class="fas fa-trash"></i></a></td>
-                </tr>
             </tbody>
         </table>
     </div>

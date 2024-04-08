@@ -45,9 +45,9 @@
                     echo "<td>" . $recipe['instructions'] . "</td>";
                     echo "<td>" . $recipe['author'] . "</td>";
                     echo "<td>";
-                    echo "<a href=\"edit_recipe.php?id=" . $recipe['_id'] . "\">Edit</a>";
+                    echo "<a href=\"edit_recipe.php?id=" . $recipe['_id'] . "\"><i class=\"fas fa-edit\"></i></a>";
                     echo " | ";
-                    echo "<a href=\"remove_recipe.php?id=" . $recipe['_id'] . "\">Delete</a>";
+                    echo "<a href=\"remove_recipe.php?id=" . $recipe['_id'] . "\"><i class=\"fas fa-trash\"></i></a>";
                     echo "</td>";
                     echo "</tr>";
                 }

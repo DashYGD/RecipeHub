@@ -16,10 +16,10 @@ if (!$db) {
 }
 
 // Check if user is logged in
-// if (!isset($_SESSION['admin'])) {
-//     header('Location: /kirjaudu/logout');
-//     exit();
-// }
+if (!isset($_SESSION['admin'])) {
+    header('Location: /kirjaudu/logout');
+    exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
