@@ -53,32 +53,32 @@
 
         <div class="icon-container">
             <div class="icon" onclick="navigate('aamupala')">
-                <img src="images/aamupala_icon.webp" alt="Aamupala">
+                <img src="images/aamupala_uusi.png" alt="Aamupala">
                 <p>Aamupala</p>
             </div>
 
             <div class="icon" onclick="navigate('lounas')">
-                <img src="images/lounas_icon.webp" alt="Lounas">
+                <img src="images/lounas_uusi.png" alt="Lounas">
                 <p>Lounas</p>
             </div>
 
             <div class="icon" onclick="navigate('valipala')">
-                <img src="images/valipala_icon.webp" alt="Valipala">
+                <img src="images/valipala_uusi.png" alt="Valipala">
                 <p>Välipala</p>
             </div>
 
             <div class="icon" onclick="navigate('paivallinen')">
-                <img src="images/illallinen_icon.webp" alt="paivallinen">
+                <img src="images/illallinen_uusi.png" alt="paivallinen">
                 <p>Päivällinen</p>
             </div>
 
             <div class="icon" onclick="navigate('iltapala')">
-                <img src="images/iltapala_icon.png" alt="iltapala">
+                <img src="images/iltapala_uusi.png" alt="iltapala">
                 <p>Iltapala</p>
             </div>
 
             <div class="icon" onclick="navigate('jalkiruoka')">
-                <img src="images/jalkiruoka_icon.webp" alt="jalkiruoka">
+                <img src="images/jalkiruoka_uusi.png" alt="jalkiruoka">
                 <p>Jälkiruoka</p>
             </div>
         </div>
