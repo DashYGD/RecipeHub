@@ -47,38 +47,39 @@
 
     <div id="layer_2"  style="opacity:0;">
         <div class="search-container">
-            <input type="text" placeholder="Hae reseptiä...">
+            <input id="search-input_1" oninput="searchRecipes(event)" type="text" placeholder="Hae reseptiä...">
             <input type="submit" value="Hae">
         </div>
+        <div id="search-results_1"></div>
 
         <div class="icon-container">
             <div class="icon" onclick="navigate('aamupala')">
-                <img src="images/aamupala_uusi.png" alt="Aamupala">
+                <img src="images/aamupala_icon.webp" alt="Aamupala">
                 <p>Aamupala</p>
             </div>
 
             <div class="icon" onclick="navigate('lounas')">
-                <img src="images/lounas_uusi.png" alt="Lounas">
+                <img src="images/lounas_icon.webp" alt="Lounas">
                 <p>Lounas</p>
             </div>
 
             <div class="icon" onclick="navigate('valipala')">
-                <img src="images/valipala_uusi.png" alt="Valipala">
+                <img src="images/valipala_icon.webp" alt="Valipala">
                 <p>Välipala</p>
             </div>
 
             <div class="icon" onclick="navigate('paivallinen')">
-                <img src="images/illallinen_uusi.png" alt="paivallinen">
+                <img src="images/illallinen_icon.webp" alt="paivallinen">
                 <p>Päivällinen</p>
             </div>
 
             <div class="icon" onclick="navigate('iltapala')">
-                <img src="images/iltapala_uusi.png" alt="iltapala">
+                <img src="images/iltapala_icon.png" alt="iltapala">
                 <p>Iltapala</p>
             </div>
 
             <div class="icon" onclick="navigate('jalkiruoka')">
-                <img src="images/jalkiruoka_uusi.png" alt="jalkiruoka">
+                <img src="images/jalkiruoka_icon.webp" alt="jalkiruoka">
                 <p>Jälkiruoka</p>
             </div>
         </div>
@@ -95,5 +96,6 @@
 <script type="text/javascript" src="../static/scripts/keyboard-accessibility.js"></script>
 <script type="text/javascript" src="../static/scripts/sidebar.js"></script>
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
+<script type="text/javascript" src="scripts/fetch_recipe.js"></script>
 </body>
 </html>
