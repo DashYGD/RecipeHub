@@ -1,54 +1,88 @@
-
-
-
-/*function selectRecipe(selectedOption) {
-    var selectedEventId = selectedOption.getAttribute('data-event-id');
-    var selectedEventValue = selectedOption.getAttribute('name');
-    var form_1 = document.getElementById('searchForm_1');
-
-    document.getElementById('searchInput_2').value = selectedEventValue;
-    localStorage.setItem('selectedEventId', selectedEventId);
-    document.getElementById('submitButton').value = selectedEventId;
-
-    localStorage.setItem('containerId', document.getElementById("tapahtumakalenteri_1").getAttribute('id'));
-
-    form_1.submit();
-}*/
-
-
 function updateSearchResults_1(results) {
-    var searchResultsContainer = document.getElementById('searchResultsContainer');
-    searchResultsContainer.innerHTML = '';
+  var searchResultsContainer = document.getElementById('search-results_1');
+  searchResultsContainer.innerHTML = '';
 
-    for (var i = 0; i < results.length; i++) {
-        var resultItem = document.createElement('div');
-        resultItem.innerHTML = '<div style="text-align: center;" class="scrollpos w3-bar-item w3-button" onclick="selectRecipe(this)" name="' + results[i].otsikko + '" data-recipe-id="' + results[i].id + '">' + results[i].otsikko + '</div>';
+  for (var i = 0; i < results.length; i++) {
+      var resultItem = document.createElement('div');
+      resultItem.className = 'recipe-card';
+      resultItem.name = i;
 
-        searchResultsContainer.appendChild(resultItem);
-    }
+      resultItem.addEventListener('click', function() {
+        openOverlay(results[resultItem.name]);
+      });
+
+
+      var totalCost = 0;
+      for (var j = 0; j < results[i].ingredients.length; j++) {
+          totalCost += +results[i].ingredients[j].price;
+          console.log(totalCost);
+      }
+      totalCost = totalCost.toFixed(2)
+      
+      var imageUrl = results[i].image ? results[i].image : ''; //Tarkistaa onko kuvaa
+      resultItem.innerHTML = '<img src="' + imageUrl + '" alt="' + results[i].name + '">' +
+                             '<h2>' + results[i].name + '</h2>' +
+                             '<p><strong>Category:</strong> ' + (results[i].category ? results[i].category : '') + '</p>' +
+                             '<p><strong>Total Cost: </strong>' + totalCost + ' €</p>';
+
+      searchResultsContainer.appendChild(resultItem);
+  }
 }
 
+function openOverlay(recipe) {
+  var overlay = document.getElementById('overlay');
+  var overlayContent = document.getElementById('overlay-content');
+
+  overlayContent.innerHTML = '';
+
+  var ingredientsHtml = '';
+  if (recipe.ingredients) {
+      for (var j = 0; j < recipe.ingredients.length; j++) {
+          ingredientsHtml += '<p>' + recipe.ingredients[j].name + ' (' + recipe.ingredients[j].quantity + ') - ' + recipe.ingredients[j].price.toFixed(2) + ' €</p>';
+      }
+  }
+
+  overlayContent.innerHTML = '<img src="' + recipe.image + '" alt="' + recipe.name + '">' +
+                              '<h2>' + recipe.name + '</h2>' +
+                              '<p><strong>Category:</strong> ' + recipe.category + '</p>' +
+                              '<p><strong>Ingredients:</strong></p>' +
+                              ingredientsHtml +
+                              '<p><strong>Instructions:</strong> ' + recipe.instructions + '</p>';
+
+  overlay.style.display = 'block';
+}
+
+function closeOverlay() {
+  var overlay = document.getElementById('overlay');
+  overlay.style.display = 'none';
+}
+
+function formatIngredients(ingredients) {
+  var formatted = '';
+  for (var i = 0; i < ingredients.length; i++) {
+      formatted += '<p>' + ingredients[i].name + ' (' + ingredients[i].quantity + '), ';
+  }
+  formatted = formatted.slice(0, -2);
+  return formatted;
+}
 
 function searchRecipes(event) {
-  
-    var input = document.getElementById('search-input_1').value;
-    console.log(input);
-    var searchResultsContainer = document.getElementById('search-results_1');
-    
-  
-    if (input.length >= 1) {
-      var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          var results = JSON.parse(xhr.responseText);
-          updateSearchResults_1(results);
-        }
-      };
-  
-      xhr.open('GET', 'server/recipe_query.php?query=' + input, true);
-      xhr.send();
-    } else {
-      searchResultsContainer.innerHTML = '';
-    }
-    return true;
+  var input = document.getElementById('search-input_1').value;
+  var searchResultsContainer = document.getElementById('search-results_1');
+
+  if (input.length >= 1) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var results = JSON.parse(xhr.responseText);
+        updateSearchResults_1(results);
+      }
+    };
+
+    xhr.open('GET', 'server/recipe_query.php?query=' + input, true);
+    xhr.send();
+  } else {
+    searchResultsContainer.innerHTML = 'nothing';
   }
+  return true;
+}

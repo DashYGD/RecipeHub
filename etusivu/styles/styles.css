@@ -4,35 +4,49 @@ body {
 }
 .recipe-card {
     text-align: center;
-    background-color: rgb(134, 228, 102);
-    width: 300px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(115, 12, 12);
+    width: calc(200px+1% - 2%);
+    max-width: 300px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(1, 1, 1, 0.3);
-    margin: 20px auto;
+    margin: 1%;
+    cursor: pointer;
+    box-sizing: border-box;
 }
 
 .recipe-card img {
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
     padding-left: 2%;
     padding-right: 2%;
-    height: auto;
     border-radius: 50%;
     margin-bottom: 10px;
 }
 
 .recipe-card h2 {
     margin-top: 0;
-    font-size: clamp(1.5vw + 10px, 3vw, 6vw) !important;
+    font-size: clamp(1.5vw + 20px, 3vw, 6vw) !important;
     color: white;
     font-family: "Rozha One", serif;
 }
 
 .recipe-card p {
     margin: 10px 0;
-    font-size: clamp(0.8vw + 5px, 1.5vw, 4vw);
+    font-size: clamp(0.8vw + 15px, 1.5vw, 4vw) !important;
     color: white;
     font-family: "Rozha One", serif;
+}
+
+#search-results_1 {
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Distributes space between items */
+    margin: 0 auto;
 }
 
 .icon-container {
@@ -110,3 +124,40 @@ h1 {
     font-style: normal;
     background-color: rgb(134, 228, 102);
 }
+
+.overlay {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.overlay-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 40px;
+    border: 1px solid #888;
+    width: 85%;
+    max-width: 800px;
+    border-radius: 10px;
+}
+
+.overlay-content img {
+    width: 90%;
+    max-width: 400px;
+}
+
+.close-btn {
+    position: relative;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+}
+

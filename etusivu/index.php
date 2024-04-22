@@ -51,6 +51,11 @@
             <input type="submit" value="Hae">
         </div>
         <div id="search-results_1"></div>
+        <div id="overlay" class="overlay">
+            <div id="overlay-content" class="overlay-content"></div>
+            <span class="close-btn" onclick="closeOverlay()">&times;</span>
+        </div>
+
 
         <div class="icon-container">
             <div class="icon" onclick="navigate('aamupala')">
