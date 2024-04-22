@@ -113,3 +113,52 @@ font-size: 15px;
 .right-links a:hover {
     background-color: #555;
 }
+
+
+
+.recipe-card {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(115, 12, 12);
+    width: calc(200px+1% - 2%);
+    max-width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(1, 1, 1, 0.3);
+    margin: 1%;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.recipe-card img {
+    width: 100%;
+    max-width: 200px;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.recipe-card h2 {
+    margin-top: 0;
+    font-size: clamp(1.5vw + 20px, 3vw, 6vw) !important;
+    color: white;
+    font-family: "Rozha One", serif;
+}
+
+.recipe-card p {
+    margin: 10px 0;
+    font-size: clamp(0.8vw + 15px, 1.5vw, 4vw) !important;
+    color: white;
+    font-family: "Rozha One", serif;
+}
+
+#search-results_1 {
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Distributes space between items */
+    margin: 0 auto;
+}
