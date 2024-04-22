@@ -18,6 +18,10 @@ class ComposerStaticInit02d983f49e648d00a846c614e9c868c7
             'Symfony\\Polyfill\\Php81\\' => 23,
             'Symfony\\Polyfill\\Php80\\' => 23,
         ),
+        'R' => 
+        array (
+            'RecipeHub\\' => 10,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -25,10 +29,6 @@ class ComposerStaticInit02d983f49e648d00a846c614e9c868c7
         'M' => 
         array (
             'MongoDB\\' => 8,
-        ),
-        'K' => 
-        array (
-            'Kone\\RecipeHub\\' => 15,
         ),
         'J' => 
         array (
@@ -45,6 +45,10 @@ class ComposerStaticInit02d983f49e648d00a846c614e9c868c7
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
+        'RecipeHub\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
@@ -52,10 +56,6 @@ class ComposerStaticInit02d983f49e648d00a846c614e9c868c7
         'MongoDB\\' => 
         array (
             0 => __DIR__ . '/..' . '/mongodb/mongodb/src',
-        ),
-        'Kone\\RecipeHub\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
         'Jean85\\' => 
         array (

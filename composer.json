@@ -3,7 +3,7 @@
     "description": "RecipeHub",
     "autoload": {
         "psr-4": {
-            "Kone\\RecipeHub\\": "src/"
+            "RecipeHub\\": "src/"
         }
     },
     "authors": [
