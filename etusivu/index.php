@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+
     <div id="layer_1" style="opacity:0;">
         <div id="sticky" style="z-index: 1;">
             <div id="navbar" class="navbar" style="z-index: 0">
@@ -26,6 +27,10 @@
                     <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                 </div>
+                <div class="logo">
+    R e c i p e H u b
+</div>
+
                 <div class="center-links">
                     <a class="w3-hide-small" href="#">tyhjä</a>
                     <a class="w3-hide-small" href="#">Suosikit</a>

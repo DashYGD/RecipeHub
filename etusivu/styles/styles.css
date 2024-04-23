@@ -161,3 +161,14 @@ h1 {
     color: white;
 }
 
+.logo {
+    font-family: "Rozha One", serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(134, 228, 102); /* Vaihda väriä tarpeen mukaan */
+    position: absolute;
+    top: 5px; /* Säädä tarvittaessa */
+    left: 20px; /* Säädä tarvittaessa */
+    
+}
+
