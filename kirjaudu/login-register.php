@@ -38,7 +38,7 @@ function checkRememberMe($db) {
                 $_SESSION['admin'] = true;
                 header("Location: /admin");
             } else {
-                $_SESSION['user'] = $result['username'];
+                $_SESSION['user'] = $result['_id'];;
                 header("Location: /kojelauta");
             }
             exit;

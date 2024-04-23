@@ -25,11 +25,11 @@ body {
     margin-left: auto;
     justify-content: center;
     align-items: center;
-    width: 90%;
-    height: 90%;
-    padding: 3%;
+    width: 100%;
+    height: 100%;
+    padding: clamp(1.8vw + 10px, 2.5vw, 4.5vw) !important;
     margin-top: 3%;
-    margin-bottom: 3%;
+    margin-bottom: 1%;
     outline-style: outset;
     border-radius: 20px;
 }
@@ -114,7 +114,7 @@ font-size: 15px;
 .center-links a,
 .right-links a {
     cursor: pointer;
-    padding: 0 10px; /* Adjust the padding of the links */
+    padding: 0 10px;
     background-color: #333;
     color: #f2f2f2;
     text-decoration: none;
@@ -134,7 +134,6 @@ font-size: 15px;
     height: 100%;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -144,24 +143,111 @@ font-size: 15px;
     z-index: 1;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a {
     
     background-color: #555;
-    color: #fff; /* Change text color to make it visible against background */
+    color: #fff;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover {
     background-color: #333;
 }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
 
+.recipe-card {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(115, 12, 12);
+    width: 100%;
+    max-width: 700px;
+    padding: clamp(1.8vw + 5px, 3vw, 5vw) !important;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(1, 1, 1, 0.3);
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+
+.recipe-card img {
+    width: clamp(8vw + 25px, 10vw, 12vw) !important;
+    max-width: 300px;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.recipe-card h2 {
+    font-size: clamp(1.8vw + 8px, 2.5vw, 4.5vw) !important;
+    color: white;
+    font-family: "Rozha One", serif;
+    margin: 0;
+    padding: clamp(0.8vw, 1vw, 2vw) !important;
+}
+
+.recipe-card p {
+    text-align: center;
+    margin: 0;
+    padding: clamp(0.8vw, 1vw, 2vw) !important;
+    font-size: clamp(1.5vw + 6px, 1.5vw, 3vw) !important;
+    color: white;
+    font-family: "Rozha One", serif;
+}
+
+
+#search-results_1 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 95%;
+    max-width: 1000px;
+    max-height: 100vh;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrolling */
+}
+
+
+
+
+.overlay {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.overlay-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 40px;
+    border: 1px solid #888;
+    width: 85%;
+    max-width: 800px;
+    border-radius: 10px;
+}
+
+.overlay-content img {
+    width: 90%;
+    max-width: 400px;
+}
+
+.close-btn {
+    position: relative;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+}
