@@ -79,18 +79,70 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <div id="layer_2" class="w3-card w3-content w3-white"  style="opacity:0; max-width:900px; max-height:1071px;">
+    <div id="layer_2" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
         <center>
             <h1>RecipeHub</h1>
             <div id="search-results_1">
-            <?php include 'server/display-recipes.php'; ?>
-            </div>
-            <div id="overlay" class="overlay">
-                <div id="overlay-content" class="overlay-content"></div>
-                <span class="close-btn" onclick="closeOverlay()">&times;</span>
+                <?php include 'server/display-recipes.php'; ?>
             </div>
         </center>
     </div>
+
+<div id="layer_3" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
+    <center>
+        <h1>Lisää</h1>
+        <div id="add-recipe-btn" class="add-recipe-btn" onclick="openOverlay2()">+</div>
+        <div id="overlay2" class="overlay2">
+            <div id="overlay-content2" class="overlay-content2">
+                <form id="add-recipe-form">
+                    <label for="recipe-name">Recipe Name:</label><br>
+                    <input type="text" id="recipe-name" name="recipe-name" required><br><br>
+
+                    <label for="category">Category:</label><br>
+                    <select id="category" name="category" required>
+                        <option value="Aamiainen">Aamiainen</option>
+                        <option value="lounas">Lounas</option>
+                        <option value="valipala">Välipala</option>
+                        <option value="paivallinen">Päivällinen</option>
+                        <option value="iltapala">Iltapala</option>
+                        <!-- Add more options as needed -->
+                    </select><br><br>
+
+                    <label for="ingredient">Ingredient:</label><br>
+                    <input type="text" id="ingredient" name="ingredient" required><br><br>
+
+                    <label for="quantity">Quantity:</label><br>
+                    <input type="text" id="quantity" name="quantity" required><br><br>
+
+                    <label for="price">Price:</label><br>
+                    <input type="number" id="price" name="price" required><br><br>
+
+                    <button type="button" onclick="addIngredient()">Add Ingredient</button><br><br>
+
+                    <!-- Display ready ingredients -->
+                    <div id="ready-ingredients"></div>
+
+                    <label for="image">Image Upload:</label><br>
+                    <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <span class="close-btn" onclick="closeOverlay1()">&times;</span>
+        </div>
+    </center>
+</div>
+
+<!-- Popup for ingredient details -->
+<div id="ingredient-popup" class="ingredient-popup">
+    <div id="ingredient-details" class="ingredient-details">
+        <!-- Additional info like quantity and price will be displayed here -->
+    </div>
+    <span class="close-btn" onclick="closeIngredientPopup()">&times;</span>
+</div>
+
+
+
 
     
 <script type="text/javascript" src="../static/scripts/animation.js"></script>
