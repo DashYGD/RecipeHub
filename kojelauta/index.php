@@ -22,7 +22,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 } else {
     $user_id = $_SESSION['user'];
-    echo $user_id;
+    //echo $user_id;
 }
 ?>
 
@@ -79,7 +79,7 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <div id="layer_2" class="w3-card w3-content w3-white"  style="opacity:0; max-width:1440px; max-height:1071px;">
+    <div id="layer_2" class="w3-card w3-content w3-white"  style="opacity:0; max-width:900px; max-height:1071px;">
         <center>
             <h1>RecipeHub</h1>
             <div id="search-results_1">
@@ -97,5 +97,6 @@ if (!isset($_SESSION['user'])) {
 <script type="text/javascript" src="../static/scripts/keyboard-accessibility.js"></script>
 <script type="text/javascript" src="../static/scripts/sidebar.js"></script>
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
+<script type="text/javascript" src="scripts/overlay.js"></script>
 </body>
 </html>
