@@ -3,7 +3,7 @@
         'name' => 'kone/recipe-hub',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '7678cb18561c230280a43185c14885d26826b6da',
+        'reference' => 'ba8b7a4cae036af4aa9672d16ca0756f6e2a4aea',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'kone/recipe-hub' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '7678cb18561c230280a43185c14885d26826b6da',
+            'reference' => 'ba8b7a4cae036af4aa9672d16ca0756f6e2a4aea',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
