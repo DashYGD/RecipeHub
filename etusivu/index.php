@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
 
@@ -36,7 +37,11 @@
                     <a class="w3-hide-small" href="#">Suosikit</a>
                     <a class="w3-hide-small" href="#">Asetukset</a>
                     <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
-                </div>
+                </div> 
+                <div class="material-symbols-outlined">
+settings
+</div>
+
                 <div class="right-links">
                     <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
