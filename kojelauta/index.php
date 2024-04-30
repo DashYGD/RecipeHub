@@ -24,6 +24,8 @@ if (!isset($_SESSION['user'])) {
     $user_id = $_SESSION['user'];
     //echo $user_id;
 }
+
+include "server\add-recipe.php";
 ?>
 
 <!DOCTYPE html>
@@ -109,13 +111,13 @@ if (!isset($_SESSION['user'])) {
                     </select><br><br>
 
                     <label for="ingredient">Ingredient:</label><br>
-                    <input type="text" id="ingredient" name="ingredient" required><br><br>
+                    <input type="text" id="ingredient" name="ingredient"><br><br>
 
                     <label for="quantity">Quantity:</label><br>
-                    <input type="text" id="quantity" name="quantity" required><br><br>
+                    <input type="text" id="quantity" name="quantity"><br><br>
 
                     <label for="price">Price:</label><br>
-                    <input type="number" id="price" name="price" required><br><br>
+                    <input type="number" id="price" name="price"><br><br>
 
                     <button type="button" onclick="addIngredient()">Add Ingredient</button><br><br>
 
@@ -150,5 +152,6 @@ if (!isset($_SESSION['user'])) {
 <script type="text/javascript" src="../static/scripts/sidebar.js"></script>
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
 <script type="text/javascript" src="scripts/overlay.js"></script>
+<script type="text/javascript" src="scripts/submit.js"></script>
 </body>
 </html>

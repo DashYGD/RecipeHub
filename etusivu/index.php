@@ -106,7 +106,7 @@
             console.log('Navigating to ' + mealType + ' recipe...');
         }
     </script>    
-<script type="text/javascript" src="../static/scripts/animation.js"></script>
+<script type="text/javascript" src="scripts/animation.js"></script>
 <script type="text/javascript" src="../static/scripts/keyboard-accessibility.js"></script>
 <script type="text/javascript" src="../static/scripts/sidebar.js"></script>
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
