@@ -176,10 +176,4 @@ h1 {
     left: 20px; /* Säädä tarvittaessa */
 }
 
-.material-symbols-outlined {
-    position: relative; /* tai absolute, riippuen siirtämisen tyylistä */
-    top: 105px; /* muuta arvoa haluamallasi tavalla */
-    left: 1200px; /* muuta arvoa haluamallasi tavalla */
-     
-  
-}  
+

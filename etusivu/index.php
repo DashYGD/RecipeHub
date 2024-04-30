@@ -24,13 +24,14 @@
         <div id="sticky" style="z-index: 1;">
             <div id="navbar" class="navbar" style="z-index: 0">
                 <div class="left-links">
-                    <a id="myHomebutton" class="w3-hide-medium w3-hide-large"><span class="homebutton material-symbols-outlined">home</span></a>
+                <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
-                </div>
+                    <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
+                </div><a href="/etusivu" role="button">
                 <div class="logo">
     R e c i p e H u b
-</div>
+</div></a>
 
                 <div class="center-links">
                     <a class="w3-hide-small" href="#">tyhjä</a>
@@ -38,11 +39,9 @@
                     <a class="w3-hide-small" href="#">Asetukset</a>
                     <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
                 </div> 
-                <div class="material-symbols-outlined">
-settings
-</div>
 
                 <div class="right-links">
+                    <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">settings</span></a>
                     <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
