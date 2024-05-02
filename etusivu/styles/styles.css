@@ -61,7 +61,7 @@ body {
     text-align: center;
     font-size: clamp(1.5vw + 10px, 2vw, 4vw) !important;
     color: white;
-    font-family: "Rozha One", serif;
+    font-family: "Ropa Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
@@ -69,7 +69,7 @@ body {
 h1 {
     font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
     color: white;
-    font-family: "Rozha One", serif;
+    font-family: "Ropa Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
     background-color: rgb(134, 228, 102);
@@ -86,7 +86,7 @@ h1 {
     border-radius: 5px;
     border: 1px solid white;
     font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
-    font-family: "Rozha One", serif;
+    font-family: "Ropa Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
     background-color: rgb(134, 228, 102);
@@ -100,7 +100,7 @@ h1 {
     border: none;
     cursor: pointer;
     font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
-    font-family: "Rozha One", serif;
+    font-family: "Ropa Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
     background-color: rgb(134, 228, 102);
@@ -157,23 +157,32 @@ h1 {
     margin-top: 0;
     font-size: clamp(1.5vw + 20px, 3vw, 6vw) !important;
     color: white;
-    font-family: "Rozha One", serif;
+    font-family: "Ropa Sans", sans-serif;
 }
 
 .recipe-card p {
     margin: 10px 0;
     font-size: clamp(0.8vw + 15px, 1.5vw, 4vw) !important;
     color: white;
-    font-family: "Rozha One", serif;
+    font-family: "Ropa Sans", sans-serif;
 }
 .logo {
-    font-family: "Rozha One", serif;
+    font-family: "Ropa Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     font-size: 30px;
-    font-weight: bold;
     color: rgb(134, 228, 102); /* Vaihda väriä tarpeen mukaan */
     position: absolute;
     top: 5px; /* Säädä tarvittaessa */
     left: 20px; /* Säädä tarvittaessa */
 }
+
+.center-links a {
+    font-family: "Ropa Sans", sans-serif;
+    font-weight: 400;
+    font-style:normal;
+    font-size: 25px;
+}
+
 
 
