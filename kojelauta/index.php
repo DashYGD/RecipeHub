@@ -25,7 +25,10 @@ if (!isset($_SESSION['user'])) {
     //echo $user_id;
 }
 
-include "server\add-recipe.php";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo 'hello';
+    include "server/add-recipe.php";
+}
 ?>
 
 <!DOCTYPE html>

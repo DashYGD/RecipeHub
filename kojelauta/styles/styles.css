@@ -195,7 +195,6 @@ font-size: 15px;
 .recipe-card img {
     width: clamp(8vw + 25px, 10vw, 12vw) !important;
     max-width: 300px;
-    border-radius: 50%;
     padding: 5px;
 }
 
