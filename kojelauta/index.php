@@ -24,11 +24,6 @@ if (!isset($_SESSION['user'])) {
     $user_id = $_SESSION['user'];
     //echo $user_id;
 }
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo 'hello';
-    include "server/add-recipe.php";
-}
 ?>
 
 <!DOCTYPE html>
@@ -99,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="add-recipe-btn" class="add-recipe-btn" onclick="openOverlay2()">+</div>
         <div id="overlay2" class="overlay2">
             <div id="overlay-content2" class="overlay-content2">
-                <form id="add-recipe-form">
+                <form id="add-recipe-form" method="POST">
                     <label for="recipe-name">Recipe Name:</label><br>
                     <input type="text" id="recipe-name" name="recipe-name" required><br><br>
 
@@ -133,17 +128,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="submit" value="Submit">
                 </form>
             </div>
-            <span class="close-btn" onclick="closeOverlay1()">&times;</span>
+            <span class="close-btn material-symbols-outlined" onclick="closeOverlay2()">Close</span>
         </div>
     </center>
 </div>
 
-<!-- Popup for ingredient details -->
+<div id="overlay1" class="overlay1">
+    <div id="overlay-content1" class="overlay-content1"></div>
+    <span class="close-btn material-symbols-outlined" onclick="closeOverlay1()">Close</span>
+</div>
+
 <div id="ingredient-popup" class="ingredient-popup">
     <div id="ingredient-details" class="ingredient-details">
-        <!-- Additional info like quantity and price will be displayed here -->
     </div>
-    <span class="close-btn" onclick="closeIngredientPopup()">&times;</span>
+    <span class="close-btn material-symbols-outlined" onclick="closeIngredientPopup()">Close</span>
 </div>
 
 

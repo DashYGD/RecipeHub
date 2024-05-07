@@ -26,7 +26,7 @@ function openOverlay2() {
     overlay2.style.display = 'block';
 }
 
-function closeOverla2() {
+function closeOverlay2() {
     var overlay2 = document.getElementById('overlay2');
     overlay2.style.display = 'none';
 }
