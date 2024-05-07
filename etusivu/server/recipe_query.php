@@ -9,14 +9,20 @@ $db = $mongoClient->reseptisovellus;
 if (!$db) {
     die("MongoDB connection failed");
 }
-
-$query = $_GET['query'];
-
 $collection = $db->recipes;
 
-$searchResult = $collection->find([
+$query = $_GET['query'];
+$category = isset($_GET['category']) ? $_GET['category'] : ''; // Check if category is set, otherwise use empty string
+
+$regexQuery = [
     'name' => ['$regex' => new MongoDB\BSON\Regex($query, 'i')]
-]);
+];
+
+if ($category !== '') { // Check if a category is provided
+    $regexQuery['category'] = ['$regex' => new MongoDB\BSON\Regex($category, 'i')];
+}
+
+$searchResult = $collection->find($regexQuery);
 
 $results = iterator_to_array($searchResult);
 

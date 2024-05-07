@@ -60,23 +60,27 @@
 
     <div id="layer_2"  style="opacity:0;">
         <div class="search-container">
-            <input id="search-input_1" oninput="searchRecipes(event)" type="text" placeholder="Hae reseptiä...">
             
-            <input id="filter-button_1" onclick="openFilter()" type="button" placeholder="Filter">
+            <div class="buttons-container">
+                <input id="search-input_1" oninput="searchRecipes(event)" type="text" placeholder="Hae reseptiä...">
+                <input id="filter-button_1" onclick="openFilter()" type="button" placeholder="Filter">
+                <input type="submit" value="Hae">
+            </div>
+            
             <div class="filter-dropdown w3-card w3-green w3-container" id="filter-dropdownContainer" style="display:none;">
-            <select id="categoryDropdown" onchange="filterRecipesByCategory(this.value)">
-                <option value="">Valitse kategoria</option>
-                <option value="aamupala">Aamupala</option>
-                <option value="lounas">Lounas</option>
-                <option value="välipala">Välipala</option>
-                <option value="päivällinen">Päivällinen</option>
-                <option value="jälkiruoka">Jälkiruoka</option>
-                <option value="iltapala">Iltapala</option>
+                <select id="categoryDropdown" onchange="filterRecipesByCategory(this.value)">
+                    <option value="">Ei kategoriaa</option>
+                    <option value="aamiainen">Aamiainen</option>
+                    <option value="lounas">Lounas</option>
+                    <option value="välipala">Välipala</option>
+                    <option value="päivällinen">Päivällinen</option>
+                    <option value="jälkiruoka">Jälkiruoka</option>
+                    <option value="iltapala">Iltapala</option>
                 </select>
             </div>
-            <input type="submit" value="Hae">
-        
         </div>
+
+
 
         <div id="search-results_1"></div>
         <div id="overlay" class="overlay">
@@ -130,6 +134,6 @@
 <script type="text/javascript" src="../static/scripts/sidebar.js"></script>
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
 <script type="text/javascript" src="scripts/fetch_recipe.js"></script>
-<script type="text/javascript" src="scripts/filterRecipes.js"></script>
+<script type="text/javascript" src="scripts/filter.js"></script>
 </body>
 </html>

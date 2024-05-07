@@ -149,16 +149,6 @@ h1 {
 
 
 
-.search-container {
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    padding: 12px;
-    padding-bottom: 8px;
-}
-
 .search-container input[type="text"] {
     width: 300px;
     padding: 10px;
@@ -193,17 +183,32 @@ h1 {
     background-position: center; /* Adjust the position of the icon */
 }
 
-.filter-dropdown {
-    position: absolute;
-    top: calc(100% + 5px); /* Position the dropdown below the filter button */
-    left: 0;
-    width: 100%; /* Adjust the width as needed */
-    display: none; /* Initially hide the dropdown */
+.search-container {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column; /* Change flex direction to column */
+    padding: 12px;
+    padding-bottom: 8px;
 }
 
-.search-container {
-    position: relative; /* Ensure the dropdown position is relative to this container */
+.buttons-container {
+    display: flex;
+    flex-direction: row; /* Keep the flex direction as row */
+    justify-content: center;
+    width: 95%;
 }
+
+.filter-dropdown {
+    border-radius: 6px;
+    width: 100%; /* Adjust the width as needed */
+    max-width: 400px;
+    display: none; /* Initially hide the dropdown */
+    margin-top: 10px; /* Add some spacing between the filter button and the dropdown */
+}
+
+
 
 
 /* Show class to display dropdown card */
