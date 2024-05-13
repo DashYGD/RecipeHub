@@ -17,6 +17,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Email</th>
                     <th scope="col">Username</th>
+                    <th scope="col">Password</th>
                     <th scope="col">Role</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -36,19 +37,22 @@
                 // Fetch all documents from the collection
                 $users = $collection->find();
 
+                $admin = "";
+
                 // Loop through each user and display its data
                 foreach ($users as $user) {
-                    if ($user['is_admin'] == 1) {
-                        $user['is_admin'] = "Admin";
+                    if (isset($user['is_admin']) == 1) {
+                        $admin = "Admin";
                     } else {
-                        $user['is_admin'] = "User";
+                        $admin = "User";
                     }
                     
                     echo "<tr>";
                     echo "<td>" . $user['_id'] . "</td>";
                     echo "<td>" . $user['email'] . "</td>";
                     echo "<td>" . $user['username'] . "</td>";
-                    echo "<td>" . $user['is_admin'] . "</td>";
+                    echo "<td>[REDACTED]</td>";
+                    echo "<td>" . $admin . "</td>";
                     echo "<td>";
                     echo "<a href=\"edit_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-edit\"></i></a>";
                     echo " | ";
@@ -56,6 +60,12 @@
                     echo "</td>";
                     echo "</tr>";
                 }
+
+                echo "<tr>";
+                echo "<td colspan=\"6\">";
+                echo "<a href=\"add_user.php\">Add User</a>";
+                echo "</td>";
+                echo "</tr>";
                 ?>
             </tbody>
         </table>

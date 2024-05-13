@@ -1,26 +1,26 @@
 <?php
+
+// Include MongoDB library
+require '../vendor/autoload.php';
+
+// Connect to MongoDB
+$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
+$db = $mongoClient->reseptisovellus;
+
+// Select the users collection
+$collection = $db->users;
+
 // Remove user for demonstration purposes
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     echo "User ID: " . $id . " removed.";
 }
 
-// Redirect back to the users page with query string
-header("Location: /admin/?page=users");
+// Button to go back to users
+echo <<<HTML
+<br><br>
+<a href="/admin/?page=users">Back to users</a>
+HTML;
 
 exit();
-
-// Remove user from database
-// require_once 'connect.php';
-
-// Prepare and execute the SQL statement
-// if ($stmt = $conn->prepare("DELETE FROM users WHERE id = ?")) {
-//     $stmt->bind_param("i", $id);
-//     $id = $_GET['id'];
-//     $stmt->execute();
-//     $stmt->close();
-// }
-
-// Close the database connection
-// $conn->close();
 ?>

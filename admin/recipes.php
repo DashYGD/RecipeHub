@@ -94,7 +94,7 @@ $recipes = $collection->find();
                             </div>
                             <?php } ?>
                         </td>
-                        <td><?= htmlspecialchars($recipe['instructions']) ?></td>
+                        <td><?= isset($recipe['instructions']) ? htmlspecialchars($recipe['instructions']) : '' ?></td>
                         <td>
                             <?php
                                 // Use the userMap to get the username based on the owner ID
@@ -109,9 +109,11 @@ $recipes = $collection->find();
                     </tr>
                 <?php endforeach; ?>
 
-                <?php // if ($recipes->count() == 0): ?>
-                    <!-- <tr><td colspan="6">No recipes found.</td></tr> -->
-                <?php // endif; ?>
+                <tr>
+                    <td colspan="6">
+                        <a href="add_recipe.php">Add Recipe</a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

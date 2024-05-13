@@ -1,22 +1,5 @@
 <?php
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-}
-
-echo <<<HTML
-<form method="post" action="edit_user.php">
-    <input type="hidden" name="id" value="$id">
-    <input type="email" name="email" value="$_POST[email]">
-    <input type="text" name="username" value="$_POST[username]">
-    <input type="password" name="password" value="$_POST[password]">
-    <input type="text" name="is_admin" value="$_POST[is_admin]">
-    <input type="submit" value="Save">
-</form>
-HTML;
-
-// Update in database
-
 // Include MongoDB library
 require '../vendor/autoload.php';
 
@@ -27,23 +10,33 @@ $db = $mongoClient->reseptisovellus;
 // Select the users collection
 $collection = $db->users;
 
-// Prepare and execute the SQL statement
-if ($stmt = $collection->updateOne(
-    ['_id' => new MongoDB\BSON\ObjectId($id)],
-    ['$set' => [
-        'email' => $_POST['email'],
-        'username' => $_POST['username'],
-        'password' => $_POST['password'],
-        'is_admin' => $_POST['is_admin']
-    ]]
-)) {
-    echo "User updated successfully.";
-} else {
-    echo "Error updating user: " . $conn->error;
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+}
+
+// Fetch the user from the collection
+$user = $collection->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+
+echo <<<HTML
+<form method="post" action="edit_user.php">
+    <input type="hidden" name="id" value="$id">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="$user[email]" required><br><br>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" value="$user[username]" required><br><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" value="$user[password]" required><br><br>
+    <label for="is_admin">Admin:</label>
+    <input type="checkbox" id="is_admin" name="is_admin" value="$user[is_admin]"><br><br>
+    <input type="submit" value="Save">
+</form>
+HTML;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    echo "Updating user...";
 }
 
 // Redirect back to the users page with query string
 header("Location: /admin/?page=users");
-
-
+exit;
 ?>

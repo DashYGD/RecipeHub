@@ -52,8 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="center-links">
                     <a class="active w3-hide-small" href="/etusivu">Etusivu</a>
-                    <a class="w3-hide-small" href="#">Tyhjä</a>
-                    <a class="w3-hide-small" href="#">tyhjä</a>
+                    <a class="w3-hide-small" href="?page=users">Käyttäjät</a>
+                    <a class="w3-hide-small" href="?page=recipes">Reseptit</a>
                     <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
                 </div>
                 <div class="right-links">
