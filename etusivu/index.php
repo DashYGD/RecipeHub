@@ -32,11 +32,11 @@
                 <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
-                    <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
-                </div><a href="/etusivu" role="button">
+                </div>
                 <div class="logo">
-    R e c i p e H u b
-</div></a>
+                    <a href="/etusivu" id="title" role="button">R e c i p e H u b</a>
+                </div>
+                
 
                 <div class="center-links">
                     <a class="w3-hide-small" href="#">tyhjä</a>
@@ -60,9 +60,28 @@
 
     <div id="layer_2"  style="opacity:0;">
         <div class="search-container">
-            <input id="search-input_1" oninput="searchRecipes(event)" type="text" placeholder="Hae reseptiä...">
-            <input type="submit" value="Hae">
+            
+            <div class="buttons-container">
+                <input id="search-input_1" oninput="searchRecipes(event)" type="text" placeholder="Hae reseptiä...">
+                <input id="filter-button_1" onclick="openFilter()" type="button" placeholder="Filter">
+                <input type="submit" value="Hae">
+            </div>
+            
+            <div class="filter-dropdown w3-card w3-green w3-container" id="filter-dropdownContainer" style="display:none;">
+                <select id="categoryDropdown" onchange="filterRecipesByCategory(this.value)">
+                    <option value="">Ei kategoriaa</option>
+                    <option value="aamiainen">Aamiainen</option>
+                    <option value="lounas">Lounas</option>
+                    <option value="välipala">Välipala</option>
+                    <option value="päivällinen">Päivällinen</option>
+                    <option value="jälkiruoka">Jälkiruoka</option>
+                    <option value="iltapala">Iltapala</option>
+                </select>
+            </div>
         </div>
+
+
+
         <div id="search-results_1"></div>
         <div id="overlay" class="overlay">
             <div id="overlay-content" class="overlay-content"></div>
@@ -115,5 +134,6 @@
 <script type="text/javascript" src="../static/scripts/sidebar.js"></script>
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
 <script type="text/javascript" src="scripts/fetch_recipe.js"></script>
+<script type="text/javascript" src="scripts/filter.js"></script>
 </body>
 </html>

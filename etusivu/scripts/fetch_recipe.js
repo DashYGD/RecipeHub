@@ -15,7 +15,6 @@ function updateSearchResults_1(results) {
       var totalCost = 0;
       for (var j = 0; j < results[i].ingredients.length; j++) {
           totalCost += +results[i].ingredients[j].price;
-          console.log(totalCost);
       }
       totalCost = totalCost.toFixed(2)
       
@@ -66,7 +65,14 @@ function formatIngredients(ingredients) {
   return formatted;
 }
 
-function searchRecipes(event) {
+var selectedCategory = ""; // Variable to store the selected category
+
+function filterRecipesByCategory(category) {
+  selectedCategory = category; // Store the selected category
+  searchRecipes(); // Perform search with the updated category
+}
+
+function searchRecipes() {
   var input = document.getElementById('search-input_1').value;
   var searchResultsContainer = document.getElementById('search-results_1');
 
@@ -79,10 +85,15 @@ function searchRecipes(event) {
       }
     };
 
-    xhr.open('GET', 'server/recipe_query.php?query=' + input, true);
+    var url = 'server/recipe_query.php?query=' + input;
+    if (selectedCategory !== undefined && selectedCategory !== "") {
+      url += '&category=' + selectedCategory; // Append category to the URL if it's not undefined or empty
+    }
+    xhr.open('GET', url, true);
     xhr.send();
   } else {
-    searchResultsContainer.innerHTML = 'nothing';
+    searchResultsContainer.innerHTML = '';
   }
   return true;
 }
+

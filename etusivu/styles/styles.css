@@ -75,37 +75,6 @@ h1 {
     background-color: rgb(134, 228, 102);
 }
 
-
-.search-container {
-    text-align: center;
-}
-
-.search-container input[type="text"] {
-    width: 300px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid white;
-    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
-    font-family: "Ropa Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    background-color: rgb(134, 228, 102);
-}
-
-.search-container input[type="submit"] {
-    background-color: rgb(134, 228, 102);
-    color: white;
-    border-radius: 5px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
-    font-family: "Ropa Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    background-color: rgb(134, 228, 102);
-}
-
 .overlay {
     display: none;
     position: fixed;
@@ -143,7 +112,6 @@ h1 {
 }
 
 
-
 .recipe-card img {
     width: 100%;
     max-width: 200px;
@@ -167,22 +135,83 @@ h1 {
     font-family: "Ropa Sans", sans-serif;
 }
 .logo {
+    position: absolute;
+    top: 6px; /* Säädä tarvittaessa */
+    left: 20px; /* Säädä tarvittaessa */
     font-family: "Ropa Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 30px;
+    font-size: clamp(0.8vw + 18px, 1.5vw, 4vw);
     color: rgb(134, 228, 102); /* Vaihda väriä tarpeen mukaan */
-    position: absolute;
-    top: 5px; /* Säädä tarvittaessa */
-    left: 20px; /* Säädä tarvittaessa */
 }
 
-.center-links a {
+
+
+
+
+.search-container input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
     font-family: "Ropa Sans", sans-serif;
     font-weight: 400;
-    font-style:normal;
-    font-size: 25px;
+    font-style: normal;
+    background-color: rgb(134, 228, 102);
+    margin: 2px;
+}
+
+.search-container input[type="submit"],  input[type="button"]{
+    background-color: rgb(134, 228, 102);
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    font-size: clamp(0.8vw + 10px, 1.5vw, 4vw);
+    font-family: "Ropa Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: rgb(134, 228, 102);
+}
+
+#filter-button_1 {
+    background-image: url('../../static/images/filter_list_24dp_FILL0_wght400_GRAD0_opsz24.svg'); /* Replace 'path_to_icon' with the path to your icon image */
+    background-repeat: no-repeat;
+    background-position: center; /* Adjust the position of the icon */
+}
+
+.search-container {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column; /* Change flex direction to column */
+    padding: 12px;
+    padding-bottom: 8px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row; /* Keep the flex direction as row */
+    justify-content: center;
+    width: 95%;
+}
+
+.filter-dropdown {
+    border-radius: 6px;
+    width: 100%; /* Adjust the width as needed */
+    max-width: 400px;
+    display: none; /* Initially hide the dropdown */
+    margin-top: 10px; /* Add some spacing between the filter button and the dropdown */
 }
 
 
 
+
+/* Show class to display dropdown card */
+.show {
+    display: block;
+}
