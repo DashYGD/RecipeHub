@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'email' => $_POST['email'],
         'username' => $_POST['username'],
         'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-        'is_admin' => (isset($_POST['is_admin']) ? 1 : 0),
+        'is_admin' => $_POST['is_admin'],
     ];
     $result = $collection->insertOne($user);
     if ($result->getInsertedCount() === 0) {

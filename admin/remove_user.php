@@ -10,17 +10,14 @@ $db = $mongoClient->reseptisovellus;
 // Select the users collection
 $collection = $db->users;
 
-// Remove user for demonstration purposes
+// Remove user
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    echo "User ID: " . $id . " removed.";
+    $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
 }
 
-// Button to go back to users
-echo <<<HTML
-<br><br>
-<a href="/admin/?page=users">Back to users</a>
-HTML;
+// Redirect to users page
+header('Location: /admin/?page=users');
 
 exit();
 ?>
