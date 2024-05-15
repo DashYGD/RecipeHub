@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </center>
 
         <?php
-        $page = $_GET['page'] ? $_GET['page'] : 'recipes';
+        $page = isset($_GET['page']) ? $_GET['page'] : 'recipes';
         switch ($page) {
             case 'recipes':
                 include 'recipes.php';
