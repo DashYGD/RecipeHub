@@ -45,8 +45,8 @@
                 </div> 
 
                 <div class="right-links">
-                    <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">settings</span></a>
-                    <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
+                    <a href="/kirjaudu" role="button"><span class="loginbutton material-symbols-outlined">settings</span></a>
+                    <a href="/kirjaudu" role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
             </div>

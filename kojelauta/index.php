@@ -52,6 +52,7 @@ if (!isset($_SESSION['user'])) {
                     <a id="myHomebutton" class="w3-hide-medium w3-hide-large"><span class="homebutton material-symbols-outlined">home</span></a>
                     <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
+                    <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                 </div>
                 <div class="center-links">
                     <div class="dropdown">
@@ -64,10 +65,10 @@ if (!isset($_SESSION['user'])) {
                     </div>
                 <a class="w3-hide-small" href="#">Suosikit</a>
                 <a class="w3-hide-small" href="#">Asetukset</a>
-                <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
                 </div>
                 <div class="right-links">
                     <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
+                    <a href="#" role="button"><span class="cartbutton material-symbols-outlined">shopping_basket</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
             </div>
@@ -81,7 +82,9 @@ if (!isset($_SESSION['user'])) {
 
     <div id="layer_2" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
         <center>
-            <h1>RecipeHub</h1>
+            <div class="logo">
+                <a href="/etusivu" id="title" role="button">R e c i p e H u b</a>
+            </div>
             <div id="search-results_1">
                 <?php include 'server/display-recipes.php'; ?>
             </div>
@@ -136,6 +139,11 @@ if (!isset($_SESSION['user'])) {
 <div id="overlay1" class="overlay1">
     <div id="overlay-content1" class="overlay-content1"></div>
     <span class="close-btn material-symbols-outlined" onclick="closeOverlay1()">Close</span>
+</div>
+
+<div id="overlay3" class="overlay3">
+    <div id="overlay-content3" class="overlay-content3"></div>
+    <span class="close-btn" onclick="closeOverlay()">&times;</span>
 </div>
 
 <div id="ingredient-popup" class="ingredient-popup">
