@@ -19,13 +19,27 @@ echo <<<HTML
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br><br>
     <label for="is_admin">Admin:</label>
-    <input type="checkbox" id="is_admin" name="is_admin"><br><br>
+    <select id="is_admin" name="is_admin">
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </select><br><br>
     <input type="submit" value="Save">
 </form>
 HTML;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "Adding user...";
+    $user = [
+        'email' => $_POST['email'],
+        'username' => $_POST['username'],
+        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+        'is_admin' => (isset($_POST['is_admin']) ? 1 : 0),
+    ];
+    $result = $collection->insertOne($user);
+    if ($result->getInsertedCount() === 0) {
+        echo "Error inserting user: " . $result->getErrorMessage();
+    } else {
+        echo "User inserted: " . $user['username'];
+    }
 }
 
 // Button to go back to users
