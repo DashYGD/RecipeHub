@@ -41,7 +41,7 @@
 
                 // Loop through each user and display its data
                 foreach ($users as $user) {
-                    if (isset($user['is_admin']) == 1) {
+                    if (isset($user['is_admin']) && $user['is_admin'] == 1) {
                         $admin = "Admin";
                     } else {
                         $admin = "User";

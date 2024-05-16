@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = [
         'email' => $_POST['email'],
         'username' => $_POST['username'],
-        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+        'user_password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
         'is_admin' => $_POST['is_admin'],
     ];
     $result = $collection->insertOne($user);
