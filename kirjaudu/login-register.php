@@ -21,6 +21,7 @@ function checkRememberMe($db) {
     if (isset($_COOKIE['auth_token'])) {
         $token = $_COOKIE['auth_token'];
         
+        
         // Perform basic input validation on the token
         if (!preg_match('/^[a-f0-9]{64}$/', $token)) {
             // Invalid token format
@@ -36,15 +37,13 @@ function checkRememberMe($db) {
 
             if ($result['is_admin'] == 1) {
                 $_SESSION['admin'] = true;
-                header("Location: /admin");
+                header("Location: admin");
             } else {
                 $_SESSION['user'] = $result['_id'];;
-                header("Location: /kojelauta");
+                header("Location: kojelauta");
             }
             exit;
         } else {
-            // Invalid token or user not found
-            // You may want to log this event for auditing purposes
         }
     }
 }
