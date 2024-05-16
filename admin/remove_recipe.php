@@ -12,14 +12,11 @@ $collection = $db->recipes;
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    echo "Recipe ID: " . $id . " removed.";
+    $collection->deleteOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
 }
 
-// Button to go back to recipes
-echo <<<HTML
-<br><br>
-<a href="/admin/?page=recipes">Back to recipes</a>
-HTML;
+// Redirect to recipes page
+header('Location: /admin/?page=recipes');
 
 exit();
 ?>

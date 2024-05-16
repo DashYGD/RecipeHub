@@ -38,7 +38,20 @@ echo <<<HTML
 HTML;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "Updating recipe...";
+    $recipeUpdated = [
+        'category' => $_POST['category'],
+        'name' => $_POST['name'],
+        'ingredients' => [
+            'name' => $_POST['ingredients'],
+        ],
+        'instructions' => $_POST['instructions'],
+    ];
+    $result = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectId($id)], ['$set' => $recipeUpdated]);
+    if ($result->getModifiedCount() === 0) {
+        echo "Error updating recipe: " . $result->getErrorMessage();
+    } else {
+        echo "Recipe updated: " . $recipe['name'];
+    }
 }
 
 // Button to go back to recipes
