@@ -47,37 +47,40 @@ if (!isset($_SESSION['user'])) {
 
     <div id="layer_1" style="opacity:0;">
         <div id="sticky" style="z-index: 1;">
-            <div id="navbar" class="navbar" style="z-index: 0">
-                <div class="left-links">
-                    <a id="myHomebutton" class="w3-hide-medium w3-hide-large"><span class="homebutton material-symbols-outlined">home</span></a>
-                    <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
-                    <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
-                    <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
-                </div>
-                <div class="center-links">
-                    <div class="dropdown">
-                        <a class="dropbtn w3-hide-small">Reseptisi</a>
-                        <div class="dropdown-content">
-                            <a href="#">Option 1</a>
-                            <a href="#">Option 2</a>
-                            <a href="#">Option 3</a>
-                        </div>
-                    </div>
-                <a class="w3-hide-small" href="#">Suosikit</a>
-                <a class="w3-hide-small" href="#">Asetukset</a>
-                </div>
-                <div class="right-links">
-                    <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
-                    <a href="#" role="button"><span class="cartbutton material-symbols-outlined">shopping_basket</span></a>
-                    <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
-                </div>
-            </div>
-            <div class="mySidebar" id="sidebar">
-                <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
-                    <a href="/etusivu" class="w3-bar-item w3-button">Etusivu</a>
-                </div>
+        <div id="navbar" class="navbar" style="z-index: 0">
+    <div class="left-links">
+        <a id="myHomebutton" class="w3-hide-medium w3-hide-large"><span class="homebutton material-symbols-outlined">home</span></a>
+        <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
+        <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
+        <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
+    </div>
+    <div class="center-links">
+        <div class="dropdown">
+            <a class="dropbtn w3-hide-small">Reseptisi</a>
+            <div class="dropdown-content">
+                <a href="#">Option 1</a>
+                <a href="#">Option 2</a>
+                <a href="#">Option 3</a>
             </div>
         </div>
+        <a class="w3-hide-small" href="#">Suosikit</a>
+        <a class="w3-hide-small" href="#">Asetukset</a>
+    </div>
+    <div class="right-links">
+        <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
+        <a href="#" role="button" id="shoppingBasketButton" class="shopping-basket"><span class="cartbutton material-symbols-outlined">shopping_basket</span></a>
+        <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
+    </div>
+</div>
+<div class="shopping-basket-dropdown" id="shopping-basket-dropdown" style="display: none;">
+    <!-- Dropdown content will be dynamically inserted here -->
+</div>
+<div class="mySidebar" id="sidebar">
+    <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
+        <a href="/etusivu" class="w3-bar-item w3-button">Etusivu</a>
+    </div>
+</div>
+
     </div>
 
     <div id="layer_2" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
@@ -85,9 +88,7 @@ if (!isset($_SESSION['user'])) {
             <div class="logo">
                 <a href="/etusivu" id="title" role="button">R e c i p e H u b</a>
             </div>
-            <div id="search-results_1">
-                <?php include 'server/display-recipes.php'; ?>
-            </div>
+            <div id="search-results_1"></div>
         </center>
     </div>
 
@@ -143,7 +144,7 @@ if (!isset($_SESSION['user'])) {
 
 <div id="overlay3" class="overlay3">
     <div id="overlay-content3" class="overlay-content3"></div>
-    <span class="close-btn" onclick="closeOverlay()">&times;</span>
+    <span class="close-btn" onclick="closeOverlay3()">&times;</span>
 </div>
 
 <div id="ingredient-popup" class="ingredient-popup">
@@ -162,5 +163,6 @@ if (!isset($_SESSION['user'])) {
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
 <script type="text/javascript" src="scripts/overlay.js"></script>
 <script type="text/javascript" src="scripts/submit.js"></script>
+<script type="text/javascript" src="scripts/fetch_list.js"></script>
 </body>
 </html>

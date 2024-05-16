@@ -21,11 +21,15 @@ $user_id = $_SESSION['user'];
 
 $collection = $db->recipes;
 
-$searchResult = $collection->find([
+$results = $collection->find([
     'owner' => ['$regex' => new MongoDB\BSON\Regex($user_id, 'i')]
 ]);
 
-foreach ($searchResult as $i => $recipe) {
+$searchResult = iterator_to_array($results);
+
+echo json_encode($searchResult);
+
+/*foreach ($searchResult as $i => $recipe) {
     $totalCost = 0;
 
     foreach ($recipe['ingredients'] as $ingredient) {
@@ -40,4 +44,4 @@ foreach ($searchResult as $i => $recipe) {
     echo '<p><strong>Category:</strong> ' . ($recipe['category'] ? $recipe['category'] : '') . '</p>';
     echo '<p> <strong>Total Cost: </strong>' . $totalCost . ' €</p>';
     echo '</div>';
-}
+}*/
