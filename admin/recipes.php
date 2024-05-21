@@ -15,8 +15,11 @@ try {
 $collection = $db->recipes;
 $collection1 = $db->users;
 
+$recipe_archive = $db->recipe_archive;
+
 // Fetch all documents from the collection
 $recipes = $collection->find();
+$recipe_archives = $recipe_archive->find();
 
 ?>
 
@@ -102,18 +105,76 @@ $recipes = $collection->find();
                             ?>
                         </td>
                         <td>
-                            <a href="edit_recipe.php?id=<?= htmlspecialchars($recipe['_id']) ?>"><i class="fas fa-edit"></i></a>
-                            |
                             <a href="remove_recipe.php?id=<?= htmlspecialchars($recipe['_id']) ?>"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
+            </tbody>
+        </table>
 
+        <table class="table table-striped table-hover">
+            <thead>
                 <tr>
-                    <td colspan="6">
-                        <a href="add_recipe.php">Add Recipe</a>
-                    </td>
+                    <th scope="col">Category</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Ingredients</th>
+                    <th scope="col">Instructions</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Actions</th>
                 </tr>
+            </thead>
+            <tbody>
+                <?php 
+                // Fetch all users
+                $users = $collection1->find();
+
+                // Create an associative array of users indexed by their ID
+                $userMap = [];
+                foreach ($users as $user) {
+                    // Convert ObjectId to string before using it as an index
+                    $userId = (string) $user['_id'];
+                    $userMap[$userId] = $user['username'];
+                }
+                
+                foreach ($recipe_archives as $recipe): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($recipe['category']) ?></td>
+                        <td><?= htmlspecialchars($recipe['name']) ?></td>
+                        <td>
+                            <?php
+                            if (!empty($recipe['ingredients'])) {
+                                // Generate a unique identifier for this recipe's ingredients container
+                                $containerId = 'ingredients_' . uniqid();
+                            ?>
+                            <div id="<?php echo $containerId; ?>" class="ingredients">
+                                <?php
+                                $firstIngredient = true;
+                                foreach ($recipe['ingredients'] as $ingredient) {
+                                    if ($firstIngredient) {
+                                        // Display the first ingredient without hiding it
+                                        echo '<div class="ingredient cursor-pointer" onclick="toggleIngredients(\'' . $containerId . '\', this)">' . $ingredient['name'] . ' <i class="fas fa-chevron-down"></i></div>';
+                                        $firstIngredient = false;
+                                    } else {
+                                        // Hide the rest of the ingredients initially
+                                        echo '<div class="ingredient hidden">' . $ingredient['name'] . '</div>';
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <?php } ?>
+                        </td>
+                        <td><?= isset($recipe['instructions']) ? htmlspecialchars($recipe['instructions']) : 'Instructions not given' ?></td>
+                        <td>
+                            <?php
+                                // Use the userMap to get the username based on the owner ID
+                                echo isset($userMap[$recipe['owner']]) ? htmlspecialchars($userMap[$recipe['owner']]) : 'Unknown';
+                            ?>
+                        </td>
+                        <td>
+                            <a href="remove_recipe_archive.php?id=<?= htmlspecialchars($recipe['_id']) ?>"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

@@ -33,9 +33,11 @@
 
                 // Select the users collection
                 $collection = $db->users;
+                $collection1 = $db->user_archive;
 
                 // Fetch all documents from the collection
                 $users = $collection->find();
+                $users1 = $collection1->find();
 
                 $admin = "";
 
@@ -54,18 +56,29 @@
                     echo "<td>[REDACTED]</td>";
                     echo "<td>" . $admin . "</td>";
                     echo "<td>";
-                    echo "<a href=\"edit_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-edit\"></i></a>";
-                    echo " | ";
                     echo "<a href=\"remove_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-trash\"></i></a>";
                     echo "</td>";
                     echo "</tr>";
                 }
 
-                echo "<tr>";
-                echo "<td colspan=\"6\">";
-                echo "<a href=\"add_user.php\">Add User</a>";
-                echo "</td>";
-                echo "</tr>";
+                foreach ($users1 as $user) {
+                    if (isset($user['is_admin']) && $user['is_admin'] == 1) {
+                        $admin = "Admin";
+                    } else {
+                        $admin = "User";
+                    }
+                    
+                    echo "<tr>";
+                    echo "<td>" . $user['_id'] . "</td>";
+                    echo "<td>" . $user['email'] . "</td>";
+                    echo "<td>" . $user['username'] . "</td>";
+                    echo "<td>[REDACTED]</td>";
+                    echo "<td>" . $admin . "</td>";
+                    echo "<td>";
+                    echo "<a href=\"remove_user_archive.php?id=" . $user['_id'] . "\"><i class=\"fas fa-trash\"></i></a>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
                 ?>
             </tbody>
         </table>
