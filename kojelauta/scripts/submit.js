@@ -2,18 +2,19 @@
 function addIngredient() {
     var ingredient = document.getElementById('ingredient').value;
     var quantity = document.getElementById('quantity').value;
+    var unit = document.getElementById('unit').value;
     var price = document.getElementById('price').value;
 
-    if (ingredient.trim() !== '' && quantity.trim() !== '' && price.trim() !== '') {
+    if (ingredient.trim() !== '' && quantity.trim() !== '' && unit.trim() !== '' && price.trim() !== '') {
         // Create a new element to display the ingredient
         var ingredientDisplay = document.createElement('div');
-        ingredientDisplay.textContent = ingredient + ' - Quantity: ' + quantity + ', Price: ' + price;
+        ingredientDisplay.textContent = ingredient + ' - Quantity: ' + quantity + ' ' + unit + ', Price: ' + price;
         ingredientDisplay.className = 'ready-ingredient';
         
         // Append ingredient display to ready ingredients
         document.getElementById('ready-ingredients').appendChild(ingredientDisplay);
 
-        // Create hidden input fields for ingredient, quantity, and price
+        // Create hidden input fields for ingredient, quantity, unit, and price
         var ingredientInput = document.createElement('input');
         ingredientInput.type = 'hidden';
         ingredientInput.name = 'ingredient[]';
@@ -26,27 +27,30 @@ function addIngredient() {
         quantityInput.value = quantity;
         document.getElementById('add-recipe-form').appendChild(quantityInput);
 
+        var unitInput = document.createElement('input');
+        unitInput.type = 'hidden';
+        unitInput.name = 'unit[]';
+        unitInput.value = unit;
+        document.getElementById('add-recipe-form').appendChild(unitInput);
+
         var priceInput = document.createElement('input');
         priceInput.type = 'hidden';
         priceInput.name = 'price[]';
         priceInput.value = price;
         document.getElementById('add-recipe-form').appendChild(priceInput);
-        
         // Clear input fields
         document.getElementById('ingredient').value = '';
         document.getElementById('quantity').value = '';
+        document.getElementById('unit').value = '';
         document.getElementById('price').value = '';
     }
 }
 
-
-
-
 // Function to open the ingredient popup with additional details
-function openIngredientPopup(ingredient, quantity, price) {
+function openIngredientPopup(ingredient, quantity, unit, price) {
     var ingredientDetails = document.getElementById('ingredient-details');
     ingredientDetails.innerHTML = '<p>Ingredient: ' + ingredient + '</p>' +
-                                  '<p>Quantity: ' + quantity + '</p>' +
+                                  '<p>Quantity: ' + quantity + ' ' + unit + '</p>' +
                                   '<p>Price: ' + price + '</p>';
     document.getElementById('ingredient-popup').style.display = 'block';
 }
@@ -56,10 +60,8 @@ function closeIngredientPopup() {
     document.getElementById('ingredient-popup').style.display = 'none';
 }
 
-
-
 document.getElementById("add-recipe-form").addEventListener("submit", function(event) {
-    if (document.getElementsByClassName('ready-ingredient')) {
+    if (document.getElementsByClassName('ready-ingredient').length > 0) {
         var formData = new FormData(document.getElementById('add-recipe-form'));
 
         // Send form data to the server using fetch
@@ -84,10 +86,7 @@ document.getElementById("add-recipe-form").addEventListener("submit", function(e
             alert('There was an error submitting the recipe.');
         });
     } else {
-        var ingredientAdded = document.getElementsByClassName('ready-ingredient').value;
-        console.log(ingredientAdded);
-        
-        // Prevent form submission if condition is not met
+        // Prevent form submission if no ingredients have been added
         alert('Please add at least one ingredient with additional information before submitting the form.');
         event.preventDefault(); // Prevent form submission
     }

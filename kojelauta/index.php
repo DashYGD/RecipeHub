@@ -55,14 +55,7 @@ if (!isset($_SESSION['user'])) {
         <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
     </div>
     <div class="center-links">
-        <div class="dropdown">
-            <a class="dropbtn w3-hide-small">Reseptisi</a>
-            <div class="dropdown-content">
-                <a href="#">Option 1</a>
-                <a href="#">Option 2</a>
-                <a href="#">Option 3</a>
-            </div>
-        </div>
+        <a class="dropbtn w3-hide-small">Reseptisi</a>
         <a class="w3-hide-small" href="#">Suosikit</a>
         <a class="w3-hide-small" href="#">Asetukset</a>
     </div>
@@ -100,39 +93,50 @@ if (!isset($_SESSION['user'])) {
         <div id="add-recipe-btn" class="add-recipe-btn" onclick="openOverlay2()">+</div>
         <div id="overlay2" class="overlay2">
             <div id="overlay-content2" class="overlay-content2">
-                <form id="add-recipe-form" method="POST">
-                    <label for="recipe-name">Recipe Name:</label><br>
-                    <input type="text" id="recipe-name" name="recipe-name" required><br><br>
+            <form id="add-recipe-form" method="POST">
+    <label for="recipe-name">Recipe Name:</label><br>
+    <input type="text" id="recipe-name" name="recipe-name" required><br><br>
 
-                    <label for="category">Category:</label><br>
-                    <select id="category" name="category" required>
-                        <option value="Aamiainen">Aamiainen</option>
-                        <option value="lounas">Lounas</option>
-                        <option value="valipala">Välipala</option>
-                        <option value="paivallinen">Päivällinen</option>
-                        <option value="iltapala">Iltapala</option>
-                        <!-- Add more options as needed -->
-                    </select><br><br>
+    <label for="category">Category:</label><br>
+    <select id="category" name="category" required>
+        <option value="Aamiainen">Aamiainen</option>
+        <option value="lounas">Lounas</option>
+        <option value="valipala">Välipala</option>
+        <option value="paivallinen">Päivällinen</option>
+        <option value="iltapala">Iltapala</option>
+        <!-- Add more options as needed -->
+    </select><br><br>
 
-                    <label for="ingredient">Ingredient:</label><br>
-                    <input type="text" id="ingredient" name="ingredient"><br><br>
+    <label for="ingredient">Ingredient:</label><br>
+    <input type="text" id="ingredient" name="ingredient"><br><br>
 
-                    <label for="quantity">Quantity:</label><br>
-                    <input type="text" id="quantity" name="quantity"><br><br>
+    <label for="quantity">Quantity:</label><br>
+    <input type="number" id="quantity" name="quantity"><br><br>
 
-                    <label for="price">Price:</label><br>
-                    <input type="number" id="price" name="price"><br><br>
+    <label for="unit">Unit:</label><br>
+    <select id="unit" name="unit">
+        <option value="g">g</option>
+        <option value="kg">kg</option>
+        <option value="ml">ml</option>
+        <option value="l">l</option>
+        <option value="pcs">pcs</option>
+    </select><br><br>
 
-                    <button type="button" onclick="addIngredient()">Add Ingredient</button><br><br>
+    <label for="price">Price:</label><br>
+    <input type="number" id="price" name="price"><br><br>
 
-                    <!-- Display ready ingredients -->
-                    <div id="ready-ingredients"></div>
+    <button type="button" onclick="addIngredient()">Add Ingredient</button><br><br>
 
-                    <label for="image">Image Upload:</label><br>
-                    <input type="file" id="image" name="image" accept="image/*" required><br><br>
+    <!-- Display ready ingredients -->
+    <div id="ready-ingredients"></div>
 
-                    <input type="submit" value="Submit">
-                </form>
+    <label for="image">Image Upload:</label><br>
+    <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+
             </div>
             <span class="close-btn material-symbols-outlined" onclick="closeOverlay2()">Close</span>
         </div>

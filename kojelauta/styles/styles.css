@@ -417,6 +417,7 @@ input[type="submit"]:hover {
 .columns-container {
     display: flex;
     justify-content: left;
+    padding: 10px;
 }
 
 .column {
@@ -428,25 +429,20 @@ input[type="submit"]:hover {
 .column h3 {
     margin-top: 0;
     margin-bottom: 10px;
+    text-align: center;
+    font-size: clamp(1vw + 15px, 2vw, 5vw) !important;
 }
 
-.column .row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px; /* Add space between rows */
-}
-
-.column .row p {
+.column input, .column button {
     flex: 1;
-    margin: 0;
-}
-
-.column .row input {
-    flex: 1;
-    margin: 0 5px; /* Add some horizontal space between inputs */
+    margin: 5px;
     padding: 5px;
-    box-sizing: border-box; /* Ensure padding is included in width */
-    height: 38.9px; /* Set the same height for both input types */
+    box-sizing: border-box;
+    height: 38.9px; 
+}
+
+.column input[type="number"] {
+    max-width: clamp(5vw + 35px, 8vw, 11vw) !important;
 }
 
 #shopping-basket-dropdown {
@@ -456,9 +452,9 @@ input[type="submit"]:hover {
     z-index: 1;
     right: 0;
     height: 100%;
-    max-height: 95vh; /* Adjust as needed */
+    max-height: 90vh;
     overflow-y: auto;
-    display: none; /* Initially hidden */
+    display: none; 
 }
 
 body.noscroll {
