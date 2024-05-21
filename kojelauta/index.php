@@ -72,9 +72,6 @@ if (!isset($_SESSION['user'])) {
         <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
     </div>
 </div>
-<div class="shopping-basket-dropdown" id="shopping-basket-dropdown" style="display: none;">
-    <!-- Dropdown content will be dynamically inserted here -->
-</div>
 <div class="mySidebar" id="sidebar">
     <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
         <a href="/etusivu" class="w3-bar-item w3-button">Etusivu</a>
@@ -82,9 +79,14 @@ if (!isset($_SESSION['user'])) {
 </div>
 
     </div>
+    
+<div class="shopping-basket-dropdown" id="shopping-basket-dropdown" style="display: none;">
+    <!-- Dropdown content will be dynamically inserted here -->
+</div>
 
     <div id="layer_2" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
-        <center>
+        
+    <center>
             <div class="logo">
                 <a href="/etusivu" id="title" role="button">R e c i p e H u b</a>
             </div>
