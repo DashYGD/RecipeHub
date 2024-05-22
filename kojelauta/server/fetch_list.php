@@ -9,10 +9,9 @@ $db = $mongoClient->reseptisovellus;
 if (!$db) {
     die("MongoDB connection failed");
 }
-$collection = $db->list; // "list" collection
+$collection = $db->list;
 
-$searchResult = $collection->find();
+$searchResult = $collection->find(); // Retrieve all fields
 $results = iterator_to_array($searchResult);
-
 echo json_encode($results);
 ?>

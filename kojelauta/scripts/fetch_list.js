@@ -9,16 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (dropdown.classList.contains('show')) {
             fetchShoppingBasket();
-            body.classList.add('noscroll'); // Disable scrolling on main page
+            body.classList.add('noscroll'); 
         } else {
-            body.classList.remove('noscroll'); // Enable scrolling on main page
+            body.classList.remove('noscroll'); 
         }
     });
 
     document.addEventListener('click', function(event) {
         if (!dropdown.contains(event.target) && !basketButton.contains(event.target)) {
             dropdown.classList.remove('show');
-            body.classList.remove('noscroll'); // Enable scrolling on main page
+            body.classList.remove('noscroll'); 
         }
     });
 });
@@ -29,6 +29,7 @@ function fetchShoppingBasket() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var results = JSON.parse(xhr.responseText);
+            console.log(results);
             displayShoppingBasket(results);
         }
     };
@@ -38,6 +39,36 @@ function fetchShoppingBasket() {
 function displayShoppingBasket(results) {
     var dropdown = document.getElementById('shopping-basket-dropdown');
     dropdown.innerHTML = '';
+
+    var owner_id = '';
+    var combinedIngredients = {};
+
+    results.forEach(function(recipe) {
+        owner_id = recipe.owner;
+        if (recipe.ingredients) {
+            recipe.ingredients.forEach(function(ingredient) {
+                var key = ingredient.name + ingredient.unit;
+                if (!combinedIngredients[key]) {
+                    combinedIngredients[key] = {
+                        name: ingredient.name,
+                        quantity: 0,
+                        unit: ingredient.unit,
+                        price: 0
+                    };
+                }
+                combinedIngredients[key].quantity += parseFloat(ingredient.quantity);
+                combinedIngredients[key].price += parseFloat(ingredient.price);
+            });
+        }
+    });
+
+    if (Object.keys(combinedIngredients).length === 0) {
+        var emptyMessage = document.createElement('p');
+        emptyMessage.textContent = 'Empty';
+        dropdown.appendChild(emptyMessage);
+        dropdown.classList.add('show');
+        return;
+    }
 
     var ingredientColumn = document.createElement('div');
     ingredientColumn.classList.add('column');
@@ -70,56 +101,95 @@ function displayShoppingBasket(results) {
     actionTitle.textContent = 'Action:';
     actionColumn.appendChild(actionTitle);
 
-    var rowsContainer = document.createElement('div');
-    rowsContainer.classList.add('rows-container');
+    Object.values(combinedIngredients).forEach(function(ingredient) {
+        var row = document.createElement('div');
+        row.classList.add('row');
 
-    results.forEach(function(recipe) {
-        if (recipe.ingredients) {
-            recipe.ingredients.forEach(function(ingredient) {
-                var row = document.createElement('div');
-                row.classList.add('row');
+        var ingredientName = document.createElement('span');
+        ingredientName.textContent = ingredient.name;
+        row.appendChild(ingredientName);
 
-                var ingredientName = document.createElement('span');
-                ingredientName.textContent = ingredient.name;
-                row.appendChild(ingredientName);
+        var ingredientQuantity = document.createElement('span');
+        ingredientQuantity.textContent = ingredient.quantity;
+        row.appendChild(ingredientQuantity);
 
-                var ingredientQuantity = document.createElement('span');
-                ingredientQuantity.textContent = ingredient.quantity;
-                row.appendChild(ingredientQuantity);
+        var ingredientUnit = document.createElement('span');
+        ingredientUnit.textContent = ingredient.unit;
+        row.appendChild(ingredientUnit);
 
-                var ingredientUnit = document.createElement('span');
-                ingredientUnit.textContent = ingredient.unit;
-                row.appendChild(ingredientUnit);
+        var ingredientPrice = document.createElement('span');
+        ingredientPrice.textContent = ingredient.price.toFixed(2);
+        row.appendChild(ingredientPrice);
 
-                var ingredientPrice = document.createElement('span');
-                ingredientPrice.textContent = ingredient.price;
-                row.appendChild(ingredientPrice);
-
-                var editButton = document.createElement('button');
+        var editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.addEventListener('click', function() {
+            if (editButton.textContent === 'Edit') {
+                editButton.textContent = 'Save';
+                ingredientName.innerHTML = `<input type="text" value="${ingredient.name}">`;
+                ingredientQuantity.innerHTML = `<input type="number" value="${ingredient.quantity}">`;
+                var unitSelect = document.createElement('select');
+                ['g', 'kg', 'ml', 'l', 'pcs'].forEach(function(option) {
+                    var optionElement = document.createElement('option');
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    if (option === ingredient.unit) {
+                        optionElement.selected = true;
+                    }
+                    unitSelect.appendChild(optionElement);
+                });
+                ingredientUnit.innerHTML = '';
+                ingredientUnit.appendChild(unitSelect);
+                ingredientPrice.innerHTML = `<input type="number" value="${ingredient.price}">`;
+            } else {
                 editButton.textContent = 'Edit';
-                editButton.addEventListener('click', function() {
-                    row.classList.add('edit-mode');
-                });
-                row.appendChild(editButton);
+                var updatedIngredient = {
+                    name: ingredientName.querySelector('input').value,
+                    quantity: ingredientQuantity.querySelector('input').value,
+                    unit: ingredientUnit.querySelector('select').value,
+                    price: ingredientPrice.querySelector('input').value
+                };
+                updateIngredient(owner_id, ingredient.name, updatedIngredient, row);
+                ingredient.name = updatedIngredient.name;
+                ingredient.quantity = updatedIngredient.quantity;
+                ingredient.unit = updatedIngredient.unit;
+                ingredient.price = updatedIngredient.price;
+                ingredientName.textContent = ingredient.name;
+                ingredientQuantity.textContent = ingredient.quantity;
+                ingredientUnit.textContent = ingredient.unit;
+                ingredientPrice.textContent = parseFloat(ingredient.price).toFixed(2);
+            }
+        });
 
-                var saveButton = document.createElement('button');
-                saveButton.textContent = 'Save';
-                saveButton.style.display = 'none';
-                saveButton.addEventListener('click', function() {
-                    row.classList.remove('edit-mode');
-                });
-                row.appendChild(saveButton);
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function() {
+            deleteIngredient(owner_id, ingredient.name, row);
+        });
 
-                var deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.addEventListener('click', function() {
-                    // Implement delete functionality here
-                });
-                row.appendChild(deleteButton);
+        var shareButton = document.createElement('button');
+        shareButton.textContent = 'Share';
+        shareButton.addEventListener('click', function() {
+            var receiptContent = `Tuote: ${ingredient.name}\nMäärä: ${ingredient.quantity}${ingredient.unit}\nHinta arvio: ${ingredient.price}€\n`;
+            var blob = new Blob([receiptContent], { type: 'text/plain' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = `${ingredient.name}-receipt.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
 
-                rowsContainer.appendChild(row);
-            });
-        }
+        ingredientColumn.appendChild(ingredientName);
+        quantityColumn.appendChild(ingredientQuantity);
+        unitColumn.appendChild(ingredientUnit);
+        priceColumn.appendChild(ingredientPrice);
+        var actionRow = document.createElement('div');
+        actionRow.classList.add('row');
+        actionRow.appendChild(editButton);
+        actionRow.appendChild(deleteButton);
+        actionRow.appendChild(shareButton);
+        actionColumn.appendChild(actionRow);
     });
 
     var columnsContainer = document.createElement('div');
@@ -131,21 +201,50 @@ function displayShoppingBasket(results) {
     columnsContainer.appendChild(actionColumn);
 
     dropdown.appendChild(columnsContainer);
-    dropdown.appendChild(rowsContainer); // Append the rowsContainer to display the rows
     dropdown.classList.add('show');
 }
 
-
-
-function deleteIngredient(id, row) {
+function updateIngredient(owner, oldName, updatedIngredient, rowElement) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'server/delete_ingredient.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.open('POST', 'server/update_ingredient.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            // Remove the row from the DOM
-            row.parentNode.removeChild(row);
+            var response = JSON.parse(xhr.responseText);
+            if (response.status === 'success') {
+                console.log('Ingredient updated successfully');
+                fetchShoppingBasket(); // Refresh the list
+            } else {
+                alert(response.message);
+            }
         }
     };
-    xhr.send('id=' + id);
+
+    var data = {
+        owner: owner,
+        oldName: oldName,
+        updatedIngredient: updatedIngredient
+    };
+
+    xhr.send(JSON.stringify(data));
+}
+
+function deleteIngredient(owner, ingredientName, rowElement) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'server/delete_ingredient.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.status === 'success') {
+                fetchShoppingBasket();
+            } else {
+                alert(response.message);
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify({ owner: owner, name: ingredientName }));
 }

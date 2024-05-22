@@ -60,6 +60,8 @@ function updateSearchResults_1(results) {
 function addToList(recipe) {
     // Remove the _id field if it exists
     delete recipe._id;
+    delete recipe.category;
+    delete recipe.image;
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'server/add_to_list.php', true);

@@ -416,7 +416,7 @@ input[type="submit"]:hover {
 
 .columns-container {
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
     padding: 10px;
 }
 
@@ -430,15 +430,34 @@ input[type="submit"]:hover {
     margin-top: 0;
     margin-bottom: 10px;
     text-align: center;
-    font-size: clamp(1vw + 15px, 2vw, 5vw) !important;
+    font-size: clamp(1vw + 10px, 2vw, 5vw) !important;
 }
 
-.column input, .column button {
+.column input, .column button, .column select {
     flex: 1;
     margin: 5px;
     padding: 5px;
     box-sizing: border-box;
-    height: 38.9px; 
+}
+
+.column .row {
+    
+    flex: 1;
+    margin: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    height: clamp(2vw, 3vw, 5vw) !important;
+}
+
+.column span {
+    flex: 1;
+    padding: 5px;
+    box-sizing: border-box;
+    height: clamp(1vw + 5px, 2vw, 5vw) !important;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .column input[type="number"] {
