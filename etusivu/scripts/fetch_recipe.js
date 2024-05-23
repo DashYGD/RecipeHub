@@ -3,6 +3,7 @@ function updateSearchResults_1(results) {
   searchResultsContainer.innerHTML = '';
 
   for (var i = 0; i < results.length; i++) {
+    searchResultsContainer.style.display = "flex";
       var resultItem = document.createElement('div');
       resultItem.className = 'recipe-card';
       resultItem.name = i;
@@ -93,6 +94,7 @@ function searchRecipes() {
     xhr.send();
   } else {
     searchResultsContainer.innerHTML = '';
+    searchResultsContainer.style.display = "none";
   }
   return true;
 }

@@ -1,32 +1,39 @@
 <?php
-// update_ingredient.php
-header('Content-Type: application/json');
+session_start();
+
+require __DIR__ . '/../../vendor/autoload.php';
+
+$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
+$db = $mongoClient->reseptisovellus;
+
+if (!$db) {
+    die("MongoDB connection failed");
+}
+
+$collection = $db->list;
 
 $data = json_decode(file_get_contents('php://input'), true);
+
 $owner = $data['owner'];
 $oldName = $data['oldName'];
 $name = $data['name'];
-$quantity = $data['quantity'];
+$quantity = (float) $data['quantity'];
 $unit = $data['unit'];
-$price = $data['price'];
+$price = (float) $data['price'];
 
-// Database connection (adjust with your database details)
-$conn = new mysqli('localhost', 'username', 'password', 'database');
+$updateResult = $collection->updateOne(
+    ['owner' => new MongoDB\BSON\Regex($owner, 'i'), 'ingredients.name' => $oldName],
+    ['$set' => [
+        'ingredients.$.name' => $name,
+        'ingredients.$.quantity' => $quantity,
+        'ingredients.$.unit' => $unit,
+        'ingredients.$.price' => $price
+    ]]
+);
 
-if ($conn->connect_error) {
-    die(json_encode(['status' => 'error', 'message' => 'Database connection failed.']));
-}
-
-$sql = "UPDATE ingredients SET name=?, quantity=?, unit=?, price=? WHERE owner=? AND name=?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('ssssss', $name, $quantity, $unit, $price, $owner, $oldName);
-
-if ($stmt->execute()) {
+if ($updateResult->getModifiedCount() > 0) {
     echo json_encode(['status' => 'success']);
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Failed to update ingredient.']);
 }
-
-$stmt->close();
-$conn->close();
 ?>

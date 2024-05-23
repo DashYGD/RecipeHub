@@ -87,10 +87,11 @@ if (!isset($_SESSION['user'])) {
         </center>
     </div>
 
+    
+    <div id="add-recipe-btn" class="add-recipe-btn" onclick="openOverlay2()">+</div>
+
 <div id="layer_3" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
     <center>
-        <h1>Lisää</h1>
-        <div id="add-recipe-btn" class="add-recipe-btn" onclick="openOverlay2()">+</div>
         <div id="overlay2" class="overlay2">
             <div id="overlay-content2" class="overlay-content2">
             <form id="add-recipe-form" method="POST">

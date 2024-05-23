@@ -149,7 +149,18 @@ function displayShoppingBasket(results) {
                     unit: ingredientUnit.querySelector('select').value,
                     price: ingredientPrice.querySelector('input').value
                 };
-                updateIngredient(owner_id, ingredient.name, updatedIngredient, row);
+
+                // Check if there are changes
+                if (
+                    ingredient.name !== updatedIngredient.name ||
+                    ingredient.quantity !== updatedIngredient.quantity ||
+                    ingredient.unit !== updatedIngredient.unit ||
+                    ingredient.price !== updatedIngredient.price
+                ) {
+                    updateIngredient(owner_id, ingredient.name, updatedIngredient);
+                }
+
+                // Update the displayed values
                 ingredient.name = updatedIngredient.name;
                 ingredient.quantity = updatedIngredient.quantity;
                 ingredient.unit = updatedIngredient.unit;
@@ -164,7 +175,7 @@ function displayShoppingBasket(results) {
         var deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.addEventListener('click', function() {
-            deleteIngredient(owner_id, ingredient.name, row);
+            deleteIngredient(owner_id, ingredient.name);
         });
 
         var shareButton = document.createElement('button');
@@ -204,7 +215,7 @@ function displayShoppingBasket(results) {
     dropdown.classList.add('show');
 }
 
-function updateIngredient(owner, oldName, updatedIngredient, rowElement) {
+function updateIngredient(owner, oldName, updatedIngredient) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'server/update_ingredient.php', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -213,8 +224,8 @@ function updateIngredient(owner, oldName, updatedIngredient, rowElement) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var response = JSON.parse(xhr.responseText);
             if (response.status === 'success') {
+                fetchShoppingBasket();
                 console.log('Ingredient updated successfully');
-                fetchShoppingBasket(); // Refresh the list
             } else {
                 alert(response.message);
             }
@@ -224,13 +235,17 @@ function updateIngredient(owner, oldName, updatedIngredient, rowElement) {
     var data = {
         owner: owner,
         oldName: oldName,
-        updatedIngredient: updatedIngredient
+        name: updatedIngredient.name,
+        quantity: updatedIngredient.quantity,
+        unit: updatedIngredient.unit,
+        price: updatedIngredient.price
     };
-
+    
     xhr.send(JSON.stringify(data));
 }
 
-function deleteIngredient(owner, ingredientName, rowElement) {
+
+function deleteIngredient(owner, ingredientName) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'server/delete_ingredient.php', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
