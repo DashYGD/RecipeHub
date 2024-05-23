@@ -18,7 +18,7 @@ if (!$db) {
 
 // Check if user is logged in
 if (!isset($_SESSION['user'])) {
-    header('Location: /kirjaudu/logout');
+    header('Location: /logout');
     exit();
 } else {
     $user_id = $_SESSION['user'];
@@ -60,7 +60,7 @@ if (!isset($_SESSION['user'])) {
         <a class="w3-hide-small" href="#">Asetukset</a>
     </div>
     <div class="right-links">
-        <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
+        <a href="/logout" role="button"><span class="loginbutton material-symbols-outlined">logout</span></a>
         <a href="#" role="button" id="shoppingBasketButton" class="shopping-basket"><span class="cartbutton material-symbols-outlined">shopping_basket</span></a>
         <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
     </div>

@@ -1,3 +1,71 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Include MongoDB library
+require __DIR__ . '/../vendor/autoload.php';
+
+// Connect to MongoDB
+$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
+$db = $mongoClient->reseptisovellus;
+
+// Check connection
+if (!$db) {
+    die("MongoDB connection failed");
+}
+
+checkRememberMe($db);
+
+function checkRememberMe($db) {
+    if (isset($_COOKIE['auth_token'])) {
+        $token = $_COOKIE['auth_token'];
+        
+        
+        if (!preg_match('/^[a-f0-9]{64}$/', $token)) {
+            return;
+        }
+        
+        $result = $db->users->findOne(['token' => $token]);
+        if ($result) {
+            session_regenerate_id(true);
+            if ($result['is_admin'] == 1) {
+                $_SESSION['admin'] = true;
+                header("Location: admin");
+            } else {
+                $_SESSION['user'] = $result['_id'];
+            }
+        } else {
+        }
+    }
+}
+
+function isUserLoggedIn() {
+    return isset($_SESSION['user']) || isset($_SESSION['admin']);
+}
+
+
+if (isset($_SESSION['login_error'])) {
+    $login_error = $_SESSION['login_error'];
+    unset($_SESSION['login_error']);
+}
+
+$registration_attempt = isset($_SESSION['registration_attempt']) && $_SESSION['registration_attempt'];
+
+if ($registration_attempt) {
+    if (isset($_SESSION['register_error'])) {
+        $register_error = $_SESSION['register_error'];
+        unset($_SESSION['register_error']);
+    } elseif (isset($_SESSION['register_success'])) {
+        $register_success = $_SESSION['register_success'];
+        unset($_SESSION['register_success']);
+    }
+    unset($_SESSION['registration_attempt']);
+}
+
+$loggedIn = isUserLoggedIn();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,8 +113,8 @@
                 </div> 
 
                 <div class="right-links">
-                    <a href="/kirjaudu" role="button"><span class="loginbutton material-symbols-outlined">settings</span></a>
-                    <a href="/kirjaudu" role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
+                    <a role="button"><span class="material-symbols-outlined">settings</span></a>
+                    <a role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
             </div>
@@ -122,11 +190,69 @@
         </div>
     </div>
 
+    <div id="layer_3" style="display:none;">
+    <div id="layer_4">
+        <center>
+            <h1>RecipeHub Kirjautuminen</h1>
+        </center>
+
+        <form class="w3-container" action="server/process.php" method="POST" id="login-in">
+            <div class="w3-section">
+                <label><b>Sähköposti/Käyttäjänimi</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Sähköposti/Käyttäjänimi" name="email-username_1" id="email-username_1" required>
+                <label><b>Salasana</b></label>
+                <input class="w3-input w3-border" type="password" placeholder="Salasana" name="password_1" id="password_1" required>
+                <input class="w3-check w3-margin-top" type="checkbox" name="muista_minut" checked="checked"> Muista minut</button>
+                <span class="w3-right w3-margin-top w3-padding w3-hide-small">Unohditko <a href="#">salasanasi?</a></span>
+                <input class="w3-button w3-block w3-green w3-section w3-padding" type="submit" value="Kirjaudu sisään">
+                <?php if (isset($login_error)) { echo "<p style='color: red;'>$login_error</p>"; } ?>
+                <?php if (isset($register_success)) { echo "<p style='color: red;'>$register_success</p>"; } ?>
+                <p>Ei vielä käyttäjää? <a href="#" onclick="toggleForms()">Rekisteröidy</a></p>
+            </div>
+        </form>
+
+        <form class="w3-container" action="process" method="POST" id="register-in">
+            <div class="w3-section">
+                <label><b>Käyttäjänimi</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Käyttäjänimi" name="name_2" id="name_2" required>
+                <label><b>Sähköposti</b></label>
+                <input class="w3-input w3-border w3-margin-bottom" type="email" name="email_2" id="email_2" placeholder="Sähköposti" required>
+                <label><b>Salasana</b></label>
+                <input class="w3-input w3-border" type="password" name="password_2" id="password_2" placeholder="Salasana" required>
+                <?php if (isset($register_error)) { echo "<p style='color: red;'>$register_error</p>"; } ?>
+                <input class="w3-button w3-block w3-green w3-section w3-padding" type="submit" value="Luo käyttäjä">
+                <p>On jo käyttäjä? <a href="#" onclick="toggleForms()">Kirjaudu sisään</a></p>
+            </div>
+        </form>
+    </div></div>
+
     <script>
-        function navigate(mealType) {
-            // Tässä voit toteuttaa toiminnallisuuden, joka vie käyttäjän valitun ateriatyypin reseptikortille.
-            // Voit esimerkiksi käyttää JavaScriptin window.location -ominaisuutta.
-            console.log('Navigating to ' + mealType + ' recipe...');
+        function toggleForms() {
+            var loginForm = document.getElementById('login-in');
+            var registerForm = document.getElementById('register-in');
+
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            }
+        }
+
+        var registrationAttempt = <?php echo $registration_attempt ? 'true' : 'false'; ?>;
+
+        if (registrationAttempt) {
+            if ("<?php echo isset($register_success); ?>") {
+                document.getElementById("register-in").style.display = "none";
+                document.getElementById("login-in").style.display = "block";
+            } else {
+                document.getElementById("register-in").style.display = "block";
+                document.getElementById("login-in").style.display = "none";
+            }
+        } else {
+            document.getElementById("login-in").style.display = "block";
+            document.getElementById("register-in").style.display = "none";
         }
     </script>    
 <script type="text/javascript" src="scripts/animation.js"></script>
@@ -135,5 +261,7 @@
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
 <script type="text/javascript" src="scripts/fetch_recipe.js"></script>
 <script type="text/javascript" src="scripts/filter.js"></script>
+<script type="text/javascript" src="scripts/overlay.js"></script>
+<script type="text/javascript" src="scripts/navigation.js"></script>
 </body>
 </html>
