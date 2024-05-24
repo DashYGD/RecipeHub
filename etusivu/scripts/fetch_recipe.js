@@ -38,7 +38,7 @@ function updateSearchResults_1(results) {
     var ingredientsHtml = '';
     if (recipe.ingredients) {
         for (var j = 0; j < recipe.ingredients.length; j++) {
-            ingredientsHtml += '<p>' + recipe.ingredients[j].name + ' (' + recipe.ingredients[j].quantity + ') - ' + recipe.ingredients[j].price.toFixed(2) + ' €</p>';
+            ingredientsHtml += '<p>' + recipe.ingredients[j].name + ' (' + recipe.ingredients[j].quantity + ') - ' + recipe.ingredients[j].price + ' €</p>';
         }
     }
   

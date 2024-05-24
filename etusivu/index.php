@@ -69,7 +69,6 @@ if ($registration_attempt) {
 
 $loggedIn = isUserLoggedIn();
 $username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
-echo $user
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +96,7 @@ echo $user
 <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Ropa+Sans:ital@0;1&display=swap" rel="stylesheet">
 <script>
         var isLoggedIn = <?php echo json_encode($loggedIn); ?>;
-    var username = <?php echo json_encode($username); ?>;
+        var username = <?php echo json_encode($username); ?>;
     </script>
 </head>
 <body>
@@ -107,7 +106,7 @@ echo $user
         <div id="sticky" style="z-index: 1;">
             <div id="navbar" class="navbar" style="z-index: 0">
                 <div class="left-links">
-                <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
+                    <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                 </div>
@@ -124,22 +123,24 @@ echo $user
 
                 <div class="right-links">
                     <a role="button" style="display:none;" id="settingsButton"><span class="material-symbols-outlined">settings</span></a>
-                    <div id="settingsDropdown">
-                        <a href="#">Option 1</a>
-                        <a href="#">Option 2</a>
-                        <a href="#">Option 3</a>
-                    </div>
                     <a role="button"><span class="loginbutton material-symbols-outlined" id="authButton">login</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
+                
             </div>
             <div class="mySidebar" id="sidebar">
                 <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
                     <a href="/etusivu" class="w3-bar-item w3-button">Etusivu</a>
                 </div>
             </div>
+            <div id="settingsDropdown" style="display:none;">
+                        <a href="#">Option 1</a>
+                        <a href="#">Option 2</a>
+                        <a href="#">Option 3</a>
+                    </div>
+                
+            </div>
         </div>
-    </div>
 
     <div id="layer_2"  style="opacity:0;">
         <div class="search-container">
@@ -243,43 +244,44 @@ echo $user
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var authButton = document.getElementById('authButton');
-            var settingsButton = document.getElementById('settingsButton');
-            var settingsDropdown = document.getElementById('settingsDropdown');
-            var welcomeMessage = document.getElementById('welcomeMessage');
-            var container1 = document.getElementById("layer_3");
+        var authButton = document.getElementById('authButton');
+        var settingsButton = document.getElementById('settingsButton');
+        var settingsDropdown = document.getElementById('settingsDropdown');
+        var welcomeMessage = document.getElementById('welcomeMessage');
+        var container1 = document.getElementById("layer_3");
 
-            if (isLoggedIn) {
-                authButton.textContent = 'logout';
-                authButton.onclick = function() {
-                    window.location.href = '../static/server/logout.php';
-                };
+    if (isLoggedIn) {
+        authButton.textContent = 'logout';
+        authButton.onclick = function() {
+            window.location.href = '../static/server/logout.php';
+        };
 
-                settingsButton.style.display = 'inline-block';
-                welcomeMessage.textContent = 'Welcome ' + username;
-                welcomeMessage.style.display = 'block';
-                setTimeout(function() {
-                    welcomeMessage.style.display = 'none';
-                }, 5000);
+        settingsButton.style.display = 'flex';
+        welcomeMessage.textContent = 'Welcome ' + username;
+        welcomeMessage.style.display = 'block';
+        setTimeout(function() {
+            welcomeMessage.style.display = 'none';
+        }, 5000);
 
-                settingsButton.addEventListener('click', function() {
-                    settingsDropdown.style.display = settingsDropdown.style.display === 'block' ? 'none' : 'block';
-                });
+        settingsButton.addEventListener('click', function() {
+            settingsDropdown.style.display = settingsDropdown.style.display === 'block' ? 'none' : 'block';
+        });
 
-                document.addEventListener('click', function(event) {
-                    if (!settingsButton.contains(event.target) && !settingsDropdown.contains(event.target)) {
-                        settingsDropdown.style.display = 'none';
-                    }
-                });
-            } else {
-                authButton.textContent = 'login';
-                authButton.onclick = function() {
-                    container1.style.display = 'flex';
-                };
-
-                settingsButton.style.display = 'none';
+        document.addEventListener('click', function(event) {
+            if (!settingsButton.contains(event.target) && !settingsDropdown.contains(event.target)) {
+                settingsDropdown.style.display = 'none';
             }
         });
+    } else {
+        authButton.textContent = 'login';
+        authButton.onclick = function() {
+            container1.style.display = 'flex';
+        };
+
+        settingsButton.style.display = 'none';
+    }
+});
+
 
 
         function toggleForms() {
@@ -316,7 +318,6 @@ echo $user
 <script type="text/javascript" src="../static/scripts/navigationbar.js"></script>
 <script type="text/javascript" src="scripts/fetch_recipe.js"></script>
 <script type="text/javascript" src="scripts/filter.js"></script>
-<script type="text/javascript" src="scripts/overlay.js"></script>
 <script type="text/javascript" src="scripts/navigation.js"></script>
 </body>
 </html>
