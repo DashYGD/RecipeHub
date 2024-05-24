@@ -5,25 +5,10 @@ ErrorDocument 403 /error/ERROR403.html
 
 RewriteRule ^$ /etusivu [L,R=302]
 
-RewriteRule ^/?etusivu/kirjaudu?$ /kirjaudu [L,R=302]
-
-RewriteRule ^/?etusivu/login?$ /kirjaudu [L,R=302]
-RewriteRule ^/?login?$ /kirjaudu [L,R=302]
-RewriteRule ^/?kirjaudu/server/logout?$ /kirjaudu/logout [L,R=302]
-RewriteRule ^/?kirjaudu/admin?$ /admin [L,R=302]
-RewriteRule ^/?kirjaudu/kojelauta?$ /kojelauta [L,R=302]
-RewriteRule ^/?kirjaudu/login?$ /kirjaudu [L,R=302]
 
 
 
-RewriteRule ^/?kirjaudu/?$ /kirjaudu/login-register\.php [END]
-RewriteRule ^/?kirjaudu/process?$ /kirjaudu/process\.php [END]
+RewriteRule ^/?etusivu/process?$ /etusivu/server/process\.php [END]
 RewriteRule ^/?admin?$ /admin/index\.php [END]
 RewriteRule ^/?kojelauta?$ /kojelauta/index\.php [END]
-RewriteRule ^/?kirjaudu/logout?$ /static/server/logout\.php [END]
-
-
-RewriteRule ^kirjaudu/login-register\.php$ [R=404,L]
-RewriteRule ^kirjaudu/process\.php$ [R=404,L]
-RewriteRule ^kirjaudu/server/logout\.php$ [R=404,L]
-RewriteRule ^kirjaudu/admin\.php$ [R=404,L]
+RewriteRule ^/?logout?$ /static/server/logout\.php [END]

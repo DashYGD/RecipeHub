@@ -1,6 +1,6 @@
 <?php
 // Include MongoDB library
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 // Connect to MongoDB
 $mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
@@ -44,13 +44,13 @@ if (isset($_POST['email-username_1'], $_POST['password_1'])) {
             header("Location: admin");
         } else {
             $_SESSION['user'] = $user['_id'];
-            header("Location: kojelauta");
+            header("Location: ../../etusivu");
         }
         exit();
     } else {
         start_session_if_not_started();
         $_SESSION['login_error'] = "Väärä sähköposti/käyttäjänimi tai salasana";
-        header("Location: login");
+        header("Location: ../../etusivu");
         exit();
     }
 }

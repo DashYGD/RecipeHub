@@ -18,13 +18,15 @@ $ingredients = [];
 
 $ingredient = $_POST['ingredient'];
 $quantity = $_POST['quantity'];
+$unit = $_POST['unit']; // Adjusted to use the new name
 $price = $_POST['price'];
 
 for ($i = 0; $i < count($ingredient); $i++) {
-    if (!empty($ingredient[$i]) && !empty($quantity[$i]) && !empty($price[$i])) {
+    if (!empty($ingredient[$i]) && !empty($quantity[$i]) && !empty($unit[$i]) && !empty($price[$i])) {
         $ingredients[] = [
             'name' => $ingredient[$i],
-            'quantity' => $quantity[$i],
+            'quantity' => $quantity[$i], // Adjusted to use the new name
+            'unit' => $unit[$i], // Adjusted to use the new name
             'price' => $price[$i]
         ];
     }
@@ -37,17 +39,16 @@ $imageUrl = '';
 if (!empty($_FILES['image']['name'])) {
     $imageTmpName = $_FILES['image']['tmp_name'];
     $fileName = $_FILES['image']['name'];
-    $newName = uniqid('', true) . '.' . $fileName;
-    $imageDes = 'C:\xampp1\htdocs\static\images\\' . $newName;
+    $newName = uniqid('', true) . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
+    $imageDes = 'C:/xampp1/htdocs/static/images/' . $newName;
     echo "Destination Path: " . $imageDes . "<br>";
     if (move_uploaded_file($imageTmpName, $imageDes)) {
-        $imageURL = '../static/images/' . $newName;
+        $imageUrl = '../static/images/' . $newName;
         echo "File moved successfully!";
     } else {
         echo "Failed to move file.";
     }
 }
-
 
 $collection = $db->recipes;
 $result = $collection->insertOne([
@@ -55,7 +56,7 @@ $result = $collection->insertOne([
     'category' => $category,
     'ingredients' => $ingredients,
     'owner' => $user_id,
-    'image' => $imageURL
+    'image' => $imageUrl
 ]);
 
 if ($result->getInsertedCount() > 0) {
