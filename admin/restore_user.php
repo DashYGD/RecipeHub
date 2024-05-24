@@ -7,13 +7,16 @@ require '../vendor/autoload.php';
 $client = new MongoDB\Client("mongodb://65.21.248.139:56123/");
 $db = $client->reseptisovellus;
 
-// Select the users collection
+// Get collection
 $users = $db->users;
+$users1 = $db->user_archive;
 
-// Remove user
+// Get user by ID
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $users->deleteOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+    $user = $users1->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+    $users1->deleteOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+    $users->insertOne($user);
 }
 
 // Redirect to users page
