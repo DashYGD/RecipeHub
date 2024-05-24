@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
                 </div>
                 <div class="right-links">
-                    <a href="/kirjaudu/logout" role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
+                    <a href="../static/server/logout.php" role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
             </div>
