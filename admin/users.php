@@ -56,6 +56,8 @@
                     echo "<td>[REDACTED]</td>";
                     echo "<td>" . $admin . "</td>";
                     echo "<td>";
+                    echo "<a href=\"archive_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-archive\"></i></a>";
+                    echo " | ";
                     echo "<a href=\"remove_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-trash\"></i></a>";
                     echo "</td>";
                     echo "</tr>";
@@ -75,6 +77,8 @@
                     echo "<td>[REDACTED]</td>";
                     echo "<td>" . $admin . "</td>";
                     echo "<td>";
+                    echo "<a href=\"restore_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-arrow-rotate-left\"></i></a>";
+                    echo " | ";
                     echo "<a href=\"remove_user_archive.php?id=" . $user['_id'] . "\"><i class=\"fas fa-trash\"></i></a>";
                     echo "</td>";
                     echo "</tr>";

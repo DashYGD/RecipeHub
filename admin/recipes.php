@@ -105,6 +105,8 @@ $recipe_archives = $recipe_archive->find();
                             ?>
                         </td>
                         <td>
+                            <a href="archive_recipe.php?id=<?= htmlspecialchars($recipe['_id']) ?>"><i class="fas fa-archive"></i></a>
+                            |
                             <a href="remove_recipe.php?id=<?= htmlspecialchars($recipe['_id']) ?>"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
@@ -171,6 +173,8 @@ $recipe_archives = $recipe_archive->find();
                             ?>
                         </td>
                         <td>
+                            <a href="restore_recipe.php?id=<?= htmlspecialchars($recipe['_id']) ?>"><i class="fas fa-arrow-rotate-left"></i></a>
+                            |
                             <a href="remove_recipe_archive.php?id=<?= htmlspecialchars($recipe['_id']) ?>"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
