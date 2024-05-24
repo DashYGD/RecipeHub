@@ -1,5 +1,8 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -9,21 +12,34 @@ $db = $mongoClient->reseptisovellus;
 if (!$db) {
     die("MongoDB connection failed");
 }
-$collection = $db->recipes;
 
-$query = $_GET['query'];
-$category = isset($_GET['category']) ? $_GET['category'] : ''; // Check if category is set, otherwise use empty string
-
-$regexQuery = [
-    'name' => ['$regex' => new MongoDB\BSON\Regex($query, 'i')]
-];
-
-if ($category !== '') { // Check if a category is provided
-    $regexQuery['category'] = ['$regex' => new MongoDB\BSON\Regex($category, 'i')];
+if (isset($_SESSION['user_i'])) {
+    $user_id = $_SESSION['user_i'];
 }
 
-$searchResult = $collection->find($regexQuery);
+$collection = $db->recipes;
 
-$results = iterator_to_array($searchResult);
+$results = $collection->find([
+    'owner' => ['$regex' => new MongoDB\BSON\Regex($user_id, 'i')]
+]);
 
-echo json_encode($results);
+$searchResult = iterator_to_array($results);
+
+echo json_encode($searchResult);
+
+/*foreach ($searchResult as $i => $recipe) {
+    $totalCost = 0;
+
+    foreach ($recipe['ingredients'] as $ingredient) {
+        $totalCost += $ingredient['price'];
+    }
+
+    $totalCost = number_format($totalCost, 2);
+
+    echo '<br><div class="recipe-card" data-index="' . $i . '">';
+    echo '<img src="../etusivu/' . $recipe['image'] . '" alt="' . $recipe['name'] . '">';
+    echo '<h2>' . $recipe['name'] . '</h2>';
+    echo '<p><strong>Category:</strong> ' . ($recipe['category'] ? $recipe['category'] : '') . '</p>';
+    echo '<p> <strong>Total Cost: </strong>' . $totalCost . ' €</p>';
+    echo '</div>';
+}*/

@@ -54,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <a class="active w3-hide-small" href="/etusivu">Etusivu</a>
                     <a class="w3-hide-small" href="?page=users">Käyttäjät</a>
                     <a class="w3-hide-small" href="?page=recipes">Reseptit</a>
+                    <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
                 </div>
                 <div class="right-links">
                     <a href="../static/server/logout.php" role="button"><span class="loginbutton material-symbols-outlined">login</span></a>

@@ -1,49 +1,4 @@
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 
-
-// Include MongoDB library
-require __DIR__ . '/../vendor/autoload.php';
-
-// Connect to MongoDB
-$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
-$db = $mongoClient->reseptisovellus;
-
-// Check connection
-if (!$db) {
-    die("MongoDB connection failed");
-}
-
-// Check if user is logged in
-if (!isset($_SESSION['user'])) {
-    header('Location: /logout');
-    exit();
-} else {
-    $user_id = $_SESSION['user'];
-    //echo $user_id;
-}
-?>
-
-<!DOCTYPE html>
-<html lang="fi">
-<head>
-    <title>Kojelauta</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="../static\images\favicon.ico">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/W3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="../static/styles/core.css">
-</head>
-<body>
 
     <div id="layer_1" style="opacity:0;">
         <div id="sticky" style="z-index: 1;">
@@ -74,7 +29,7 @@ if (!isset($_SESSION['user'])) {
     </div>
     
 <div class="shopping-basket-dropdown" id="shopping-basket-dropdown" style="display: none;">
-    <!-- Dropdown content will be dynamically inserted here -->
+
 </div>
 
     <div id="layer_2" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
@@ -105,7 +60,6 @@ if (!isset($_SESSION['user'])) {
         <option value="valipala">Välipala</option>
         <option value="paivallinen">Päivällinen</option>
         <option value="iltapala">Iltapala</option>
-        <!-- Add more options as needed -->
     </select><br><br>
 
     <label for="ingredient">Ingredient:</label><br>
@@ -128,7 +82,6 @@ if (!isset($_SESSION['user'])) {
 
     <button type="button" onclick="addIngredient()">Add Ingredient</button><br><br>
 
-    <!-- Display ready ingredients -->
     <div id="ready-ingredients"></div>
 
     <label for="image">Image Upload:</label><br>

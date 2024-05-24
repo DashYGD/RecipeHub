@@ -111,6 +111,6 @@ font-size: 15px;
 .left-links a:hover,
 .center-links a:hover,
 .right-links a:hover {
-    background-color: #555;
+    background-color: #555 !important;
 }
 

@@ -21,7 +21,6 @@ function checkRememberMe($db) {
     if (isset($_COOKIE['auth_token'])) {
         $token = $_COOKIE['auth_token'];
         
-        
         if (!preg_match('/^[a-f0-9]{64}$/', $token)) {
             return;
         }
@@ -29,17 +28,19 @@ function checkRememberMe($db) {
         $result = $db->users->findOne(['token' => $token]);
         if ($result) {
             session_regenerate_id(true);
-            if ($result['is_admin']) {
+            if (isset($result['is_admin'])) {
                 if ($result['is_admin'] == 1) {
-                $_SESSION['admin'] = true;
-                header("Location: ../admin");
+                    $_SESSION['admin'] = true;
+                    header("Location: admin");
                 } else {
-                    $_SESSION['user'] = $result['_id'];
+                    $_SESSION['user'] = (array) $result; // Store as array
+                    $_SESSION['user_i'] = $result['_id'];
+                    echo $_SESSION['user_i'];
                 }
             } else {
-                $_SESSION['user'] = $result['_id'];
+                $_SESSION['user'] = (array) $result; // Store as array
+                $_SESSION['user_i'] = $result['_id'];
             }
-        } else {
         }
     }
 }
@@ -47,7 +48,6 @@ function checkRememberMe($db) {
 function isUserLoggedIn() {
     return isset($_SESSION['user']) || isset($_SESSION['admin']);
 }
-
 
 if (isset($_SESSION['login_error'])) {
     $login_error = $_SESSION['login_error'];
@@ -68,7 +68,7 @@ if ($registration_attempt) {
 }
 
 $loggedIn = isUserLoggedIn();
-$username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
+$username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -97,6 +97,8 @@ $username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 <script>
         var isLoggedIn = <?php echo json_encode($loggedIn); ?>;
         var username = <?php echo json_encode($username); ?>;
+
+        
     </script>
 </head>
 <body>
@@ -116,13 +118,14 @@ $username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
                 
 
                 <div class="center-links">
-                    <a class="w3-hide-small" href="#">tyhjä</a>
-                    <a class="w3-hide-small" href="#">Suosikit</a>
-                    <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
+                    <a class="w3-hide-small" href="#" onclick="showSection('section_1')">Hub</a>
+                    <a class="w3-hide-small" href="#" onclick="showSection('section_2')">Reseptini</a>
+                    <a class="w3-hide-small w3-hide-medium" href="#">Suosikit</a>
                 </div> 
 
                 <div class="right-links">
                     <a role="button" style="display:none;" id="settingsButton"><span class="material-symbols-outlined">settings</span></a>
+                    <a href="#" role="button" id="shoppingBasketButton" class="shopping-basket"><span class="cartbutton material-symbols-outlined">shopping_basket</span></a>
                     <a role="button"><span class="loginbutton material-symbols-outlined" id="authButton">login</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
@@ -133,20 +136,16 @@ $username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
                     <a href="/etusivu" class="w3-bar-item w3-button">Etusivu</a>
                 </div>
             </div>
-            <div id="settingsDropdown" style="display:none;">
-                        <a href="#">Option 1</a>
-                        <a href="#">Option 2</a>
-                        <a href="#">Option 3</a>
-                    </div>
                 
             </div>
         </div>
 
+        <div style="display:block;" id="section_1">
     <div id="layer_2"  style="opacity:0;">
         <div class="search-container">
             
             <div class="buttons-container">
-                <input id="search-input_1" oninput="searchRecipes(event)" type="text" placeholder="Hae reseptiä...">
+                <input id="search-input_1" oninput="searchRecipes1(event)" type="text" placeholder="Hae reseptiä...">
                 <input id="filter-button_1" onclick="openFilter()" type="button" placeholder="Filter">
                 <input type="submit" value="Hae">
             </div>
@@ -166,7 +165,7 @@ $username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 
 
 
-        <div id="search-results_1"></div>
+        <div id="search-results_2"></div>
         <div id="overlay" class="overlay">
             <div id="overlay-content" class="overlay-content"></div>
             <span class="close-btn" onclick="closeOverlay()">&times;</span>
@@ -205,6 +204,94 @@ $username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
             </div>
         </div>
     </div>
+</div>
+
+<div style="display:none;" id="section_2">
+<div class="shopping-basket-dropdown" id="shopping-basket-dropdown" style="display: none;">
+
+</div>
+
+    <div id="layer_10" class="w3-card w3-content w3-white" style="max-width:900px; max-height:1071px;">
+        
+    <center>
+            <div class="logo2">
+                <a href="/etusivu" id="title" role="button">R e c i p e H u b</a>
+            </div>
+            <div id="search-results_3"></div>
+        </center>
+    </div>
+
+    
+    <div id="add-recipe-btn" class="add-recipe-btn" onclick="openOverlay5()">+</div>
+
+<div id="layer_11" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
+    <center>
+        <div id="overlay5" class="overlay5">
+            <div id="overlay-content5" class="overlay-content5">
+            <form id="add-recipe-form" method="POST">
+    <label for="recipe-name">Recipe Name:</label><br>
+    <input type="text" id="recipe-name" name="recipe-name" required><br><br>
+
+    <label for="category">Category:</label><br>
+    <select id="category" name="category" required>
+        <option value="Aamiainen">Aamiainen</option>
+        <option value="lounas">Lounas</option>
+        <option value="valipala">Välipala</option>
+        <option value="paivallinen">Päivällinen</option>
+        <option value="iltapala">Iltapala</option>
+    </select><br><br>
+
+    <label for="ingredient">Ingredient:</label><br>
+    <input type="text" id="ingredient" name="ingredient"><br><br>
+
+    <label for="quantity">Quantity:</label><br>
+    <input type="number" id="quantity" name="quantity"><br><br>
+
+    <label for="unit">Unit:</label><br>
+    <select id="unit" name="unit">
+        <option value="g">g</option>
+        <option value="kg">kg</option>
+        <option value="ml">ml</option>
+        <option value="l">l</option>
+        <option value="pcs">pcs</option>
+    </select><br><br>
+
+    <label for="price">Price:</label><br>
+    <input type="number" id="price" name="price"><br><br>
+
+    <button type="button" onclick="addIngredient()">Add Ingredient</button><br><br>
+
+    <div id="ready-ingredients"></div>
+
+    <label for="image">Image Upload:</label><br>
+    <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+
+            </div>
+            <span class="close-btn material-symbols-outlined" onclick="closeOverlay5()">Close</span>
+        </div>
+    </center>
+</div>
+
+<div id="overlay6" class="overlay6">
+    <div id="overlay-content6" class="overlay-content6"></div>
+    <span class="close-btn material-symbols-outlined" onclick="closeOverlay6()">Close</span>
+</div>
+
+<div id="overlay7" class="overlay7">
+    <div id="overlay-content7" class="overlay-content7"></div>
+    <span class="close-btn" onclick="closeOverlay7()">&times;</span>
+</div>
+
+<div id="ingredient-popup" class="ingredient-popup">
+    <div id="ingredient-details" class="ingredient-details">
+    </div>
+    <span class="close-btn material-symbols-outlined" onclick="closeIngredientPopup()">Close</span>
+</div>
+</div>
 
     <div id="layer_3" style="display:none;">
     <div id="layer_4">
@@ -243,46 +330,73 @@ $username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
     </div></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        var authButton = document.getElementById('authButton');
-        var settingsButton = document.getElementById('settingsButton');
-        var settingsDropdown = document.getElementById('settingsDropdown');
-        var welcomeMessage = document.getElementById('welcomeMessage');
-        var container1 = document.getElementById("layer_3");
+        function attachEventListeners() {
+    var basketButton = document.getElementById('shoppingBasketButton');
+    var dropdown = document.getElementById('shopping-basket-dropdown');
+    var body = document.body;
+
+    if (basketButton) {
+        basketButton.addEventListener('click', function(event) {
+            event.stopPropagation();
+            dropdown.classList.toggle('show');
+            
+            if (dropdown.classList.contains('show')) {
+                fetchShoppingBasket();
+                body.classList.add('noscroll'); 
+            } else {
+                body.classList.remove('noscroll'); 
+            }
+        });
+    }
+    var authButton = document.getElementById('authButton');
+    var container1 = document.getElementById("layer_3");
+    var container2 = document.getElementById("layer_4");
 
     if (isLoggedIn) {
         authButton.textContent = 'logout';
         authButton.onclick = function() {
             window.location.href = '../static/server/logout.php';
         };
-
-        settingsButton.style.display = 'flex';
-        welcomeMessage.textContent = 'Welcome ' + username;
-        welcomeMessage.style.display = 'block';
-        setTimeout(function() {
-            welcomeMessage.style.display = 'none';
-        }, 5000);
-
-        settingsButton.addEventListener('click', function() {
-            settingsDropdown.style.display = settingsDropdown.style.display === 'block' ? 'none' : 'block';
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!settingsButton.contains(event.target) && !settingsDropdown.contains(event.target)) {
-                settingsDropdown.style.display = 'none';
-            }
-        });
     } else {
         authButton.textContent = 'login';
         authButton.onclick = function() {
             container1.style.display = 'flex';
+            container2.style.display = 'block';
         };
-
-        settingsButton.style.display = 'none';
+    }
+    document.addEventListener('click', function(event) {
+    if (!container2.contains(event.target) && event.target !== authButton) {
+        container1.style.display = 'none';
+        container2.style.display = 'none';
     }
 });
 
 
+    document.addEventListener('click', function(event) {
+        if (!dropdown.contains(event.target) && !basketButton.contains(event.target)) {
+            dropdown.classList.remove('show');
+            body.classList.remove('noscroll'); 
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    attachEventListeners();
+});
+function showSection(sectionId) {
+    attachEventListeners();
+document.getElementById('section_1').style.display = 'none';
+document.getElementById('section_2').style.display = 'none';
+
+if (document.getElementById('section_2').style.display == 'block') {
+    searchRecipes();
+    console.log("ok");
+}
+
+document.getElementById(sectionId).style.display = 'block';
+}
+
+    showSection('section_1');
 
         function toggleForms() {
             var loginForm = document.getElementById('login-in');
@@ -319,5 +433,8 @@ $username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 <script type="text/javascript" src="scripts/fetch_recipe.js"></script>
 <script type="text/javascript" src="scripts/filter.js"></script>
 <script type="text/javascript" src="scripts/navigation.js"></script>
+<script type="text/javascript" src="scripts/overlay.js"></script>
+<script type="text/javascript" src="scripts/submit.js"></script>
+<script type="text/javascript" src="scripts/fetch_list.js"></script>
 </body>
 </html>
