@@ -50,7 +50,7 @@ if (isset($_POST['email-username_1'], $_POST['password_1'])) {
     } else {
         start_session_if_not_started();
         $_SESSION['login_error'] = "Väärä sähköposti/käyttäjänimi tai salasana";
-        header("Location: login");
+        header("Location: ../../etusivu");
         exit();
     }
 }

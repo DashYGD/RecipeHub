@@ -21,7 +21,7 @@ body {
 }
 
 #layer_3 {
-    display: none; /* Initially hidden */
+    display: none; 
     position: absolute;
     z-index: 998;
     top: 0;
@@ -30,14 +30,14 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     overflow: hidden;
-    display: flex; /* Use Flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
 }
 
 #layer_4 {
     z-index: 999;
-    position: relative; /* Change to relative for proper positioning within flex container */
+    position: relative;
     background-color: white;
     padding: 4%;
     width: 90%;
@@ -46,7 +46,7 @@ body {
     border-style: outset;
     margin-right: auto;
     margin-left: auto;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Optional: Add shadow for better visibility */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -57,7 +57,7 @@ body {
     width: 95%;
     display: none;
     flex-wrap: wrap;
-    justify-content: center; /* Distributes space between items */
+    justify-content: center; 
     margin: 0 auto;
     overflow: auto;
     padding: 5px;
@@ -75,20 +75,20 @@ body {
     height: 60%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Distributes space between items */
+    justify-content: center; 
     margin: 0 auto;
 }
 
 .icon {
     width: 30%;
     max-width: 150px;
-    margin: 1%; /* 1% margin between blocks */
+    margin: 1%;
     cursor: pointer;
     background-color: rgb(134, 228, 102);
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(1, 1, 1, 0.3);
     text-align: center;
-    box-sizing: border-box; /* Ensures padding is included in the width */
+    box-sizing: border-box;
 }
 
 .icon img {
@@ -183,7 +183,7 @@ h1 {
     font-weight: 400;
     font-style: normal;
     font-size: clamp(0.8vw + 18px, 1.5vw, 4vw);
-    color: rgb(134, 228, 102); /* Vaihda väriä tarpeen mukaan */
+    color: rgb(134, 228, 102); 
 }
 
 
@@ -225,9 +225,8 @@ h1 {
 }
 
 #filter-button_1 {
-    background-image: url('../../static/images/filter_list_24dp_FILL0_wght400_GRAD0_opsz24.svg'); /* Replace 'path_to_icon' with the path to your icon image */
-    background-repeat: no-repeat;
-    background-position: center; /* Adjust the position of the icon */
+    background-image: url('../../static/images/filter_list_24dp_FILL0_wght400_GRAD0_opsz24.svg'); 
+    background-position: center;
 }
 
 .search-container {
@@ -235,31 +234,59 @@ h1 {
     align-items: center;
     justify-content: center;
     display: flex;
-    flex-direction: column; /* Change flex direction to column */
+    flex-direction: column; 
     padding: 12px;
     padding-bottom: 8px;
 }
 
 .buttons-container {
     display: flex;
-    flex-direction: row; /* Keep the flex direction as row */
+    flex-direction: row;
     justify-content: center;
     width: 95%;
 }
 
 .filter-dropdown {
-    display: none; /* Initially hide the dropdown */
+    display: none;
     padding: 5px;
     border-radius: 6px;
-    width: 100%; /* Adjust the width as needed */
+    width: 100%;
     max-width: 500px;
-    margin-top: 2px; /* Add some spacing between the filter button and the dropdown */
+    margin-top: 2px;
 }
 
 
 
-
-/* Show class to display dropdown card */
 .show {
     display: block;
+}
+
+
+#settingsDropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+#settingsDropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+#settingsDropdown a:hover {
+    background-color: #f1f1f1;
+}
+#welcomeMessage {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 1000;
 }

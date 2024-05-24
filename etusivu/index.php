@@ -29,9 +29,13 @@ function checkRememberMe($db) {
         $result = $db->users->findOne(['token' => $token]);
         if ($result) {
             session_regenerate_id(true);
-            if ($result['is_admin'] == 1) {
+            if ($result['is_admin']) {
+                if ($result['is_admin'] == 1) {
                 $_SESSION['admin'] = true;
                 header("Location: admin");
+                } else {
+                    $_SESSION['user'] = $result['_id'];
+                }
             } else {
                 $_SESSION['user'] = $result['_id'];
             }
@@ -64,10 +68,12 @@ if ($registration_attempt) {
 }
 
 $loggedIn = isUserLoggedIn();
+$username = isset($_SESSION['user']) ? $_SESSION['user'] : '';
+echo $user
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,9 +95,13 @@ $loggedIn = isUserLoggedIn();
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Ropa+Sans:ital@0;1&display=swap" rel="stylesheet">
-
+<script>
+        var isLoggedIn = <?php echo json_encode($loggedIn); ?>;
+    var username = <?php echo json_encode($username); ?>;
+    </script>
 </head>
 <body>
+<div id="welcomeMessage"></div>
 
     <div id="layer_1" style="opacity:0;">
         <div id="sticky" style="z-index: 1;">
@@ -113,8 +123,13 @@ $loggedIn = isUserLoggedIn();
                 </div> 
 
                 <div class="right-links">
-                    <a role="button"><span class="material-symbols-outlined">settings</span></a>
-                    <a role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
+                    <a role="button" style="display:none;" id="settingsButton"><span class="material-symbols-outlined">settings</span></a>
+                    <div id="settingsDropdown">
+                        <a href="#">Option 1</a>
+                        <a href="#">Option 2</a>
+                        <a href="#">Option 3</a>
+                    </div>
+                    <a role="button"><span class="loginbutton material-symbols-outlined" id="authButton">login</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
             </div>
@@ -227,6 +242,46 @@ $loggedIn = isUserLoggedIn();
     </div></div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var authButton = document.getElementById('authButton');
+            var settingsButton = document.getElementById('settingsButton');
+            var settingsDropdown = document.getElementById('settingsDropdown');
+            var welcomeMessage = document.getElementById('welcomeMessage');
+            var container1 = document.getElementById("layer_3");
+
+            if (isLoggedIn) {
+                authButton.textContent = 'logout';
+                authButton.onclick = function() {
+                    window.location.href = '../static/server/logout.php';
+                };
+
+                settingsButton.style.display = 'inline-block';
+                welcomeMessage.textContent = 'Welcome ' + username;
+                welcomeMessage.style.display = 'block';
+                setTimeout(function() {
+                    welcomeMessage.style.display = 'none';
+                }, 5000);
+
+                settingsButton.addEventListener('click', function() {
+                    settingsDropdown.style.display = settingsDropdown.style.display === 'block' ? 'none' : 'block';
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (!settingsButton.contains(event.target) && !settingsDropdown.contains(event.target)) {
+                        settingsDropdown.style.display = 'none';
+                    }
+                });
+            } else {
+                authButton.textContent = 'login';
+                authButton.onclick = function() {
+                    container1.style.display = 'flex';
+                };
+
+                settingsButton.style.display = 'none';
+            }
+        });
+
+
         function toggleForms() {
             var loginForm = document.getElementById('login-in');
             var registerForm = document.getElementById('register-in');
