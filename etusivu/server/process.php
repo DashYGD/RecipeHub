@@ -41,7 +41,7 @@ if (isset($_POST['email-username_1'], $_POST['password_1'])) {
         }
         if ($user['is_admin'] == 1) {
             $_SESSION['admin'] = true;
-            header("Location: admin");
+            header("Location: ../admin");
         } else {
             $_SESSION['user'] = $user['_id'];
             header("Location: ../../etusivu");

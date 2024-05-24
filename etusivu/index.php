@@ -32,7 +32,7 @@ function checkRememberMe($db) {
             if ($result['is_admin']) {
                 if ($result['is_admin'] == 1) {
                 $_SESSION['admin'] = true;
-                header("Location: admin");
+                header("Location: ../admin");
                 } else {
                     $_SESSION['user'] = $result['_id'];
                 }
