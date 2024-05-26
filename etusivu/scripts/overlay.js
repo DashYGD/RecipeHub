@@ -1,16 +1,16 @@
 function updateSearchResults_2(results) {
-    var searchResultsContainer = document.getElementById('search-results_1');
+    var searchResultsContainer = document.getElementById('search-results_2');
     searchResultsContainer.innerHTML = '';
   
     for (var i = 0; i < results.length; i++) {
         var resultItem = document.createElement('div');
-        resultItem.className = 'recipe-card';
+        resultItem.className = 'recipe-card_2';
         resultItem.id = 'recipe-card-' + i;
         //console.log(resultItem.name);
   
         (function(index) {
             resultItem.addEventListener('click', function() {
-              openOverlay5(results[index]);
+              openOverlay_6(results[index]);
             });
           })(i);
   
@@ -23,17 +23,17 @@ function updateSearchResults_2(results) {
         var imageUrl = results[i].image ? results[i].image : ''; //Tarkistaa onko kuvaa
         resultItem.innerHTML = '<img src="' + imageUrl + '" alt="' + results[i].name + '">' +
                                '<h2>' + results[i].name + '</h2>' +
-                               '<p><strong>Category:</strong> ' + (results[i].category ? results[i].category : '') + '</p>' +
-                               '<p><strong>Total Cost: </strong>' + totalCost + ' €</p>';
+                               '<p><strong>Kategoria:</strong> ' + (results[i].category ? results[i].category : '') + '</p>' +
+                               '<p><strong>Hinta: </strong>' + totalCost + ' €</p>';
   
         searchResultsContainer.appendChild(resultItem);
     }
   }
 
 
-  function openOverlay5(recipe) {
-    var overlay = document.getElementById('overlay3');
-    var overlayContent = document.getElementById('overlay-content3');
+  function openOverlay_6(recipe) {
+    var overlay = document.getElementById('overlay_6');
+    var overlayContent = document.getElementById('overlay-content_6');
     console.log(recipe);
 
     overlayContent.innerHTML = '';
@@ -48,13 +48,13 @@ function updateSearchResults_2(results) {
 
     overlayContent.innerHTML = '<img src="' + recipe.image + '" alt="' + recipe.name + '">' +
                                 '<h2>' + recipe.name + '</h2>' +
-                                '<p><strong>Category:</strong> ' + recipe.category + '</p>' +
-                                '<p><strong>Ingredients:</strong></p>' +
+                                '<p><strong>Kategoria:</strong> ' + recipe.category + '</p>' +
+                                '<p><strong>Aineosat:</strong></p>' +
                                 ingredientsHtml +
-                                '<p><strong>Instructions:</strong> ' + recipe.instructions + '</p><br>' +
-                                '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Add to Basket</button><br>';
+                                '<p><strong>Ohjeet:</strong> ' + recipe.instructions + '</p><br>' +
+                                '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Lisää ostoskoriin</button><br>';
 
-    overlay.style.display = 'block';
+    overlay.style.display = 'flex';
 }
 
 function addToList(recipe) {
@@ -78,7 +78,7 @@ function addToList(recipe) {
 
 
 
-function formatIngredients2(ingredients) {
+function formatIngredients(ingredients) {
 var formatted = '';
 for (var i = 0; i < ingredients.length; i++) {
     formatted += '<p>' + ingredients[i].name + ' (' + ingredients[i].quantity + '), ';
@@ -86,32 +86,19 @@ for (var i = 0; i < ingredients.length; i++) {
 formatted = formatted.slice(0, -2);
 return formatted;
 }
-function searchRecipes2() {
+
+function searchRecipes_2() {
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
 if (xhr.readyState == 4 && xhr.status == 200) {
     var results = JSON.parse(xhr.responseText);
-    updateSearchResults_1(results);
+    console.log("ok");
+    updateSearchResults_2(results);
 }
 };
 
-var url = 'server/recipe_query.php';
+var url = 'server/recipe_query_2.php';
 xhr.open('GET', url, true);
 xhr.send();
 return true;
-}
-
-function openOverlay7() {
-    var overlay7 = document.getElementById('overlay7');
-    overlay7.style.display = 'block';
-}
-
-function closeOverlay5() {
-    var overlay5 = document.getElementById('overlay5');
-    overlay5.style.display = 'none';
-}
-
-function closeOverlay6() {
-    var overlay6 = document.getElementById('overlay6');
-    overlay6.style.display = 'none';
 }

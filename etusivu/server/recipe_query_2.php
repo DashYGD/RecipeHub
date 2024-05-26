@@ -12,7 +12,6 @@ $db = $mongoClient->reseptisovellus;
 if (!$db) {
     die("MongoDB connection failed");
 }
-
 if (isset($_SESSION['user_i'])) {
     $user_id = $_SESSION['user_i'];
 }

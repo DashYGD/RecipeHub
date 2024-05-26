@@ -31,11 +31,10 @@ function checkRememberMe($db) {
             if (isset($result['is_admin'])) {
                 if ($result['is_admin'] == 1) {
                     $_SESSION['admin'] = true;
-                    header("Location: admin");
+                    header("Location: ../admin");
                 } else {
                     $_SESSION['user'] = (array) $result; // Store as array
                     $_SESSION['user_i'] = $result['_id'];
-                    echo $_SESSION['user_i'];
                 }
             } else {
                 $_SESSION['user'] = (array) $result; // Store as array
@@ -76,7 +75,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reseptikortti</title>
+    <title>RecipeHub</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="../static/styles/core.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,21 +111,21 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                     <a class="hidden w3-hide-small" disabled><span class="material-symbols-outlined">home</span></a>
                     <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                 </div>
-                <div class="logo">
+                <div class="logo_1">
                     <a href="/etusivu" id="title" role="button">R e c i p e H u b</a>
                 </div>
                 
 
                 <div class="center-links">
                     <a class="w3-hide-small" href="#" onclick="showSection('section_1')">Hub</a>
-                    <a class="w3-hide-small" href="#" onclick="showSection('section_2')">Reseptini</a>
-                    <a class="w3-hide-small w3-hide-medium" href="#">Suosikit</a>
+                    <a class="w3-hide-small" id="sectionButton_2" href="#" onclick="showSection('section_2')">Reseptini</a>
+                    <a class="w3-hide-small" href="#">Suosikit</a>
                 </div> 
 
                 <div class="right-links">
                     <a role="button" style="display:none;" id="settingsButton"><span class="material-symbols-outlined">settings</span></a>
-                    <a href="#" role="button" id="shoppingBasketButton" class="shopping-basket"><span class="cartbutton material-symbols-outlined">shopping_basket</span></a>
-                    <a role="button"><span class="loginbutton material-symbols-outlined" id="authButton">login</span></a>
+                    <a href="#" role="button" id="shoppingBasketButton_1" class="shopping-basket"><span id="shoppingBasketButton_2" class="cartbutton material-symbols-outlined">shopping_basket</span></a>
+                    <a id="authButton_1" role="button"><span class="loginbutton material-symbols-outlined" id="authButton_2">login</span></a>
                     <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
                 </div>
                 
@@ -139,15 +138,16 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                 
             </div>
         </div>
-
+        
+    <div class="shopping-basket-dropdown" id="shopping-basket-dropdown_1" style="display: none;"></div>
         <div style="display:block;" id="section_1">
     <div id="layer_2"  style="opacity:0;">
-        <div class="search-container">
+        <div class="search-container_1">
             
-            <div class="buttons-container">
-                <input id="search-input_1" oninput="searchRecipes1(event)" type="text" placeholder="Hae reseptiä...">
+            <div class="buttons-container_1">
+                <input id="search-input_1" oninput="searchRecipes_1()" type="text" placeholder="Hae reseptiä...">
                 <input id="filter-button_1" onclick="openFilter()" type="button" placeholder="Filter">
-                <input type="submit" value="Hae">
+                <input type="submit" onclick="searchRecipes_1()" value="Hae">
             </div>
             
             <div class="filter-dropdown w3-card w3-green w3-container" id="filter-dropdownContainer" style="display:none;">
@@ -165,14 +165,13 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
 
 
 
-        <div id="search-results_2"></div>
-        <div id="overlay" class="overlay">
-            <div id="overlay-content" class="overlay-content"></div>
-            <span class="close-btn" onclick="closeOverlay()">&times;</span>
+        <div id="search-results_1"></div>
+        <div id="overlay_1" class="overlay_1">
+            <div id="overlay-content_1" class="overlay-content_1"></div>
         </div>
 
 
-        <div class="icon-container">
+        <div class="icon-container_1">
             <div class="icon" onclick="navigate('aamupala')">
                 <img src="images/aamupala_uusi.png" alt="Aamupala">
                 <p>Aamupala</p>
@@ -207,32 +206,30 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
 </div>
 
 <div style="display:none;" id="section_2">
-<div class="shopping-basket-dropdown" id="shopping-basket-dropdown" style="display: none;">
+<div class="shopping-basket-dropdown" id="shopping-basket-dropdown_2" style="display: none;"></div>
 
-</div>
-
-    <div id="layer_10" class="w3-card w3-content w3-white" style="max-width:900px; max-height:1071px;">
+    <div id="layer_3" class="w3-card w3-content w3-white" style="max-width:900px;">
         
     <center>
-            <div class="logo2">
-                <a href="/etusivu" id="title" role="button">R e c i p e H u b</a>
+            <div class="logo_2">
+                <a href="#" id="title" role="button">R e c i p e H u b</a>
             </div>
-            <div id="search-results_3"></div>
+            <div id="search-results_2"></div>
         </center>
     </div>
 
     
-    <div id="add-recipe-btn" class="add-recipe-btn" onclick="openOverlay5()">+</div>
+    <div id="add-recipe-btn" class="add-recipe-btn">+</div>
 
-<div id="layer_11" class="w3-card w3-content w3-white" style="opacity:0; max-width:900px; max-height:1071px;">
+<div id="layer_4" class="w3-card w3-content w3-white" style="max-width:900px; max-height:1071px;">
     <center>
-        <div id="overlay5" class="overlay5">
-            <div id="overlay-content5" class="overlay-content5">
+        <div id="overlay_5" class="overlay_5">
+            <div id="overlay-content_5" class="overlay-content_5">
             <form id="add-recipe-form" method="POST">
-    <label for="recipe-name">Recipe Name:</label><br>
+    <label for="recipe-name">Reseptin nimi:</label><br>
     <input type="text" id="recipe-name" name="recipe-name" required><br><br>
 
-    <label for="category">Category:</label><br>
+    <label for="category">Kategoria:</label><br>
     <select id="category" name="category" required>
         <option value="Aamiainen">Aamiainen</option>
         <option value="lounas">Lounas</option>
@@ -241,49 +238,46 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         <option value="iltapala">Iltapala</option>
     </select><br><br>
 
-    <label for="ingredient">Ingredient:</label><br>
+    <label for="ingredient">Ainesosa:</label><br>
     <input type="text" id="ingredient" name="ingredient"><br><br>
 
-    <label for="quantity">Quantity:</label><br>
+    <label for="quantity">Määrä:</label><br>
     <input type="number" id="quantity" name="quantity"><br><br>
 
-    <label for="unit">Unit:</label><br>
+    <label for="unit">Yksikkö:</label><br>
     <select id="unit" name="unit">
         <option value="g">g</option>
         <option value="kg">kg</option>
         <option value="ml">ml</option>
         <option value="l">l</option>
-        <option value="pcs">pcs</option>
+        <option value="kpl">kpl</option>
     </select><br><br>
 
-    <label for="price">Price:</label><br>
+    <label for="price">Hinta:</label><br>
     <input type="number" id="price" name="price"><br><br>
 
-    <button type="button" onclick="addIngredient()">Add Ingredient</button><br><br>
+    <button type="button" onclick="addIngredient()">Tallenna ainesosa</button><br><br>
 
     <div id="ready-ingredients"></div>
 
-    <label for="image">Image Upload:</label><br>
+    <label for="image">Kuva:</label><br>
     <input type="file" id="image" name="image" accept="image/*" required><br><br>
 
-    <input type="submit" value="Submit">
+    <label for="instructions">Ohjeet:</label><br>
+    <textarea id="instructions" name="instructions" rows="10" cols="50" required></textarea><br><br>
+
+    <input type="submit" value="Luo resepti">
 </form>
 
 
+
             </div>
-            <span class="close-btn material-symbols-outlined" onclick="closeOverlay5()">Close</span>
         </div>
     </center>
 </div>
 
-<div id="overlay6" class="overlay6">
-    <div id="overlay-content6" class="overlay-content6"></div>
-    <span class="close-btn material-symbols-outlined" onclick="closeOverlay6()">Close</span>
-</div>
-
-<div id="overlay7" class="overlay7">
-    <div id="overlay-content7" class="overlay-content7"></div>
-    <span class="close-btn" onclick="closeOverlay7()">&times;</span>
+<div id="overlay_6" class="overlay_6">
+    <div id="overlay-content_6" class="overlay-content_6"></div>
 </div>
 
 <div id="ingredient-popup" class="ingredient-popup">
@@ -293,8 +287,13 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
 </div>
 </div>
 
-    <div id="layer_3" style="display:none;">
-    <div id="layer_4">
+<div style="display:none;" id="section_3">
+</div>
+
+
+
+    <div id="layer_5" style="display:none;">
+    <div id="layer_6">
         <center>
             <h1>RecipeHub Kirjautuminen</h1>
         </center>
@@ -330,102 +329,190 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
     </div></div>
 
     <script>
-        function attachEventListeners() {
-    var basketButton = document.getElementById('shoppingBasketButton');
-    var dropdown = document.getElementById('shopping-basket-dropdown');
-    var body = document.body;
+    function attachEventListeners() {
+        var basketButton_1 = document.getElementById('shoppingBasketButton_1');
+        var basketButton_2 = document.getElementById('shoppingBasketButton_2');
+        var container1 = document.getElementById("layer_5");
+        var container2 = document.getElementById("layer_6");
+        var dropdown_1 = document.getElementById('shopping-basket-dropdown_1');
+        
+        var form_1 = document.getElementById('overlay_5');
+        var form_2 = document.getElementById('overlay-content_5');
 
-    if (basketButton) {
-        basketButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dropdown.classList.toggle('show');
+        var overlay_1 = document.getElementById('overlay_6');
+        var overlay_2 = document.getElementById('overlay-content_6');
+        var overlay_3 = document.getElementsByClassName('recipe-card_2');
+
+        var overlay_4 = document.getElementById('overlay_1');
+        var overlay_5 = document.getElementById('overlay-content_1');
+        var overlay_6 = document.getElementsByClassName('recipe-card');
+
+        var form_button = document.getElementById('add-recipe-btn');
+        var body = document.body;
+
+        if (basketButton_1 && isLoggedIn) {
+            basketButton_1.addEventListener('click', function(event) {
+                event.stopPropagation();
+                dropdown_1.classList.toggle('show');
+                
+                if (dropdown_1.classList.contains('show')) {
+                    fetchShoppingBasket();
+                    body.classList.add('noscroll'); 
+                } else {
+                    body.classList.remove('noscroll'); 
+                }
+            });
+        } else {
+            basketButton_1.onclick = function() {
+                container1.style.display = 'flex';
+                container2.style.display = 'block';
+                console.log("what");
+            };
+
+        }
+
+        var authButton_1 = document.getElementById('authButton_1');
+        var authButton_2 = document.getElementById('authButton_2');
+        var sectionButton = document.getElementById('sectionButton_2');
+
+        if (isLoggedIn) {
+            authButton_2.textContent = 'logout';
+            authButton_1.onclick = function() {
+                localStorage.setItem('currentSection', 'section_1');
+                window.location.href = '../static/server/logout.php';
+            };
+        } else {
+            authButton_2.textContent = 'login';
+            authButton_1.onclick = function() {
+                container1.style.display = 'flex';
+                container2.style.display = 'block';
+            };
             
-            if (dropdown.classList.contains('show')) {
-                fetchShoppingBasket();
-                body.classList.add('noscroll'); 
-            } else {
+        }
+
+        document.addEventListener('click', function(event) {
+            if (!container2.contains(event.target) && event.target !== authButton_2 && event.target !== authButton_1 && event.target !== sectionButton && event.target !== basketButton_2 && event.target !== basketButton_1) {
+                container1.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!dropdown_1.contains(event.target) && !basketButton_2.contains(event.target)) {
+                dropdown_1.classList.remove('show');
                 body.classList.remove('noscroll'); 
             }
         });
-    }
-    var authButton = document.getElementById('authButton');
-    var container1 = document.getElementById("layer_3");
-    var container2 = document.getElementById("layer_4");
 
-    if (isLoggedIn) {
-        authButton.textContent = 'logout';
-        authButton.onclick = function() {
-            window.location.href = '../static/server/logout.php';
-        };
-    } else {
-        authButton.textContent = 'login';
-        authButton.onclick = function() {
+        document.addEventListener('click', function(event) {
+            if (!form_2.contains(event.target) && event.target !== form_button) {
+                form_1.style.display = 'none';
+            } else {
+                form_1.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            var clickedInsideOverlay2 = overlay_2.contains(event.target);
+            var clickedInsideOverlay3 = false;
+
+            for (var i = 0; i < overlay_3.length; i++) {
+                if (overlay_3[i].contains(event.target)) {
+                    clickedInsideOverlay3 = true;
+                    break;
+                }
+            }
+
+            if (!clickedInsideOverlay2 && !clickedInsideOverlay3) {
+                overlay_1.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            var clickedInsideOverlay5 = overlay_5.contains(event.target);
+            var clickedInsideOverlay6 = false;
+
+            for (var i = 0; i < overlay_6.length; i++) {
+                if (overlay_6[i].contains(event.target)) {
+                    clickedInsideOverlay6 = true;
+                    break;
+                }
+            }
+
+            if (!clickedInsideOverlay5 && !clickedInsideOverlay6) {
+                overlay_4.style.display = 'none';
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        var storedSection = localStorage.getItem('currentSection');
+        console.log(storedSection);
+        if (storedSection) {
+            showSection(storedSection);
+            console.log("GAy");
+        } else {
+            showSection('section_1');
+        }
+        attachEventListeners();
+    });
+
+    function showSection(sectionId) {
+        if (sectionId === 'section_2' && !isLoggedIn) {
+            var container1 = document.getElementById("layer_5");
+            var container2 = document.getElementById("layer_6");
             container1.style.display = 'flex';
             container2.style.display = 'block';
-        };
-    }
-    document.addEventListener('click', function(event) {
-    if (!container2.contains(event.target) && event.target !== authButton) {
-        container1.style.display = 'none';
-        container2.style.display = 'none';
-    }
-});
-
-
-    document.addEventListener('click', function(event) {
-        if (!dropdown.contains(event.target) && !basketButton.contains(event.target)) {
-            dropdown.classList.remove('show');
-            body.classList.remove('noscroll'); 
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    attachEventListeners();
-});
-function showSection(sectionId) {
-    attachEventListeners();
-document.getElementById('section_1').style.display = 'none';
-document.getElementById('section_2').style.display = 'none';
-
-if (document.getElementById('section_2').style.display == 'block') {
-    searchRecipes();
-    console.log("ok");
-}
-
-document.getElementById(sectionId).style.display = 'block';
-}
-
-    showSection('section_1');
-
-        function toggleForms() {
-            var loginForm = document.getElementById('login-in');
-            var registerForm = document.getElementById('register-in');
-
-            if (loginForm.style.display === 'none') {
-                loginForm.style.display = 'block';
-                registerForm.style.display = 'none';
-            } else {
-                loginForm.style.display = 'none';
-                registerForm.style.display = 'block';
-            }
-        }
-
-        var registrationAttempt = <?php echo $registration_attempt ? 'true' : 'false'; ?>;
-
-        if (registrationAttempt) {
-            if ("<?php echo isset($register_success); ?>") {
-                document.getElementById("register-in").style.display = "none";
-                document.getElementById("login-in").style.display = "block";
-            } else {
-                document.getElementById("register-in").style.display = "block";
-                document.getElementById("login-in").style.display = "none";
-            }
         } else {
-            document.getElementById("login-in").style.display = "block";
-            document.getElementById("register-in").style.display = "none";
+            document.getElementById('section_1').style.display = 'none';
+            document.getElementById('section_2').style.display = 'none';
+            document.getElementById(sectionId).style.display = 'block';
+            if (sectionId === 'section_2') {
+                
+                localStorage.setItem('currentSection', sectionId);
+                searchRecipes_2();
+                console.log("oaak");
+            } else {
+                
+                localStorage.setItem('currentSection', sectionId);
+                console.log("oook");
+            }
+            
+        
+            console.log(localStorage.getItem('currentSection'));
+            console.log("works");
         }
-    </script>    
+    }
+
+    function toggleForms() {
+        var loginForm = document.getElementById('login-in');
+        var registerForm = document.getElementById('register-in');
+
+        if (loginForm.style.display === 'none') {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+        } else {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+        }
+    }
+
+    var registrationAttempt = <?php echo $registration_attempt ? 'true' : 'false'; ?>;
+
+    if (registrationAttempt) {
+        if ("<?php echo isset($register_success); ?>") {
+            document.getElementById("register-in").style.display = "none";
+            document.getElementById("login-in").style.display = "block";
+        } else {
+            document.getElementById("register-in").style.display = "block";
+            document.getElementById("login-in").style.display = "none";
+        }
+    } else {
+        document.getElementById("login-in").style.display = "block";
+        document.getElementById("register-in").style.display = "none";
+    }
+</script>
+
 <script type="text/javascript" src="scripts/animation.js"></script>
 <script type="text/javascript" src="../static/scripts/keyboard-accessibility.js"></script>
 <script type="text/javascript" src="../static/scripts/sidebar.js"></script>

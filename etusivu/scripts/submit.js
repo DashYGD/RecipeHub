@@ -7,13 +7,11 @@ function addIngredient() {
     if (ingredient.trim() !== '' && quantity.trim() !== '' && unit.trim() !== '' && price.trim() !== '') {
 
         var ingredientDisplay = document.createElement('div');
-        ingredientDisplay.textContent = ingredient + ' - Quantity: ' + quantity + ' ' + unit + ', Price: ' + price;
+        ingredientDisplay.textContent = 'Nimi: ' + ingredient + ' - Määrä: ' + quantity + ' ' + unit + ' - Hinta: ' + price + '€';
         ingredientDisplay.className = 'ready-ingredient';
-        
         
         document.getElementById('ready-ingredients').appendChild(ingredientDisplay);
 
-        
         var ingredientInput = document.createElement('input');
         ingredientInput.type = 'hidden';
         ingredientInput.name = 'ingredient[]';
@@ -47,9 +45,9 @@ function addIngredient() {
 
 function openIngredientPopup(ingredient, quantity, unit, price) {
     var ingredientDetails = document.getElementById('ingredient-details');
-    ingredientDetails.innerHTML = '<p>Ingredient: ' + ingredient + '</p>' +
-                                  '<p>Quantity: ' + quantity + ' ' + unit + '</p>' +
-                                  '<p>Price: ' + price + '</p>';
+    ingredientDetails.innerHTML = '<p>Aineosat: ' + ingredient + '</p>' +
+                                  '<p>Määrä: ' + quantity + ' ' + unit + '</p>' +
+                                  '<p>Hinta: ' + price + '€</p>';
     document.getElementById('ingredient-popup').style.display = 'block';
 }
 
@@ -59,6 +57,8 @@ function closeIngredientPopup() {
 
 document.getElementById("add-recipe-form").addEventListener("submit", function(event) {
     if (document.getElementsByClassName('ready-ingredient').length > 0) {
+        event.preventDefault();  // Prevent the default form submission
+
         var formData = new FormData(document.getElementById('add-recipe-form'));
 
         fetch('server/add-recipe.php', {
@@ -74,14 +74,13 @@ document.getElementById("add-recipe-form").addEventListener("submit", function(e
         .then(data => {
             console.log(data); 
             alert('Recipe submitted successfully!');
+            location.href = "/etusivu";
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
-
             alert('There was an error submitting the recipe.');
         });
     } else {
-
         alert('Please add at least one ingredient with additional information before submitting the form.');
         event.preventDefault();
     }

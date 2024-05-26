@@ -10,7 +10,7 @@ function updateSearchResults_1(results) {
       
       (function(item) {
           resultItem.addEventListener('click', function() {
-              openOverlay(results[item]);
+              openOverlay_1(results[item]);
           });
       })(i);
 
@@ -23,17 +23,17 @@ function updateSearchResults_1(results) {
       var imageUrl = results[i].image ? results[i].image : ''; //Tarkistaa onko kuvaa
       resultItem.innerHTML = '<img src="' + imageUrl + '" alt="' + results[i].name + '">' +
                              '<h2>' + results[i].name + '</h2>' +
-                             '<p><strong>Category:</strong> ' + (results[i].category ? results[i].category : '') + '</p>' +
-                             '<p><strong>Total Cost: </strong>' + totalCost + ' €</p>';
+                             '<p><strong>Kategoria:</strong> ' + (results[i].category ? results[i].category : '') + '</p>' +
+                             '<p><strong>Hinta: </strong>' + totalCost + ' €</p>';
 
       searchResultsContainer.appendChild(resultItem);
   }
 }
 
   
-function openOverlay(recipe) {
-  var overlay = document.getElementById('overlay');
-  var overlayContent = document.getElementById('overlay-content');
+function openOverlay_1(recipe) {
+  var overlay = document.getElementById('overlay_1');
+  var overlayContent = document.getElementById('overlay-content_1');
 
   overlayContent.innerHTML = '';
 
@@ -46,19 +46,13 @@ function openOverlay(recipe) {
 
   overlayContent.innerHTML = '<img src="' + recipe.image + '" alt="' + recipe.name + '">' +
                               '<h2>' + recipe.name + '</h2>' +
-                              '<p><strong>Category:</strong> ' + recipe.category + '</p>' +
-                              '<p><strong>Ingredients:</strong></p>' +
+                              '<p><strong>Kategoria:</strong> ' + recipe.category + '</p>' +
+                              '<p><strong>Ainesosat:</strong></p>' +
                               ingredientsHtml +
-                              '<p><strong>Instructions:</strong> ' + recipe.instructions + '</p>';
+                              '<p><strong>Ohjeet:</strong> ' + recipe.instructions + '</p>';
 
   overlay.style.display = 'block';
 }
-
-  
-  function closeOverlay() {
-    var overlay = document.getElementById('overlay');
-    overlay.style.display = 'none';
-  }
   
   function formatIngredients(ingredients) {
     var formatted = '';
@@ -73,14 +67,15 @@ function openOverlay(recipe) {
   
   function filterRecipesByCategory(category) {
     selectedCategory = category;
-    searchRecipes1();
+    searchRecipes_1();
   }
   
-  function searchRecipes1() {
-    var input = document.getElementById('search-input_1').value;
+  function searchRecipes_1() {
+    var input = '';
+    input = document.getElementById('search-input_1').value;
     var searchResultsContainer = document.getElementById('search-results_1');
   
-    if (input.length >= 1) {
+    if (input.length >= 0) {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -89,7 +84,7 @@ function openOverlay(recipe) {
         }
       };
   
-      var url = 'server/recipe_query.php?query=' + input;
+      var url = 'server/recipe_query_1.php?query=' + input;
       if (selectedCategory !== undefined && selectedCategory !== "") {
         url += '&category=' + selectedCategory;
       }

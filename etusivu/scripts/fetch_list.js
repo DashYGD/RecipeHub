@@ -1,29 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var basketButton = document.getElementById('shoppingBasketButton');
-    var dropdown = document.getElementById('shopping-basket-dropdown');
-    var body = document.body;
-
-    if (basketButton) {
-    basketButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dropdown.classList.toggle('show');
-        
-        if (dropdown.classList.contains('show')) {
-            fetchShoppingBasket();
-            body.classList.add('noscroll'); 
-        } else {
-            body.classList.remove('noscroll'); 
-        }
-    });
-}
-
-    document.addEventListener('click', function(event) {
-        if (!dropdown.contains(event.target) && !basketButton.contains(event.target)) {
-            dropdown.classList.remove('show');
-            body.classList.remove('noscroll'); 
-        }
-    });
-});
 
 function fetchShoppingBasket() {
     var xhr = new XMLHttpRequest();
@@ -39,8 +13,8 @@ function fetchShoppingBasket() {
 }
 
 function displayShoppingBasket(results) {
-    var dropdown = document.getElementById('shopping-basket-dropdown');
-    dropdown.innerHTML = '';
+    var dropdown_1 = document.getElementById('shopping-basket-dropdown_1');
+    dropdown_1.innerHTML = '';
 
     var owner_id = '';
     var combinedIngredients = {};
@@ -66,11 +40,13 @@ function displayShoppingBasket(results) {
 
     if (Object.keys(combinedIngredients).length === 0) {
         var emptyMessage = document.createElement('p');
-        emptyMessage.textContent = 'Empty';
-        dropdown.appendChild(emptyMessage);
-        dropdown.classList.add('show');
+        emptyMessage.id = 'empty'; // Add this line to set the ID
+        emptyMessage.textContent = 'Tyhjä';
+        dropdown_1.appendChild(emptyMessage);
+        dropdown_1.classList.add('show');
         return;
     }
+    
 
     var ingredientColumn = document.createElement('div');
     ingredientColumn.classList.add('column');
@@ -84,23 +60,23 @@ function displayShoppingBasket(results) {
     actionColumn.classList.add('column');
 
     var ingredientTitle = document.createElement('h3');
-    ingredientTitle.textContent = 'Ingredients:';
+    ingredientTitle.textContent = 'Aineosat:';
     ingredientColumn.appendChild(ingredientTitle);
 
     var quantityTitle = document.createElement('h3');
-    quantityTitle.textContent = 'Quantity:';
+    quantityTitle.textContent = 'Määrä:';
     quantityColumn.appendChild(quantityTitle);
 
     var unitTitle = document.createElement('h3');
-    unitTitle.textContent = 'Unit:';
+    unitTitle.textContent = 'Yksikkö:';
     unitColumn.appendChild(unitTitle);
 
     var priceTitle = document.createElement('h3');
-    priceTitle.textContent = 'Price:';
+    priceTitle.textContent = 'Hinta:';
     priceColumn.appendChild(priceTitle);
 
     var actionTitle = document.createElement('h3');
-    actionTitle.textContent = 'Action:';
+    actionTitle.textContent = 'Toiminnot:';
     actionColumn.appendChild(actionTitle);
 
     Object.values(combinedIngredients).forEach(function(ingredient) {
@@ -120,18 +96,18 @@ function displayShoppingBasket(results) {
         row.appendChild(ingredientUnit);
 
         var ingredientPrice = document.createElement('span');
-        ingredientPrice.textContent = ingredient.price.toFixed(2);
+        ingredientPrice.textContent = ingredient.price.toFixed(2) + " €";
         row.appendChild(ingredientPrice);
 
         var editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
+        editButton.textContent = 'Muokkaa';
         editButton.addEventListener('click', function() {
-            if (editButton.textContent === 'Edit') {
-                editButton.textContent = 'Save';
+            if (editButton.textContent === 'Muokkaa') {
+                editButton.textContent = 'Tallenna';
                 ingredientName.innerHTML = `<input type="text" value="${ingredient.name}">`;
                 ingredientQuantity.innerHTML = `<input type="number" value="${ingredient.quantity}">`;
                 var unitSelect = document.createElement('select');
-                ['g', 'kg', 'ml', 'l', 'pcs'].forEach(function(option) {
+                ['g', 'kg', 'ml', 'l', 'kpl'].forEach(function(option) {
                     var optionElement = document.createElement('option');
                     optionElement.value = option;
                     optionElement.textContent = option;
@@ -142,9 +118,9 @@ function displayShoppingBasket(results) {
                 });
                 ingredientUnit.innerHTML = '';
                 ingredientUnit.appendChild(unitSelect);
-                ingredientPrice.innerHTML = `<input type="number" value="${ingredient.price}">`;
+                ingredientPrice.innerHTML = `<input type="number" value="${ingredient.price}">€`;
             } else {
-                editButton.textContent = 'Edit';
+                editButton.textContent = 'Muokkaa';
                 var updatedIngredient = {
                     name: ingredientName.querySelector('input').value,
                     quantity: ingredientQuantity.querySelector('input').value,
@@ -168,25 +144,25 @@ function displayShoppingBasket(results) {
                 ingredientName.textContent = ingredient.name;
                 ingredientQuantity.textContent = ingredient.quantity;
                 ingredientUnit.textContent = ingredient.unit;
-                ingredientPrice.textContent = parseFloat(ingredient.price).toFixed(2);
+                ingredientPrice.textContent = parseFloat(ingredient.price).toFixed(2) + " €";
             }
         });
 
         var deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
+        deleteButton.textContent = 'Poista';
         deleteButton.addEventListener('click', function() {
             deleteIngredient(owner_id, ingredient.name);
         });
 
         var shareButton = document.createElement('button');
-        shareButton.textContent = 'Share';
+        shareButton.textContent = 'Jaa';
         shareButton.addEventListener('click', function() {
             var receiptContent = `Tuote: ${ingredient.name}\nMäärä: ${ingredient.quantity}${ingredient.unit}\nHinta arvio: ${ingredient.price}€\n`;
             var blob = new Blob([receiptContent], { type: 'text/plain' });
             var url = URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = url;
-            a.download = `${ingredient.name}-receipt.txt`;
+            a.download = `${ingredient.name}-Kuitti.txt`;
             a.click();
             URL.revokeObjectURL(url);
         });
@@ -211,8 +187,8 @@ function displayShoppingBasket(results) {
     columnsContainer.appendChild(priceColumn);
     columnsContainer.appendChild(actionColumn);
 
-    dropdown.appendChild(columnsContainer);
-    dropdown.classList.add('show');
+    dropdown_1.appendChild(columnsContainer);
+    dropdown_1.classList.add('show');
 }
 
 function updateIngredient(owner, oldName, updatedIngredient) {

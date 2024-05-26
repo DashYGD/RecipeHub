@@ -12,13 +12,13 @@ if (!$db) {
 $collection = $db->recipes;
 
 $query = $_GET['query'];
-$category = isset($_GET['category']) ? $_GET['category'] : ''; // Check if category is set, otherwise use empty string
+$category = isset($_GET['category']) ? $_GET['category'] : '';
 
 $regexQuery = [
     'name' => ['$regex' => new MongoDB\BSON\Regex($query, 'i')]
 ];
 
-if ($category !== '') { // Check if a category is provided
+if ($category !== '') {
     $regexQuery['category'] = ['$regex' => new MongoDB\BSON\Regex($category, 'i')];
 }
 
