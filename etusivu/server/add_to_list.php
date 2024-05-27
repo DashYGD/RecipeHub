@@ -5,19 +5,30 @@ if (session_status() == PHP_SESSION_NONE) {
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-$mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
+use MongoDB\Client;
+use MongoDB\BSON\Regex;
+
+// Connect to MongoDB
+$mongoClient = new Client("mongodb://65.21.248.139:56123/");
 $db = $mongoClient->reseptisovellus;
 
+// Check connection
 if (!$db) {
     die("MongoDB connection failed");
 }
-$collection = $db->list;
 
+// Check if user is logged in
+if (!isset($_SESSION['user_i']) || strlen($_SESSION['user_i']) < 1) {
+    echo json_encode(['status' => 'error', 'message' => 'Login first']);
+    exit;
+}
+
+$collection = $db->list;
 $data = json_decode(file_get_contents('php://input'), true);
 
 if ($data) {
     $ingredients = $data['ingredients'];
-    $owner = $data['owner'];
+    $owner = (string) $_SESSION['user_i'];
 
     // Fetch the existing ingredient list for the owner
     $existingList = $collection->findOne(['owner' => $owner]);
@@ -42,7 +53,7 @@ if ($data) {
 
         // Update the ingredient list with combined ingredients
         $updateResult = $collection->updateOne(
-            ['owner' => new MongoDB\BSON\Regex($owner, 'i')],
+            ['owner' => new Regex($owner, 'i')],
             ['$set' => ['ingredients' => $existingIngredients]]
         );
 

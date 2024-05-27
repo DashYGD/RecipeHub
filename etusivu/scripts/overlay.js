@@ -69,13 +69,21 @@ function addFavorite(recipe) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            alert('Recipe added to Favorites');
-            window.location.href = '../etusivu';
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                alert(response.message);
+                window.location.href = '../etusivu';
+            } else {
+                alert('Error: ' + response.message);
+            }
+        } else if (xhr.readyState == 4) {
+            alert('Server error: ' + xhr.status);
         }
     };
 
     xhr.send(JSON.stringify(recipe));
 }
+
 
 function addToList(recipe) {
     delete recipe._id;
@@ -87,14 +95,24 @@ function addToList(recipe) {
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            alert('Recipe added to basket');
-            window.location.href = '../etusivu';
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
+                    alert('Ingredients added to list');
+                    window.location.href = '../etusivu';
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            } else {
+                alert('Error adding to list: Server Error');
+            }
         }
     };
 
     xhr.send(JSON.stringify(recipe));
 }
+
 
 function deleteRecipe(recipeId) {
     var xhr = new XMLHttpRequest();
@@ -212,7 +230,7 @@ function openOverlay_7(recipe) {
                                 ingredientsHtml +
                                 '<p><strong>Ohjeet:</strong> ' + recipe.instructions + '</p><br>' +
                                 '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Lisää ostoskoriin</button>\n' +
-                                '<button type="button" onclick=\'addFavorite(' + JSON.stringify(recipe) + ')\'>Poista suosikeista</button><br>';
+                                '<button type="button" onclick=\'deleteFavorite("' + recipe._id.$oid + '")\'>Poista suosikeista</button><br>';
 
     overlay.style.display = 'flex';
 }
@@ -232,4 +250,28 @@ function searchRecipes_3() {
     xhr.open('GET', url, true);
     xhr.send();
     return true;
+    }
+
+    function deleteFavorite(recipeId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'server/delete_favorite.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+    
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert('Recipe deleted successfully');
+                        window.location.href = '../etusivu';
+                    } else {
+                        alert('Error deleting recipe: ' + response.message);
+                    }
+                } else {
+                    alert('Error deleting recipe: Server Error');
+                }
+            }
+        };
+    
+        xhr.send(JSON.stringify({ recipe_id: recipeId }));
     }

@@ -82,7 +82,7 @@ font-size: 15px;
 }
 
 .material-symbols-outlined{
-    font-size: clamp(1vw + 20px, 2vw, 6vw);
+    font-size: clamp(0.7vw + 20px, 1.2vw, 1.8vw) !important;
 }
 
 .left-links,

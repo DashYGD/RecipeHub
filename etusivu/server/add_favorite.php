@@ -18,12 +18,27 @@ if (!$db) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if user is logged in
+    if (!isset($_SESSION['user_i']) || strlen($_SESSION['user_i']) < 1) {
+        echo json_encode(['success' => false, 'message' => 'Login first']);
+        exit;
+    }
+
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($data) {
         $data['owner'] = (string) $_SESSION['user_i'];
 
+        // Check for duplicate favorites
         $collection = $db->favorites;
+        $existingFavorite = $collection->findOne(['name' => $data['name'], 'owner' => $data['owner']]);
+
+        if ($existingFavorite) {
+            echo json_encode(['success' => false, 'message' => 'Recipe already in favourites']);
+            exit;
+        }
+
+        // Insert the recipe into the favorites collection
         $insertResult = $collection->insertOne($data);
 
         if ($insertResult->getInsertedCount() == 1) {
