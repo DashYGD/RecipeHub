@@ -5,6 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 require __DIR__ . '/../../vendor/autoload.php';
 
+// Connect to MongoDB
 $mongoClient = new MongoDB\Client("mongodb://65.21.248.139:56123/");
 $db = $mongoClient->reseptisovellus;
 
@@ -12,6 +13,7 @@ if (!$db) {
     die("MongoDB connection failed");
 }
 
+// Gather form data
 $recipeName = $_POST['recipe-name'];
 $category = $_POST['category'];
 $instructions = $_POST['instructions'];
@@ -27,7 +29,7 @@ for ($i = 0; $i < count($ingredient); $i++) {
         $ingredients[] = [
             'name' => $ingredient[$i],
             'quantity' => $quantity[$i],
-            'unit' => $unit[$i], 
+            'unit' => $unit[$i],
             'price' => $price[$i]
         ];
     }
@@ -35,22 +37,29 @@ for ($i = 0; $i < count($ingredient); $i++) {
 
 $imageUrl = '';
 
-$user_id = (string) $_SESSION['user_i'];
+// Ensure user session is set
+if (isset($_SESSION['user_id'])) {
+    $user_id = (string) $_SESSION['user_id'];
+} else {
+    die("User not authenticated");
+}
 
+// Handle file upload
 if (!empty($_FILES['image']['name'])) {
     $imageTmpName = $_FILES['image']['tmp_name'];
     $fileName = $_FILES['image']['name'];
     $newName = uniqid('', true) . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
     $imageDes = '/var/www/RecipeHub/static/images/' . $newName;
-    echo "Destination Path: " . $imageDes . "<br>";
+
+    // Move the uploaded file
     if (move_uploaded_file($imageTmpName, $imageDes)) {
         $imageUrl = '../static/images/' . $newName;
-        echo "File moved successfully!";
     } else {
-        echo "Failed to move file.";
+        die("Failed to move file.");
     }
 }
 
+// Insert recipe into MongoDB
 $collection = $db->recipes;
 $result = $collection->insertOne([
     'name' => $recipeName,
