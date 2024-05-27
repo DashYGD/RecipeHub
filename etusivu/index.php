@@ -44,11 +44,13 @@ function checkRememberMe($db) {
     }
 }
 
+$login_form_open = false;
 function isUserLoggedIn() {
     return isset($_SESSION['user']) || isset($_SESSION['admin']);
 }
 
 if (isset($_SESSION['login_error'])) {
+    $login_form_open = true;
     $login_error = $_SESSION['login_error'];
     unset($_SESSION['login_error']);
 }
@@ -57,15 +59,16 @@ $registration_attempt = isset($_SESSION['registration_attempt']) && $_SESSION['r
 
 if ($registration_attempt) {
     if (isset($_SESSION['register_error'])) {
+        $login_form_open = true;
         $register_error = $_SESSION['register_error'];
         unset($_SESSION['register_error']);
     } elseif (isset($_SESSION['register_success'])) {
+        $login_form_open = true;
         $register_success = $_SESSION['register_success'];
         unset($_SESSION['register_success']);
     }
     unset($_SESSION['registration_attempt']);
 }
-
 $loggedIn = isUserLoggedIn();
 $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username'] : '';
 ?>
@@ -96,6 +99,8 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
 <script>
         var isLoggedIn = <?php echo json_encode($loggedIn); ?>;
         var username = <?php echo json_encode($username); ?>;
+        var loginFormOpen = <?php echo json_encode($login_form_open); ?>;
+        console.log(loginFormOpen);
 
         
     </script>
@@ -119,7 +124,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                 <div class="center-links">
                     <a class="w3-hide-small" href="#" onclick="showSection('section_1')">Hub</a>
                     <a class="w3-hide-small" id="sectionButton_2" href="#" onclick="showSection('section_2')">Reseptini</a>
-                    <a class="w3-hide-small" href="#">Suosikit</a>
+                    <a class="w3-hide-small" id="sectionButton_3" href="#" onclick="showSection('section_3')">Suosikit</a>
                 </div> 
 
                 <div class="right-links">
@@ -132,7 +137,10 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
             </div>
             <div class="mySidebar" id="sidebar">
                 <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
-                    <a href="/etusivu" class="w3-bar-item w3-button">Etusivu</a>
+                    <a href="#" onclick="showSection('section_1')" class="w3-bar-item w3-button">Hub</a>
+                    <a href="#Reseptini" onclick="showSection('section_2')" class="w3-bar-item w3-button">Reseptini</a>
+                    <a href="#Suosikit" onclick="showSection('section_3')" class="w3-bar-item w3-button">Suosikit</a>
+                    <a href="#Asetukset" class="w3-bar-item w3-button">Asetukset</a>
                 </div>
             </div>
                 
@@ -212,7 +220,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         
     <center>
             <div class="logo_2">
-                <a href="#" id="title" role="button">R e c i p e H u b</a>
+                <a href="#" id="title" role="button">R e s e p t i n i</a>
             </div>
             <div id="search-results_2"></div>
         </center>
@@ -288,7 +296,19 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
 </div>
 
 <div style="display:none;" id="section_3">
+    <div id="layer_7" class="w3-card w3-content w3-white" style="max-width:900px;">
+        <center>
+            <div class="logo_2">
+                <a href="#" id="title" role="button">S u o s i k i t</a>
+            </div>
+            <div id="search-results_3"></div>
+        </center>
+        </div>
 </div>
+
+        <div id="overlay_7" class="overlay_7">
+            <div id="overlay-content_7" class="overlay-content_7"></div>
+        </div>
 
 
 
@@ -347,8 +367,14 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         var overlay_5 = document.getElementById('overlay-content_1');
         var overlay_6 = document.getElementsByClassName('recipe-card');
 
+        var overlay_7 = document.getElementById('overlay_7');
+        var overlay_8 = document.getElementById('overlay-content_7');
+        var overlay_9 = document.getElementsByClassName('recipe-card_3');
+
         var form_button = document.getElementById('add-recipe-btn');
         var body = document.body;
+        
+        
 
         if (basketButton_1 && isLoggedIn) {
             basketButton_1.addEventListener('click', function(event) {
@@ -374,6 +400,13 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         var authButton_1 = document.getElementById('authButton_1');
         var authButton_2 = document.getElementById('authButton_2');
         var sectionButton = document.getElementById('sectionButton_2');
+        var sectionButton3 = document.getElementById('sectionButton_3');
+        if (loginFormOpen) {
+            toggleLoginForm(true); // Open the login form
+        }
+
+
+
 
         if (isLoggedIn) {
             authButton_2.textContent = 'logout';
@@ -391,7 +424,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         }
 
         document.addEventListener('click', function(event) {
-            if (!container2.contains(event.target) && event.target !== authButton_2 && event.target !== authButton_1 && event.target !== sectionButton && event.target !== basketButton_2 && event.target !== basketButton_1) {
+            if (!container2.contains(event.target) && event.target !== authButton_2 && event.target !== authButton_1 && event.target !== sectionButton && event.target !== sectionButton3 && event.target !== basketButton_2 && event.target !== basketButton_1) {
                 container1.style.display = 'none';
             }
         });
@@ -426,6 +459,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                 overlay_1.style.display = 'none';
             }
         });
+        
 
         document.addEventListener('click', function(event) {
             var clickedInsideOverlay5 = overlay_5.contains(event.target);
@@ -442,6 +476,34 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                 overlay_4.style.display = 'none';
             }
         });
+
+        document.addEventListener('click', function(event) {
+            var clickedInsideOverlay8 = overlay_8.contains(event.target);
+            var clickedInsideOverlay9 = false;
+
+            for (var i = 0; i < overlay_9.length; i++) {
+                if (overlay_9[i].contains(event.target)) {
+                    clickedInsideOverlay9 = true;
+                    break;
+                }
+            }
+
+            if (!clickedInsideOverlay8 && !clickedInsideOverlay9) {
+                overlay_7.style.display = 'none';
+            }
+        });
+    }
+
+    function toggleLoginForm(show) {
+        var container1 = document.getElementById("layer_5");
+        var container2 = document.getElementById("layer_6");
+        if (show) {
+            container1.style.display = 'flex';
+            container2.style.display = 'block';
+        } else {
+            container1.style.display = 'none';
+            container2.style.display = 'none';
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -450,15 +512,16 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         console.log(storedSection);
         if (storedSection) {
             showSection(storedSection);
-            console.log("GAy");
         } else {
             showSection('section_1');
         }
+
+        
         attachEventListeners();
     });
 
     function showSection(sectionId) {
-        if (sectionId === 'section_2' && !isLoggedIn) {
+        if ((sectionId === 'section_2' || sectionId === 'section_3') && !isLoggedIn) {
             var container1 = document.getElementById("layer_5");
             var container2 = document.getElementById("layer_6");
             container1.style.display = 'flex';
@@ -466,12 +529,16 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         } else {
             document.getElementById('section_1').style.display = 'none';
             document.getElementById('section_2').style.display = 'none';
+            document.getElementById('section_3').style.display = 'none';
             document.getElementById(sectionId).style.display = 'block';
             if (sectionId === 'section_2') {
                 
                 localStorage.setItem('currentSection', sectionId);
                 searchRecipes_2();
                 console.log("oaak");
+            } else if (sectionId === 'section_3') {
+                localStorage.setItem('currentSection', sectionId);
+                searchRecipes_3();
             } else {
                 
                 localStorage.setItem('currentSection', sectionId);

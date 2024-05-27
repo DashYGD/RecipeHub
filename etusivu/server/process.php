@@ -68,7 +68,7 @@ if (isset($_POST['name_2'], $_POST['email_2'], $_POST['password_2'])) {
         start_session_if_not_started();
         $_SESSION['register_error'] = "Valitsemasi sähköposti on jo käytössä";
         $_SESSION['registration_attempt'] = true;
-        header("Location: login");
+        header("Location: ../etusivu");
         exit();
     }
 
@@ -77,7 +77,7 @@ if (isset($_POST['name_2'], $_POST['email_2'], $_POST['password_2'])) {
         start_session_if_not_started();
         $_SESSION['register_error'] = "Valitsemasi käyttäjänimi on jo käytössä";
         $_SESSION['registration_attempt'] = true;
-        header("Location: login");
+        header("Location: ../etusivu");
         exit();
     }
 
@@ -93,13 +93,13 @@ if (isset($_POST['name_2'], $_POST['email_2'], $_POST['password_2'])) {
         start_session_if_not_started();
         $_SESSION['register_success'] = "Käyttäjä lisätty järjestelmään, ole hyvä ja kirjaudu sisään";
         $_SESSION['registration_attempt'] = true;
-        header("Location: login");
+        header("Location: ../etusivu");
         exit();
     } else {
         start_session_if_not_started();
         $_SESSION['register_error'] = "Virhe käyttäjän lisäämisessä";
         $_SESSION['registration_attempt'] = true;
-        header("Location: login");
+        header("Location: ../etusivu");
         exit();
     }
 }

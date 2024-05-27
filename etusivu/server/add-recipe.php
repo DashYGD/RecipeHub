@@ -51,7 +51,6 @@ if (!empty($_FILES['image']['name'])) {
     }
 }
 
-echo $user_id;
 $collection = $db->recipes;
 $result = $collection->insertOne([
     'name' => $recipeName,
