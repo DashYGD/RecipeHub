@@ -41,7 +41,7 @@ if (!empty($_FILES['image']['name'])) {
     $imageTmpName = $_FILES['image']['tmp_name'];
     $fileName = $_FILES['image']['name'];
     $newName = uniqid('', true) . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
-    $imageDes = 'C:/xampp/htdocs/static/images/' . $newName;
+    $imageDes = 'C:/var/www/RecipeHub/static/images/' . $newName;
     echo "Destination Path: " . $imageDes . "<br>";
     if (move_uploaded_file($imageTmpName, $imageDes)) {
         $imageUrl = '../static/images/' . $newName;
