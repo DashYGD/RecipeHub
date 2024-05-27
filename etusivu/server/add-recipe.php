@@ -38,8 +38,8 @@ for ($i = 0; $i < count($ingredient); $i++) {
 $imageUrl = '';
 
 // Ensure user session is set
-if (isset($_SESSION['user_id'])) {
-    $user_id = (string) $_SESSION['user_id'];
+if (isset($_SESSION['user_i'])) {
+    $user_id = (string) $_SESSION['user_i'];
 } else {
     die("User not authenticated");
 }
