@@ -104,7 +104,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         </script>
     </head>
     <body>
-        <div id="welcomeMessage"></div>
+        <div id="welcomeMessage" style="opacity:0;"></div>
         <div id="layer_1" style="opacity:0;">
             <div id="sticky" style="z-index: 1;">
                 <div id="navbar" class="navbar" style="z-index: 0">
@@ -119,9 +119,9 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                 
 
                     <div class="center-links">
-                        <a class="w3-hide-small" href="#" onclick="showSection('section_1')">Hub</a>
-                        <a class="w3-hide-small" id="sectionButton_2" href="#" onclick="showSection('section_2')">Reseptini</a>
-                        <a class="w3-hide-small" id="sectionButton_3" href="#" onclick="showSection('section_3')">Suosikit</a>
+                        <a class="w3-hide-small" href="#Hub" onclick="showSection('section_1')">Hub</a>
+                        <a class="w3-hide-small" id="sectionButton_2" href="#Reseptini" onclick="showSection('section_2')">Reseptini</a>
+                        <a class="w3-hide-small" id="sectionButton_3" href="#Suosikit" onclick="showSection('section_3')">Suosikit</a>
                     </div> 
 
                     <div class="right-links">
@@ -365,13 +365,24 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         var form_button = document.getElementById('add-recipe-btn');
         var body = document.body;
 
-        if (isLoggedIn) {
-            welcomeMessage.textContent = 'Welcome ' + username;
+        if (isLoggedIn && document.getElementById('section_1').style.display === 'block') {
+            welcomeMessage.textContent = 'Tervetuloa ' + username;
             welcomeMessage.style.display = 'block';
+            welcomeMessage.style.opacity = "0";
+            welcomeMessage.style.transition = "opacity 0.5s ease-in-out";
+            
             setTimeout(function() {
-                welcomeMessage.style.display = 'none';
+                welcomeMessage.style.opacity = "1";
+            }, 100);
+
+            setTimeout(function() {
+                welcomeMessage.style.opacity = "0";
+                setTimeout(function() {
+                    welcomeMessage.style.display = 'none';
+                }, 500);
             }, 4000);
         }
+
         
         
 
