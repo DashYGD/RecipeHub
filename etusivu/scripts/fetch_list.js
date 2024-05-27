@@ -40,7 +40,7 @@ function displayShoppingBasket(results) {
 
     if (Object.keys(combinedIngredients).length === 0) {
         var emptyMessage = document.createElement('p');
-        emptyMessage.id = 'empty'; // Add this line to set the ID
+        emptyMessage.id = 'empty';
         emptyMessage.textContent = 'Tyhjä';
         dropdown_1.appendChild(emptyMessage);
         dropdown_1.classList.add('show');

@@ -13,7 +13,6 @@ if (!$db) {
     die("MongoDB connection failed");
 }
 
-// Gather form data
 $recipeName = $_POST['recipe-name'];
 $category = $_POST['category'];
 $instructions = $_POST['instructions'];
@@ -37,26 +36,22 @@ for ($i = 0; $i < count($ingredient); $i++) {
 
 $imageUrl = '';
 
-// Ensure user session is set
 if (isset($_SESSION['user_i'])) {
     $user_id = (string) $_SESSION['user_i'];
 } else {
     die("User not authenticated");
 }
 
-// Handle file upload
 if (!empty($_FILES['image']['name'])) {
     $imageTmpName = $_FILES['image']['tmp_name'];
     $fileName = $_FILES['image']['name'];
     $newName = uniqid('', true) . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
     $imageDes = '/var/www/RecipeHub/static/images/' . $newName;
 
-    // Check if directory is writable
     if (!is_writable(dirname($imageDes))) {
         die("Directory is not writable: " . dirname($imageDes));
     }
 
-    // Move the uploaded file
     if (move_uploaded_file($imageTmpName, $imageDes)) {
         $imageUrl = '../static/images/' . $newName;
     } else {
@@ -65,7 +60,6 @@ if (!empty($_FILES['image']['name'])) {
     }
 }
 
-// Insert recipe into MongoDB
 $collection = $db->recipes;
 $result = $collection->insertOne([
     'name' => $recipeName,

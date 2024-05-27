@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($data) {
         $data['owner'] = (string) $_SESSION['user_i'];
 
-        // Check for duplicate favorites
         $collection = $db->favorites;
         $existingFavorite = $collection->findOne(['name' => $data['name'], 'owner' => $data['owner']]);
 
@@ -38,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        // Insert the recipe into the favorites collection
         $insertResult = $collection->insertOne($data);
 
         if ($insertResult->getInsertedCount() == 1) {

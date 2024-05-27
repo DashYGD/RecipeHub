@@ -30,11 +30,9 @@ if ($data) {
     $ingredients = $data['ingredients'];
     $owner = (string) $_SESSION['user_i'];
 
-    // Fetch the existing ingredient list for the owner
     $existingList = $collection->findOne(['owner' => $owner]);
 
     if ($existingList) {
-        // Combine ingredients
         $existingIngredients = $existingList['ingredients'];
         foreach ($ingredients as $newIngredient) {
             $found = false;
@@ -51,7 +49,6 @@ if ($data) {
             }
         }
 
-        // Update the ingredient list with combined ingredients
         $updateResult = $collection->updateOne(
             ['owner' => new Regex($owner, 'i')],
             ['$set' => ['ingredients' => $existingIngredients]]
@@ -63,7 +60,6 @@ if ($data) {
             echo json_encode(['status' => 'error', 'message' => 'Failed to update ingredients in list']);
         }
     } else {
-        // Insert new ingredient list for the owner
         $insertResult = $collection->insertOne(['owner' => $owner, 'ingredients' => $ingredients]);
         if ($insertResult->getInsertedCount() == 1) {
             echo json_encode(['status' => 'success', 'message' => 'Ingredients added to list']);

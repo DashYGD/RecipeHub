@@ -13,9 +13,9 @@ if (!$db) {
 }
 $collection = $db->list;
 
-$owner = $_SESSION['user_i']; // Assuming 'user' session variable stores the owner's identifier
+$owner = $_SESSION['user_i'];
 if ($owner) {
-    $searchResult = $collection->find(['owner' => new MongoDB\BSON\Regex($owner, 'i')]); // Retrieve ingredients for the specific owner
+    $searchResult = $collection->find(['owner' => new MongoDB\BSON\Regex($owner, 'i')]); 
     $results = iterator_to_array($searchResult);
     echo json_encode($results);
 } else {

@@ -22,7 +22,7 @@ if ($data) {
     $recipe = $collection->findOne(['owner' => $owner]);
 
 if ($recipe) {
-    $ingredients = iterator_to_array($recipe['ingredients']); // Convert BSONArray to PHP array
+    $ingredients = iterator_to_array($recipe['ingredients']); 
     $updatedIngredients = array_filter($ingredients, function($ingredient) use ($ingredientName) {
         return $ingredient['name'] !== $ingredientName;
     });

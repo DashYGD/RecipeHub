@@ -36,7 +36,6 @@ if (isset($_POST['email-username_1'], $_POST['password_1'])) {
         if (isset($_POST['muista_minut'])) {
             $token = generateToken();
             setUserToken($user['_id'], $token, $collection);
-            // Set cookie to remember user
             setcookie('auth_token', $token, time() + (86400 * 30), "/"); // Cookie valid for 30 days
         }
         if ($user['is_admin'] == 1) {

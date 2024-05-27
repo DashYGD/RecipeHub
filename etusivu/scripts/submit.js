@@ -57,7 +57,7 @@ function closeIngredientPopup() {
 
 document.getElementById("add-recipe-form").addEventListener("submit", function(event) {
     if (document.getElementsByClassName('ready-ingredient').length > 0) {
-        event.preventDefault();  // Prevent the default form submission
+        event.preventDefault();
 
         var formData = new FormData(document.getElementById('add-recipe-form'));
 

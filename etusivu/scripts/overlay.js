@@ -20,7 +20,7 @@ function updateSearchResults_2(results) {
         }
         totalCost = totalCost.toFixed(2)
         
-        var imageUrl = results[i].image ? results[i].image : ''; //Tarkistaa onko kuvaa
+        var imageUrl = results[i].image ? results[i].image : '';
         resultItem.innerHTML = '<img src="' + imageUrl + '" alt="' + results[i].name + '">' +
                                '<h2>' + results[i].name + '</h2>' +
                                '<p><strong>Kategoria:</strong> ' + (results[i].category ? results[i].category : '') + '</p>' +
