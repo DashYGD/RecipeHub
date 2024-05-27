@@ -51,11 +51,17 @@ if (!empty($_FILES['image']['name'])) {
     $newName = uniqid('', true) . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
     $imageDes = '/var/www/RecipeHub/static/images/' . $newName;
 
+    // Check if directory is writable
+    if (!is_writable(dirname($imageDes))) {
+        die("Directory is not writable: " . dirname($imageDes));
+    }
+
     // Move the uploaded file
     if (move_uploaded_file($imageTmpName, $imageDes)) {
         $imageUrl = '../static/images/' . $newName;
     } else {
-        die("Failed to move file.");
+        $error = error_get_last();
+        die("Failed to move file. Error: " . $error['message']);
     }
 }
 
