@@ -17,10 +17,12 @@ function displayShoppingBasket(results) {
     dropdown_1.innerHTML = '';
 
     var owner_id = '';
+    var recipe_id = '';
     var combinedIngredients = {};
 
     results.forEach(function(recipe) {
         owner_id = recipe.owner;
+        recipe_id = recipe._id.$oid;
         if (recipe.ingredients) {
             recipe.ingredients.forEach(function(ingredient) {
                 var key = ingredient.name + ingredient.unit;
@@ -157,15 +159,20 @@ function displayShoppingBasket(results) {
         var shareButton = document.createElement('button');
         shareButton.textContent = 'Jaa';
         shareButton.addEventListener('click', function() {
-            var receiptContent = `Tuote: ${ingredient.name}\nMäärä: ${ingredient.quantity}${ingredient.unit}\nHinta arvio: ${ingredient.price}€\n`;
-            var blob = new Blob([receiptContent], { type: 'text/plain' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = `${ingredient.name}-Kuitti.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
+            var shareLink = '/share?id=' + recipe_id;
+
+            navigator.clipboard.writeText(window.location.origin + shareLink)
+                .then(() => {
+                    console.log('Linkki ostoslistaan tallennettu leikepöydälle:', window.location.origin + shareLink);
+                    alert('Linkki ostoslistaan tallennettu leikepöydälle!');
+                })
+                .catch(err => {
+                    console.error('Error copying shareable link to clipboard:', err);
+                    alert('Virhe linkin kopioinnissa.');
+                });
         });
+
+
 
         ingredientColumn.appendChild(ingredientName);
         quantityColumn.appendChild(ingredientQuantity);

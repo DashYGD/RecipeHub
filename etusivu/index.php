@@ -175,32 +175,32 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
 
 
                 <div class="icon-container_1">
-                    <div class="icon" onclick="navigate('aamupala')">
+                    <div class="icon" onclick="selectCategoryAndSearch('aamiainen')">
                         <img src="images/aamupala_uusi.png" alt="Aamupala">
                         <p>Aamupala</p>
                     </div>
 
-                    <div class="icon" onclick="navigate('lounas')">
+                    <div class="icon" onclick="selectCategoryAndSearch('lounas')">
                         <img src="images/lounas_uusi.png" alt="Lounas">
                         <p>Lounas</p>
                     </div>
 
-                    <div class="icon" onclick="navigate('valipala')">
+                    <div class="icon" onclick="selectCategoryAndSearch('välipala')">
                         <img src="images/valipala_uusi.png" alt="Valipala">
                         <p>Välipala</p>
                     </div>
 
-                    <div class="icon" onclick="navigate('paivallinen')">
+                    <div class="icon" onclick="selectCategoryAndSearch('päivällinen')">
                         <img src="images/paivallinen_uusi.png" alt="paivallinen">
                         <p>Päivällinen</p>
                     </div>
 
-                    <div class="icon" onclick="navigate('iltapala')">
+                    <div class="icon" onclick="selectCategoryAndSearch('iltapala')">
                         <img src="images/iltapala_uusi.png" alt="iltapala">
                         <p>Iltapala</p>
                     </div>
 
-                    <div class="icon" onclick="navigate('jalkiruoka')">
+                    <div class="icon" onclick="selectCategoryAndSearch('jälkiruoka')">
                         <img src="images/jalkiruoka_uusi.png" alt="jalkiruoka">
                         <p>Jälkiruoka</p>
                     </div>
@@ -340,6 +340,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
     </div>
 
     <script>
+
     function attachEventListeners() {
         var basketButton_1 = document.getElementById('shoppingBasketButton_1');
         var basketButton_2 = document.getElementById('shoppingBasketButton_2');
@@ -406,6 +407,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
             };
 
         }
+        
 
         var authButton_1 = document.getElementById('authButton_1');
         var authButton_2 = document.getElementById('authButton_2');
@@ -454,21 +456,29 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
             }
         });
 
+        var edit_button_1 = document.getElementById('edit-button_1');
         document.addEventListener('click', function(event) {
-            var clickedInsideOverlay2 = overlay_2.contains(event.target);
-            var clickedInsideOverlay3 = false;
+    var clickedInsideOverlay2 = overlay_2.contains(event.target);
+    var clickedInsideOverlay3 = false;
 
-            for (var i = 0; i < overlay_3.length; i++) {
-                if (overlay_3[i].contains(event.target)) {
-                    clickedInsideOverlay3 = true;
-                    break;
-                }
-            }
+    for (var i = 0; i < overlay_3.length; i++) {
+        if (overlay_3[i].contains(event.target) && event.target !== edit_button_1) {
+            clickedInsideOverlay3 = true;
+            break;
+        }
+        if (event.target === edit_button_1) {
+            clickedInsideOverlay3 = true;
+            console.log("ok");
+        }
+    }
 
-            if (!clickedInsideOverlay2 && !clickedInsideOverlay3) {
-                overlay_1.style.display = 'none';
-            }
-        });
+    console.log("Clicked inside overlay 3:", clickedInsideOverlay3); // Add this line
+
+    if (!clickedInsideOverlay2 && !clickedInsideOverlay3 && event.target !== edit_button_1) {
+        overlay_1.style.display = 'none';
+    }
+});
+
         
 
         document.addEventListener('click', function(event) {

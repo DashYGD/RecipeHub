@@ -1,9 +1,9 @@
 function updateSearchResults_1(results) {
   var searchResultsContainer = document.getElementById('search-results_1');
   searchResultsContainer.innerHTML = '';
+  searchResultsContainer.style.display = "flex";
 
   for (var i = 0; i < results.length; i++) {
-      searchResultsContainer.style.display = "flex";
       var resultItem = document.createElement('div');
       resultItem.className = 'recipe-card';
       resultItem.name = i;
@@ -27,6 +27,10 @@ function updateSearchResults_1(results) {
                              '<p><strong>Hinta: </strong>' + totalCost + ' €</p>';
 
       searchResultsContainer.appendChild(resultItem);
+  }
+  
+  if (results.length == 0) {
+    searchResultsContainer.innerHTML = "Ei tuloksia";
   }
 }
 
@@ -71,6 +75,15 @@ function openOverlay_1(recipe) {
     selectedCategory = category;
     searchRecipes_1();
   }
+
+  
+
+  function selectCategoryAndSearch(category) {
+    
+    selectedCategory = category;
+    
+    searchRecipes_1();
+}
   
   function searchRecipes_1() {
     var input = '';
@@ -92,9 +105,6 @@ function openOverlay_1(recipe) {
       }
       xhr.open('GET', url, true);
       xhr.send();
-    } else {
-      searchResultsContainer.innerHTML = '';
-      searchResultsContainer.style.display = "none";
     }
     return true;
   }
