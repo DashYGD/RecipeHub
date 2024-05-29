@@ -14,7 +14,6 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Email</th>
                     <th scope="col">Username</th>
                     <th scope="col">Password</th>
@@ -50,11 +49,12 @@
                     }
                     
                     echo "<tr>";
-                    echo "<td>" . $user['_id'] . "</td>";
                     echo "<td>" . $user['email'] . "</td>";
                     echo "<td>" . $user['username'] . "</td>";
                     echo "<td>[REDACTED]</td>";
-                    echo "<td>" . $admin . "</td>";
+                    echo "<td>";
+                    echo $admin;
+                    echo "</td>";
                     echo "<td>";
                     echo "<a href=\"archive_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-archive\"></i></a>";
                     echo " | ";
@@ -75,7 +75,9 @@
                     echo "<td>" . $user['email'] . "</td>";
                     echo "<td>" . $user['username'] . "</td>";
                     echo "<td>[REDACTED]</td>";
-                    echo "<td>" . $admin . "</td>";
+                    echo "<td>";
+                    echo $admin;
+                    echo "</td>";
                     echo "<td>";
                     echo "<a href=\"restore_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-arrow-rotate-left\"></i></a>";
                     echo " | ";

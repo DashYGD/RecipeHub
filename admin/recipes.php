@@ -97,7 +97,7 @@ $recipe_archives = $recipe_archive->find();
                             </div>
                             <?php } ?>
                         </td>
-                        <td><?= isset($recipe['instructions']) ? htmlspecialchars($recipe['instructions']) : '' ?></td>
+                        <td><textarea style="width: 100%" readonly><?= isset($recipe['instructions']) ? htmlspecialchars($recipe['instructions']) : 'Instructions not given' ?></textarea></td>
                         <td>
                             <?php
                                 // Use the userMap to get the username based on the owner ID
