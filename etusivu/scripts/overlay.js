@@ -201,8 +201,11 @@ function saveRecipeChanges(recipeId) {
 
 
 function addFavorite(recipe) {
-    delete recipe._id;
     delete recipe.owner;
+    recipe.id = recipe._id.$oid;
+    console.log(recipe.id);
+    
+    delete recipe._id;
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'server/add_favorite.php', true);
