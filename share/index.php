@@ -23,6 +23,11 @@ if (isset($_GET['id'])) {
     $recipe = $recipesCollection->findOne(['_id' => new MongoDB\BSON\ObjectId($recipeId)]);
 
     if ($recipe) {
+        // Calculate total price
+        $totalPrice = 0;
+        foreach ($recipe['ingredients'] as $ingredient) {
+            $totalPrice += floatval($ingredient['price']);
+        }
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -79,6 +84,15 @@ if (isset($_GET['id'])) {
                 .price {
                     text-align: left;
                 }
+                .divider {
+                    border-top: 1px solid #ccc;
+                    margin-top: 10px;
+                }
+                .total-price {
+                    font-weight: bold;
+                    margin-top: 10px;
+                    font-size: 24px;
+                }
             </style>
         </head>
         <body>
@@ -100,6 +114,8 @@ if (isset($_GET['id'])) {
                         </li>
                     <?php endforeach; ?>
                 </ul>
+                <div class="divider"></div>
+                <div class="total-price">Kokonaishinta: <?= number_format($totalPrice, 2) ?>€</div>
             </div>
         </body>
         </html>

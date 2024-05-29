@@ -54,7 +54,7 @@ function openOverlay_1(recipe) {
                               '<p><strong>Ainesosat:</strong></p>' +
                               ingredientsHtml +
                               '<p><strong>Ohjeet:</strong> ' + recipe.instructions + '</p><br>' +
-                              '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Lisää ostoskoriin</button>\n' +
+                              '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Lisää ostoslistaan</button>\n' +
                               '<button type="button" onclick=\'addFavorite(' + JSON.stringify(recipe) + ')\'>Lisää suosikkeihin</button><br>';
 
   overlay.style.display = 'block';

@@ -49,7 +49,7 @@ function openOverlay_6(recipe) {
                                 '<p><strong>Aineosat:</strong></p>' +
                                 '<div id="recipe-ingredients">' + ingredientsHtml + '</div>' +
                                 '<p><strong>Ohjeet:</strong> <span id="recipe-instructions">' + recipe.instructions + '</span></p><br>' +
-                                '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Lisää ostoskoriin</button>\n' +
+                                '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Lisää ostoslistaan</button>\n' +
                                 '<button type="button" onclick=\'addFavorite(' + JSON.stringify(recipe) + ')\'>Lisää suosikkeihin</button>\n' +
                                 '<button type="button" id="edit-button_1" onclick=\'editRecipe(' + JSON.stringify(recipe) + ')\'>Muokkaa reseptiä</button>\n' +
                                 '<button type="button" onclick=\'deleteRecipe("' + recipe._id.$oid + '")\'>Poista resepti</button><br>';
@@ -373,7 +373,7 @@ function openOverlay_7(recipe) {
                                 '<p><strong>Aineosat:</strong></p>' +
                                 ingredientsHtml +
                                 '<p><strong>Ohjeet:</strong> ' + recipe.instructions + '</p><br>' +
-                                '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Lisää ostoskoriin</button>\n' +
+                                '<button type="button" onclick=\'addToList(' + JSON.stringify(recipe) + ')\'>Lisää ostoslistaank</button>\n' +
                                 '<button type="button" onclick=\'deleteFavorite("' + recipe._id.$oid + '")\'>Poista suosikeista</button><br>';
 
     overlay.style.display = 'flex';

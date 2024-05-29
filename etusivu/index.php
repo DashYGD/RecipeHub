@@ -34,11 +34,13 @@ function checkRememberMe($db) {
                     header("Location: ../admin");
                 } else {
                     $_SESSION['user'] = (array) $result; // Store as array
+                    $_SESSION['email'] = $result['email'];
                     $_SESSION['user_i'] = $result['_id'];
                 }
             } else {
                 $_SESSION['user'] = (array) $result; // Store as array
                 $_SESSION['user_i'] = $result['_id'];
+                $_SESSION['email'] = $result['email'];
             }
         }
     }
@@ -70,7 +72,10 @@ if ($registration_attempt) {
     unset($_SESSION['registration_attempt']);
 }
 $loggedIn = isUserLoggedIn();
+$loggedIn = isUserLoggedIn();
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : ''; // Ensure $email is always defined
 $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username'] : '';
+
 ?>
 
 <!DOCTYPE html>
@@ -100,6 +105,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         <script>
             var isLoggedIn = <?php echo json_encode($loggedIn); ?>;
             var username = <?php echo json_encode($username); ?>;
+            var email = <?php echo json_encode($email); ?>;
             var loginFormOpen = <?php echo json_encode($login_form_open); ?>;
             console.log(loginFormOpen);
         </script>
@@ -138,7 +144,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                         <a href="#" onclick="showSection('section_1')" class="w3-bar-item w3-button">Hub</a>
                         <a href="#Reseptini" onclick="showSection('section_2')" class="w3-bar-item w3-button">Reseptini</a>
                         <a href="#Suosikit" onclick="showSection('section_3')" class="w3-bar-item w3-button">Suosikit</a>
-                        <a href="#Asetukset" class="w3-bar-item w3-button">Asetukset</a>
+                        <a href="#" style="display:none;" id="overlay-trigger" class="w3-bar-item w3-button">Käyttäjä</a>
                     </div>
                 </div>
             </div>
@@ -244,7 +250,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                             <input type="text" id="ingredient" name="ingredient"><br><br>
 
                             <label for="quantity">Määrä:</label><br>
-                            <input type="number" id="quantity" name="quantity"><br><br>
+                            <input type="number" name="quantity" id="quantity" min="0.00" max="1000" step="0.1"><br><br>
 
                             <label for="unit">Yksikkö:</label><br>
                             <select id="unit" name="unit">
@@ -256,14 +262,15 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                             </select><br><br>
 
                             <label for="price">Hinta:</label><br>
-                            <input type="number" id="price" name="price"><br><br>
+                            <input type="number" name="price" id="price" min="0.00" max="1000" step="0.1"><br><br>
 
                             <button type="button" onclick="addIngredient()">Tallenna ainesosa</button><br><br>
 
                             <div id="ready-ingredients"></div>
 
                             <label for="image">Kuva:</label><br>
-                            <input type="file" id="image" name="image" accept="image/*" required><br><br>
+                            <input type="file" id="image" name="image" accept="image/jpeg, image/jpg, image/png" onchange="validateImage(this)" required><br><br>
+
 
                             <label for="instructions">Ohjeet:</label><br>
                             <textarea id="instructions" name="instructions" rows="10" cols="50" required></textarea><br><br>
@@ -356,6 +363,12 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
             </form>
         </div>
     </div>
+    
+    <div id="overlay_10" class="overlay_10">
+    <div class="overlay-content_10">
+        <span id="username-placeholder"></span>
+    </div>
+    </div>
 
     <style>
         .w3-input-group {
@@ -376,6 +389,66 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
     </style>
 
     <script>
+
+    document.getElementById('quantity').addEventListener('input', function() {
+        var quantityInput = document.getElementById('quantity');
+        if (quantityInput.value <= 0) {
+            quantityInput.value = 0.00;
+        } else if (quantityInput.value > 1000) {
+            quantityInput.value = 1000;
+        }
+    });
+
+    document.getElementById('price').addEventListener('input', function() {
+        var priceInput = document.getElementById('price');
+        if (priceInput.value <= 0) {
+            priceInput.value = 0.00;
+        } else if (priceInput.value > 10000) {
+            priceInput.value = 10000;
+        }
+    });
+
+
+        var trigger = document.getElementById("overlay-trigger");
+
+        trigger.addEventListener("click", function(event) {
+        event.preventDefault();
+        document.getElementById("username-placeholder").innerText = "Kirjautunut käyttäjä: " + username + "\nSähköposti: " + email;
+        document.getElementById("overlay_10").style.display = "block";
+        });
+
+        document.getElementById("overlay_10").addEventListener("click", function(event) {
+        if (event.target === this) {
+            this.style.display = "none";
+        }
+        });
+
+        function validateImage(input) {
+            var file = input.files[0];
+            if (file) {
+                if (!['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+                    alert('Vain JPEG, JPG ja PNG kuvamuodot ovat sallittuja.');
+                    input.value = '';
+                    return;
+                }
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Tiedoston koko ei saa olla yli 2MB.');
+                    input.value = '';
+                    return;
+                }
+
+                var img = new Image();
+                img.onload = function () {
+                    if (this.width > 4000 || this.height > 4000) {
+                        alert('Kuvan maksimikoko on 4000x4000 pikseliä.');
+                        input.value = '';
+                        return;
+                    }
+                };
+                img.src = URL.createObjectURL(file); 
+            }
+        }
+
         document.getElementById('togglePasswordLogin').addEventListener('click', function () {
         var passwordInput = document.getElementById('password_1');
         var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -496,6 +569,8 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                 localStorage.setItem('currentSection', 'section_1');
                 window.location.href = '../static/server/logout.php';
             };
+            trigger.style.display = 'block';
+
         } else {
             authButton_2.textContent = 'login';
             authButton_1.onclick = function() {

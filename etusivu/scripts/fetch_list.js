@@ -107,7 +107,23 @@ function displayShoppingBasket(results) {
             if (editButton.textContent === 'Muokkaa') {
                 editButton.textContent = 'Tallenna';
                 ingredientName.innerHTML = `<input type="text" value="${ingredient.name}">`;
-                ingredientQuantity.innerHTML = `<input type="number" value="${ingredient.quantity}">`;
+                
+                var quantityInput = document.createElement('input');
+                quantityInput.type = 'number';
+                quantityInput.value = ingredient.quantity;
+                quantityInput.min = '0.00';
+                quantityInput.max = '1000';
+                quantityInput.step = '0.1';
+                quantityInput.addEventListener('input', function() {
+                    if (this.value <= 0) {
+                        this.value = 0.00;
+                    } else if (this.value > 1000) {
+                        this.value = 1000;
+                    }
+                });
+                ingredientQuantity.innerHTML = '';
+                ingredientQuantity.appendChild(quantityInput);
+                
                 var unitSelect = document.createElement('select');
                 ['g', 'kg', 'ml', 'l', 'kpl'].forEach(function(option) {
                     var optionElement = document.createElement('option');
@@ -120,7 +136,22 @@ function displayShoppingBasket(results) {
                 });
                 ingredientUnit.innerHTML = '';
                 ingredientUnit.appendChild(unitSelect);
-                ingredientPrice.innerHTML = `<input type="number" value="${ingredient.price}">€`;
+                
+                var priceInput = document.createElement('input');
+                priceInput.type = 'number';
+                priceInput.value = ingredient.price;
+                priceInput.min = '0.00';
+                priceInput.max = '10000';
+                priceInput.step = '0.1';
+                priceInput.addEventListener('input', function() {
+                    if (this.value <= 0) {
+                        this.value = 0.00;
+                    } else if (this.value > 10000) {
+                        this.value = 10000;
+                    }
+                });
+                ingredientPrice.innerHTML = '';
+                ingredientPrice.appendChild(priceInput);
             } else {
                 editButton.textContent = 'Muokkaa';
                 var updatedIngredient = {
