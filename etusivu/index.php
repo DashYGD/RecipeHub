@@ -186,13 +186,13 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                         <p>Lounas</p>
                     </div>
 
-                    <div class="icon" onclick="selectCategoryAndSearch('valipala')">
-                        <img src="images/valipala_uusi.png" alt="Valipala">
+                    <div class="icon" onclick="selectCategoryAndSearch('välipala')">
+                        <img src="images/valipala_uusi.png" alt="Välipala">
                         <p>Välipala</p>
                     </div>
 
-                    <div class="icon" onclick="selectCategoryAndSearch('paivallinen')">
-                        <img src="images/paivallinen_uusi.png" alt="paivallinen">
+                    <div class="icon" onclick="selectCategoryAndSearch('päivällinen')">
+                        <img src="images/paivallinen_uusi.png" alt="päivallinen">
                         <p>Päivällinen</p>
                     </div>
 
@@ -201,8 +201,8 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                         <p>Iltapala</p>
                     </div>
 
-                    <div class="icon" onclick="selectCategoryAndSearch('jalkiruoka')">
-                        <img src="images/jalkiruoka_uusi.png" alt="jalkiruoka">
+                    <div class="icon" onclick="selectCategoryAndSearch('jälkiruoka')">
+                        <img src="images/jalkiruoka_uusi.png" alt="jälkiruoka">
                         <p>Jälkiruoka</p>
                     </div>
                 </div>
@@ -235,8 +235,8 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                             <select id="category" name="category" required>
                                 <option value="Aamiainen">Aamiainen</option>
                                 <option value="lounas">Lounas</option>
-                                <option value="valipala">Välipala</option>
-                                <option value="paivallinen">Päivällinen</option>
+                                <option value="välipala">Välipala</option>
+                                <option value="päivallinen">Päivällinen</option>
                                 <option value="iltapala">Iltapala</option>
                             </select><br><br>
 
@@ -314,24 +314,41 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                     <label><b>Sähköposti/Käyttäjänimi</b></label>
                     <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Sähköposti/Käyttäjänimi" name="email-username_1" id="email-username_1" required>
                     <label><b>Salasana</b></label>
-                    <input class="w3-input w3-border" type="password" placeholder="Salasana" name="password_1" id="password_1" required>
+                    <div class="w3-input-group">
+                        <input class="w3-input w3-border" type="password" placeholder="Salasana" name="password_1" id="password_1" required>
+                        <span class="eye-icon" id="togglePasswordLogin">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                    </div>
                     <input class="w3-check w3-margin-top" type="checkbox" name="muista_minut" checked="checked"> Muista minut</button>
-                    <span class="w3-right w3-margin-top w3-padding w3-hide-small">Unohditko <a href="#">salasanasi?</a></span>
                     <input class="w3-button w3-block w3-green w3-section w3-padding" type="submit" value="Kirjaudu sisään">
                     <?php if (isset($login_error)) { echo "<p style='color: red;'>$login_error</p>"; } ?>
-                    <?php if (isset($register_success)) { echo "<p style='color: red;'>$register_success</p>"; } ?>
+                    <?php if (isset($register_success)) { echo "<p style='color: green;'>$register_success</p>"; } ?>
                     <p>Ei vielä käyttäjää? <a href="#" onclick="toggleForms()">Rekisteröidy</a></p>
                 </div>
             </form>
 
-            <form class="w3-container" action="process" method="POST" id="register-in">
+            <form class="w3-container" action="process" method="POST" id="register-in" onsubmit="return validateRegistrationForm()">
                 <div class="w3-section">
                     <label><b>Käyttäjänimi</b></label>
                     <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Käyttäjänimi" name="name_2" id="name_2" required>
                     <label><b>Sähköposti</b></label>
                     <input class="w3-input w3-border w3-margin-bottom" type="email" name="email_2" id="email_2" placeholder="Sähköposti" required>
                     <label><b>Salasana</b></label>
-                    <input class="w3-input w3-border" type="password" name="password_2" id="password_2" placeholder="Salasana" required>
+                    <div class="w3-input-group">
+                        <input class="w3-input w3-border" type="password" placeholder="Salasana" name="password_2" id="password_2" required>
+                        <span class="eye-icon" id="togglePassword">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                    </div>
+                    <label><b>Vahvista salasana</b></label>
+                    <div class="w3-input-group">
+                        <input class="w3-input w3-border" type="password" placeholder="Vahvista salasana" name="password_confirm" id="password_confirm" required>
+                        <span class="eye-icon" id="toggleConfirmPassword">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                    </div>
+                    <p id="password_error" style="color: red; display: none;">Salasanat eivät täsmää.</p>
                     <?php if (isset($register_error)) { echo "<p style='color: red;'>$register_error</p>"; } ?>
                     <input class="w3-button w3-block w3-green w3-section w3-padding" type="submit" value="Luo käyttäjä">
                     <p>On jo käyttäjä? <a href="#" onclick="toggleForms()">Kirjaudu sisään</a></p>
@@ -340,7 +357,59 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         </div>
     </div>
 
+    <style>
+        .w3-input-group {
+            position: relative;
+        }
+
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .eye-icon i {
+            color: #555;
+        }
+    </style>
+
     <script>
+        document.getElementById('togglePasswordLogin').addEventListener('click', function () {
+        var passwordInput = document.getElementById('password_1');
+        var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        var passwordInput = document.getElementById('password_2');
+        var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+        var confirmPasswordInput = document.getElementById('password_confirm');
+        var type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPasswordInput.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    function validateRegistrationForm() {
+        var password = document.getElementById("password_2").value;
+        var confirmPassword = document.getElementById("password_confirm").value;
+        var passwordError = document.getElementById("password_error");
+
+        if (password !== confirmPassword) {
+            passwordError.style.display = "block";
+            return false;
+        } else {
+            passwordError.style.display = "none";
+            return true;
+        }
+    }
 
     function attachEventListeners() {
         var basketButton_1 = document.getElementById('shoppingBasketButton_1');

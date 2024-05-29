@@ -24,6 +24,27 @@ function setUserToken($user_id, $token, $collection) {
     return $updateResult->getModifiedCount() > 0;
 }
 
+function validatePassword($password) {
+    $errors = [];
+
+    if (strlen($password) < 8) {
+        $errors[] = "Password must be at least 8 characters long.";
+    }
+
+    if (!preg_match('/[A-Z]/', $password)) {
+        $errors[] = "Password must include at least one uppercase letter.";
+    }
+    if (!preg_match('/[a-z]/', $password)) {
+        $errors[] = "Password must include at least one lowercase letter.";
+    }
+
+    if (!preg_match('/[\W_]/', $password)) {
+        $errors[] = "Password must include at least one special character.";
+    }
+
+    return $errors;
+}
+
 if (isset($_POST['email-username_1'], $_POST['password_1'])) {
     $login_input = $_POST['email-username_1'];
     $user_password = $_POST['password_1'];
@@ -59,6 +80,16 @@ if (isset($_POST['name_2'], $_POST['email_2'], $_POST['password_2'])) {
     $email = $_POST['email_2'];
     $user_password = $_POST['password_2'];
     $verificationToken = generateToken();
+
+    $passwordErrors = validatePassword($user_password);
+
+    if (!empty($passwordErrors)) {
+        start_session_if_not_started();
+        $_SESSION['register_error'] = implode("\n", $passwordErrors);
+        $_SESSION['registration_attempt'] = true;
+        header("Location: ../etusivu");
+        exit();
+    }
 
     $collection = $db->users;
 
@@ -102,3 +133,4 @@ if (isset($_POST['name_2'], $_POST['email_2'], $_POST['password_2'])) {
         exit();
     }
 }
+?>

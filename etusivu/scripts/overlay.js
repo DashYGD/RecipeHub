@@ -69,8 +69,8 @@ function editRecipe(recipe) {
             <select id="category" name="category" required>
                 <option value="Aamiainen" ${recipe.category === 'Aamiainen' ? 'selected' : ''}>Aamiainen</option>
                 <option value="lounas" ${recipe.category === 'lounas' ? 'selected' : ''}>Lounas</option>
-                <option value="valipala" ${recipe.category === 'valipala' ? 'selected' : ''}>Välipala</option>
-                <option value="paivallinen" ${recipe.category === 'paivallinen' ? 'selected' : ''}>Päivällinen</option>
+                <option value="välipala" ${recipe.category === 'välipala' ? 'selected' : ''}>Välipala</option>
+                <option value="päivallinen" ${recipe.category === 'päivallinen' ? 'selected' : ''}>Päivällinen</option>
                 <option value="iltapala" ${recipe.category === 'iltapala' ? 'selected' : ''}>Iltapala</option>
             </select><br><br>
 
