@@ -17,7 +17,7 @@ if (!$db) {
 
 // Check if user is logged in
 if (!isset($_SESSION['admin'])) {
-    header('Location: /kirjaudu/logout');
+    header('Location: ../static/server/logout.php');
     exit();
 }
 

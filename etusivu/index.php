@@ -80,6 +80,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RecipeHub</title>
         <link rel="stylesheet" href="styles/styles.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <link rel="stylesheet" href="../static/styles/core.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
