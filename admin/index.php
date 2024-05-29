@@ -51,25 +51,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <a class="hidden" disabled><span class="material-symbols-outlined">home</span></a>
                 </div>
                 <div class="center-links">
-                    <a class="active w3-hide-small" href="/etusivu">Etusivu</a>
                     <a class="w3-hide-small" href="?page=users">Käyttäjät</a>
                     <a class="w3-hide-small" href="?page=recipes">Reseptit</a>
-                    <a class="w3-hide-small w3-hide-medium" href="#">tyhjä</a>
                 </div>
                 <div class="right-links">
                     <a href="../static/server/logout.php" role="button"><span class="loginbutton material-symbols-outlined">login</span></a>
-                    <a role="button" style="border-style:none;" id="myMenubutton" class="menubutton1"><span id="openmenu" class="menubutton material-symbols-outlined"></span></a>
-                </div>
-            </div>
-            <div class="mySidebar" id="sidebar">
-                <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
-                    <a href="/etusivu" class="w3-bar-item w3-button">Etusivu</a>
-                </div>
-                <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
-                    <a href="?page=recipes" class="w3-bar-item w3-button">Reseptit</a>
-                </div>
-                <div class="sidebar w3-white w3-card w3-bar-block w3-animate-opacity" id="mySidebar">
-                    <a href="?page=users" class="w3-bar-item w3-button">Käyttäjät</a>
                 </div>
             </div>
         </div>
