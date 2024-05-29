@@ -39,7 +39,7 @@ function openOverlay_6(recipe) {
     if (recipe.ingredients) {
         for (var j = 0; j < recipe.ingredients.length; j++) {
             var price = parseFloat(recipe.ingredients[j].price);
-            ingredientsHtml += '<p>' + recipe.ingredients[j].name + ' (' + recipe.ingredients[j].quantity + ') - ' + (isNaN(price) ? 'N/A' : price.toFixed(2)) + ' €</p>';
+            ingredientsHtml += '<p>' + recipe.ingredients[j].name + ' (' + recipe.ingredients[j].quantity + ' ' + recipe.ingredients[j].unit + ') - ' + (isNaN(price) ? 'N/A' : price.toFixed(2)) + ' €</p>';
         }
     }
 
@@ -360,7 +360,7 @@ function openOverlay_7(recipe) {
     if (recipe.ingredients) {
         for (var j = 0; j < recipe.ingredients.length; j++) {
             var price = parseFloat(recipe.ingredients[j].price);
-            ingredientsHtml += '<p>' + recipe.ingredients[j].name + ' (' + recipe.ingredients[j].quantity + ') - ' + (isNaN(price) ? 'N/A' : price.toFixed(2)) + ' €</p>';
+            ingredientsHtml += '<p>' + recipe.ingredients[j].name + ' (' + recipe.ingredients[j].quantity + ' ' + recipe.ingredients[j].unit + ') - ' + (isNaN(price) ? 'N/A' : price.toFixed(2)) + ' €</p>';
         }
     }
 
