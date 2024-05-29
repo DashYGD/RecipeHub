@@ -185,12 +185,12 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                         <p>Lounas</p>
                     </div>
 
-                    <div class="icon" onclick="selectCategoryAndSearch('välipala')">
+                    <div class="icon" onclick="selectCategoryAndSearch('valipala')">
                         <img src="images/valipala_uusi.png" alt="Valipala">
                         <p>Välipala</p>
                     </div>
 
-                    <div class="icon" onclick="selectCategoryAndSearch('päivällinen')">
+                    <div class="icon" onclick="selectCategoryAndSearch('paivallinen')">
                         <img src="images/paivallinen_uusi.png" alt="paivallinen">
                         <p>Päivällinen</p>
                     </div>
@@ -200,7 +200,7 @@ $username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username']
                         <p>Iltapala</p>
                     </div>
 
-                    <div class="icon" onclick="selectCategoryAndSearch('jälkiruoka')">
+                    <div class="icon" onclick="selectCategoryAndSearch('jalkiruoka')">
                         <img src="images/jalkiruoka_uusi.png" alt="jalkiruoka">
                         <p>Jälkiruoka</p>
                     </div>
