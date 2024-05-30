@@ -30,7 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $data['owner'] = (string) $_SESSION['user_i'];
 
         $collection = $db->favorites;
-        $existingFavorite = $collection->findOne(['id' => $data['id']]);
+        $existingFavorite = $collection->findOne([  
+            'id' => $data['id'],
+            'owner' => $data['owner']
+        ]);
 
         if ($existingFavorite) {
             echo json_encode(['success' => false, 'message' => 'Recipe already in favourites']);
