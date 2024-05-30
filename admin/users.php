@@ -39,26 +39,31 @@
                 $users1 = $collection1->find();
 
                 $admin = "";
+                $selected = "";
 
                 // Loop through each user and display its data
                 foreach ($users as $user) {
                     if (isset($user['is_admin']) && $user['is_admin'] == 1) {
                         $admin = "Admin";
+                        $selected = ($admin == "Admin") ? "selected" : "";
                     } else {
                         $admin = "User";
+                        $selected = ($admin == "User") ? "selected" : "";
                     }
+
+                    $userId = (string) $user['_id'];
                     
                     echo "<tr>";
                     echo "<td>" . $user['email'] . "</td>";
                     echo "<td>" . $user['username'] . "</td>";
                     echo "<td>[REDACTED]</td>";
-                    echo "<td>";
-                    echo $admin;
-                    echo "</td>";
+                    echo "<td id='role-" . $user['_id'] . "'>" . $admin . "</td>";
                     echo "<td>";
                     echo "<a href=\"archive_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-archive\"></i></a>";
                     echo " | ";
                     echo "<a href=\"remove_user.php?id=" . $user['_id'] . "\"><i class=\"fas fa-trash\"></i></a>";
+                    echo " | ";
+                    echo "<a href=\"#\" onclick=\"editRole('" . $userId . "')\" id='edit-" . $user['_id'] . "'><i class=\"fas fa-edit\"></i></a>";
                     echo "</td>";
                     echo "</tr>";
                 }
@@ -89,5 +94,71 @@
             </tbody>
         </table>
     </div>
+
+    <script>    
+        function editRole(userId) {
+            // Get the current role text
+            var roleElement = document.getElementById('role-' + userId);
+            var currentRole = roleElement.innerText;
+
+            // Create the select element
+            var selectElement = document.createElement("select");
+            selectElement.id = "select-role-" + userId;
+
+            // Add options to the select element
+            var options = ["User", "Admin"];
+            options.forEach(function(option) {
+                var optionElement = document.createElement("option");
+                optionElement.value = option;
+                optionElement.text = option;
+                if (option == currentRole) {
+                    optionElement.selected = true;
+                }
+                selectElement.appendChild(optionElement);
+            });
+
+            // Replace the role text with the select element
+            roleElement.innerHTML = "";
+            roleElement.appendChild(selectElement);
+
+            var saveButton = document.createElement("a");
+            saveButton.id = "save-" + userId;
+            saveButton.innerHTML = "<i class=\"fas fa-save\"></i>";
+            saveButton.addEventListener("click", function() {
+                saveRole(userId);
+            });
+
+            // Change the edit button to a save button
+            var editButton = document.getElementById('edit-' + userId);
+            editButton.innerHTML = "";
+            editButton.appendChild(saveButton);
+        }
+
+        function saveRole(userId) {
+            // Get the selected role
+            var selectElement = document.getElementById('select-role-' + userId);
+            var selectedRole = selectElement.value;
+
+            // Create a form and submit it
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "change_role.php";
+
+            var inputElement = document.createElement("input");
+            inputElement.type = "hidden";
+            inputElement.name = "userId";
+            inputElement.value = userId;
+            form.appendChild(inputElement);
+
+            var roleInputElement = document.createElement("input");
+            roleInputElement.type = "hidden";
+            roleInputElement.name = "role";
+            roleInputElement.value = selectedRole;
+            form.appendChild(roleInputElement);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </body>
 </html>
